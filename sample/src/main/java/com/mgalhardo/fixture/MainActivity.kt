@@ -45,7 +45,8 @@ data class Person(
 //    val birthday: LocalDate,
 //    val type: Type,
 //    val objectAny: ObjectTest,
-    val ops: MyInterface
+//    val myInterface: Interface,
+    val abstractClass: AbstractClass
 )
 
 data class PersonName(
@@ -61,6 +62,8 @@ sealed class Type {
     class One : Type()
 }
 
-interface MyInterface
+interface Interface
+
+abstract class AbstractClass
 
 object ObjectTest

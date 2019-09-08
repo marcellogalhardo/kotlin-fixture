@@ -4,11 +4,16 @@ import com.mgalhardo.fixture.Fixture
 import com.mgalhardo.fixture.external.MakeRandomInstanceConfig
 import com.mgalhardo.fixture.external.NoUsableConstructor
 import com.mgalhardo.fixture.external.getKType
+import java.lang.reflect.Method
+import java.lang.reflect.Proxy
 import kotlin.reflect.KClass
 import kotlin.reflect.KType
 import kotlin.reflect.KTypeParameter
 import kotlin.reflect.KVisibility
 import kotlin.reflect.full.createInstance
+import kotlin.reflect.jvm.javaType
+import kotlin.reflect.jvm.jvmErasure
+import kotlin.reflect.jvm.kotlinFunction
 
 class ReflectTypeProvider(
     val fixture: Fixture,
@@ -51,8 +56,7 @@ class ReflectTypeProvider(
         throw NoUsableConstructor()
     }
 
-    @Suppress("IMPLICIT_CAST_TO_ANY")
-    private fun nextStandardOrNull(classRef: KClass<*>, type: KType) = when (classRef) {
+    private fun nextStandardOrNull(classRef: KClass<*>, type: KType): Any? = when (classRef) {
         Int::class -> fixture.nextInt()
         Long::class -> fixture.nextLong()
         Double::class -> fixture.nextDouble()
@@ -74,7 +78,6 @@ class ReflectTypeProvider(
 
         return when (val classifier = paramType.classifier) {
             is KClass<*> -> {
-
                 if (classifier.isSealed) {
                     // If is a sealed class, takes the first nested class.
                     val nestedClass = classifier.sealedSubclasses.firstOrNull()
@@ -83,17 +86,22 @@ class ReflectTypeProvider(
                     }
                 }
                 // If is an abstraction, creates a Proxy instance.
-//                if (classifier.isAbstract) {
-//                    return Proxy.newProxyInstance(
-//                        ClassLoader.getSystemClassLoader(),
-//                        arrayOf(paramType::class.java)
-//                    ) { _: Any, method: Method, _: Array<out Any> ->
-//                        method.kotlinFunction
-//                            ?.returnType
-//                            ?.jvmErasure
-//                            ?.createInstance()
-//                    }
-//                }
+                if (classifier.isAbstract) {
+                    val paramClass = classifier.javaObjectType
+                    return Proxy.newProxyInstance(
+                        paramClass.classLoader,
+                        arrayOf(paramClass)
+                    ) { proxy: Any, method: Method, args: Array<out Any> ->
+                        val methodReturnType = method.kotlinFunction
+                            ?.returnType
+                            ?.jvmErasure
+                        if (methodReturnType != null) {
+                            fixture.reflectNextOf(methodReturnType, paramType)
+                        } else {
+                            null
+                        }
+                    }
+                }
                 // If it is a normal object, creates it.
                 fixture.reflectNextOf(classifier, paramType)
             }
