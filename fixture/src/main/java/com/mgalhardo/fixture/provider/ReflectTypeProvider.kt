@@ -11,7 +11,6 @@ import kotlin.reflect.KType
 import kotlin.reflect.KTypeParameter
 import kotlin.reflect.KVisibility
 import kotlin.reflect.full.createInstance
-import kotlin.reflect.jvm.javaType
 import kotlin.reflect.jvm.jvmErasure
 import kotlin.reflect.jvm.kotlinFunction
 
@@ -71,7 +70,7 @@ class ReflectTypeProvider(
     private fun nextRandomOfParameter(
         paramType: KType,
         classRef: KClass<*>,
-        type: KType
+        classType: KType
     ): Any? {
         // Nullable variables will always returns null.
         if (paramType.isMarkedNullable) return null
@@ -85,9 +84,9 @@ class ReflectTypeProvider(
                         return fixture.reflectNextOf(nestedClass, paramType)
                     }
                 }
-                // If is an abstraction, creates a Proxy instance.
-                if (classifier.isAbstract) {
-                    val paramClass = classifier.javaObjectType
+                // If it is an interface, creates a Proxy instance.
+                val paramClass = classifier.javaObjectType
+                if (paramClass.isInterface) {
                     return Proxy.newProxyInstance(
                         paramClass.classLoader,
                         arrayOf(paramClass)
@@ -109,7 +108,7 @@ class ReflectTypeProvider(
                 val typeParameterName = classifier.name
                 val typeParameterId =
                     classRef.typeParameters.indexOfFirst { it.name == typeParameterName }
-                val parameterType = type.arguments[typeParameterId].type ?: getKType<Any>()
+                val parameterType = classType.arguments[typeParameterId].type ?: getKType<Any>()
                 fixture.reflectNextOf(parameterType.classifier as KClass<*>, parameterType)
             }
             else -> {
