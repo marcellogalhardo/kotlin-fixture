@@ -39,12 +39,13 @@ class MainActivity : AppCompatActivity() {
 }
 
 data class Person(
-    val id: PersonId,
-    val name: PersonName,
-    val age: Int,
-    val birthday: LocalDate,
-    val type: Type,
-    val objectAny: ObjectTest
+//    val id: PersonId,
+//    val name: PersonName,
+//    val age: Int,
+//    val birthday: LocalDate,
+//    val type: Type,
+//    val objectAny: ObjectTest,
+    val ops: MyInterface
 )
 
 data class PersonName(
@@ -59,5 +60,7 @@ inline class PersonId(
 sealed class Type {
     class One : Type()
 }
+
+interface MyInterface
 
 object ObjectTest

@@ -7,6 +7,7 @@ import com.mgalhardo.fixture.external.getKType
 import kotlin.reflect.KClass
 import kotlin.reflect.KType
 import kotlin.reflect.KTypeParameter
+import kotlin.reflect.KVisibility
 import kotlin.reflect.full.createInstance
 
 class ReflectTypeProvider(
@@ -19,17 +20,22 @@ class ReflectTypeProvider(
     }
 
     fun nextRandomInstance(classRef: KClass<*>, type: KType): Any? {
+        // Nullable variables will always returns null.
+        if (type.isMarkedNullable) return null
+
+        // Check for a standard instance (e.g., Int or String).
         val primitive = nextStandardOrNull(classRef, type)
         if (primitive != null) {
             return primitive
         }
 
+        // Get the first non-private constructor with the least number of arguments.
         val constructors = classRef.constructors
+            .filter { it.visibility != KVisibility.PRIVATE }
             .sortedBy { it.parameters.size }
 
-//        try {
+        // If it doesn't have a constructor, try to check if it is an Object Type.
         if (constructors.isEmpty()) {
-            // If it doesn't have a constructor, try to check if it is an Object Type.
             return classRef.objectInstance ?: classRef.createInstance()
         } else {
             for (constructor in constructors) {
@@ -41,9 +47,6 @@ class ReflectTypeProvider(
 
             }
         }
-//        } catch (e: Throwable) {
-//            e.printStackTrace()
-//        }
 
         throw NoUsableConstructor()
     }
@@ -66,8 +69,12 @@ class ReflectTypeProvider(
         classRef: KClass<*>,
         type: KType
     ): Any? {
+        // Nullable variables will always returns null.
+        if (paramType.isMarkedNullable) return null
+
         return when (val classifier = paramType.classifier) {
             is KClass<*> -> {
+
                 if (classifier.isSealed) {
                     // If is a sealed class, takes the first nested class.
                     val nestedClass = classifier.sealedSubclasses.firstOrNull()
@@ -75,6 +82,18 @@ class ReflectTypeProvider(
                         return fixture.reflectNextOf(nestedClass, paramType)
                     }
                 }
+                // If is an abstraction, creates a Proxy instance.
+//                if (classifier.isAbstract) {
+//                    return Proxy.newProxyInstance(
+//                        ClassLoader.getSystemClassLoader(),
+//                        arrayOf(paramType::class.java)
+//                    ) { _: Any, method: Method, _: Array<out Any> ->
+//                        method.kotlinFunction
+//                            ?.returnType
+//                            ?.jvmErasure
+//                            ?.createInstance()
+//                    }
+//                }
                 // If it is a normal object, creates it.
                 fixture.reflectNextOf(classifier, paramType)
             }
@@ -83,17 +102,8 @@ class ReflectTypeProvider(
                 val typeParameterId =
                     classRef.typeParameters.indexOfFirst { it.name == typeParameterName }
                 val parameterType = type.arguments[typeParameterId].type ?: getKType<Any>()
-//                nextRandomInstance(parameterType.classifier as KClass<*>, parameterType)
                 fixture.reflectNextOf(parameterType.classifier as KClass<*>, parameterType)
             }
-//            is KClass<*> -> nextRandomInstance(classifier, paramType)
-//            is KTypeParameter -> {
-//                val typeParameterName = classifier.name
-//                val typeParameterId =
-//                    classRef.typeParameters.indexOfFirst { it.name == typeParameterName }
-//                val parameterType = type.arguments[typeParameterId].type ?: getKType<Any>()
-//                nextRandomInstance(parameterType.classifier as KClass<*>, parameterType)
-//            }
             else -> {
                 throw Error("Type of the classifier $classifier is not supported")
             }
@@ -123,13 +133,4 @@ class ReflectTypeProvider(
             .map { nextRandomOfParameter(valType, classRef, type) }
         return keys.zip(values).toMap()
     }
-
-//    FIXME: Dead code. Random Char / String
-//
-//    private fun makeRandomChar(random: Random) = ('A'..'z').random(random)
-//    private fun makeRandomString(random: Random) =
-//        (1..random.nextInt(config.possibleStringSizes.first, config.possibleStringSizes.last + 1))
-//            .map { makeRandomChar(random) }
-//            .joinToString(separator = "") { "$it" }
-
 }
