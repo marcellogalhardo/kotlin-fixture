@@ -6,6 +6,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import java.time.LocalDate
+import kotlin.random.Random
 import kotlin.system.measureTimeMillis
 
 @SuppressLint("NewApi")
@@ -14,6 +15,11 @@ class MainActivity : AppCompatActivity() {
     private val fixture = Fixture().apply {
         register {
             LocalDate.of(1990, 6, 28)
+        }
+        register<AbstractClass> {
+            object : AbstractClass() {
+
+            }
         }
     }
 
@@ -25,6 +31,27 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun testFixture(textView: TextView) {
+//        val person = Person(
+//            id = PersonId(1),
+//            name = PersonName(
+//                firstName = "Maria",
+//                lastName = "Chietera"
+//            ),
+//            age = 45,
+//            birthday = LocalDate.now(),
+//            objectAny = ObjectTest,
+//            type = Type.One(),
+//            myInterface = object : Interface {
+//
+//            },
+//            abstractClass = object: AbstractClass() {
+//
+//            }
+//        )
+
+//        val coolPerson = fixture.nextOf<Person>()
+
+
         textView.text = "Fixture Test"
         textView.setOnClickListener {
             var person: Person? = null
@@ -39,14 +66,14 @@ class MainActivity : AppCompatActivity() {
 }
 
 data class Person(
-//    val id: PersonId,
-//    val name: PersonName,
-//    val age: Int,
-//    val birthday: LocalDate,
-//    val type: Type,
-//    val objectAny: ObjectTest,
-    val myInterface: Interface
-//    val abstractClass: AbstractClass
+    val id: PersonId,
+    val name: PersonName,
+    val age: Int,
+    val birthday: LocalDate,
+    val type: Type,
+    val objectAny: ObjectTest,
+    val myInterface: Interface,
+    val abstractClass: AbstractClass
 )
 
 data class PersonName(

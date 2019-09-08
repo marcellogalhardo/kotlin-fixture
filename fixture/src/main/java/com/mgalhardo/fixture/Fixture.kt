@@ -12,7 +12,7 @@ class Fixture(
     private val standardTypeProvider: StandardTypeProvider = StandardTypeProvider.Default()
 ) : StandardTypeProvider by standardTypeProvider {
 
-    val reflector: ReflectTypeProvider = ReflectTypeProvider(this)
+    val reflectTypeProvider: ReflectTypeProvider = ReflectTypeProvider(this)
 
     val customTypeProvider = hashMapOf<String, CustomTypeProvider<out Any>>()
 
@@ -39,7 +39,7 @@ class Fixture(
         if (typeGenerator != null) {
             return typeGenerator.nextOf()
         }
-        return reflector.nextRandomInstance(classRef, type)
+        return reflectTypeProvider.nextRandomInstance(classRef, type)
     }
 
     inline fun <reified T : Any> nextOf(): T {
@@ -47,7 +47,7 @@ class Fixture(
         if (typeGenerator != null) {
             return typeGenerator.nextOf() as T
         }
-        return reflector.nextOf()
+        return reflectTypeProvider.nextOf()
     }
 
     inline fun <reified T : Any> nextOf(key: String): T {

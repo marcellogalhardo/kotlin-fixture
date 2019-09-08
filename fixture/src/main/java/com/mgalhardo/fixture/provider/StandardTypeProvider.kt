@@ -3,6 +3,7 @@ package com.mgalhardo.fixture.provider
 import java.util.*
 import kotlin.random.Random
 
+
 interface StandardTypeProvider {
 
     fun nextBits(bitCount: Int): Int

@@ -9,7 +9,6 @@ import java.lang.reflect.Proxy
 import kotlin.reflect.KClass
 import kotlin.reflect.KType
 import kotlin.reflect.KTypeParameter
-import kotlin.reflect.KVisibility
 import kotlin.reflect.full.createInstance
 import kotlin.reflect.jvm.jvmErasure
 import kotlin.reflect.jvm.kotlinFunction
@@ -35,7 +34,7 @@ class ReflectTypeProvider(
 
         // Get the first non-private constructor with the least number of arguments.
         val constructors = classRef.constructors
-            .filter { it.visibility != KVisibility.PRIVATE }
+//            .filter { it.visibility != KVisibility.PRIVATE }
             .sortedBy { it.parameters.size }
 
         // If it doesn't have a constructor, try to check if it is an Object Type.
@@ -48,7 +47,6 @@ class ReflectTypeProvider(
                     .toTypedArray()
 
                 return constructor.call(*arguments)
-
             }
         }
 
@@ -56,11 +54,12 @@ class ReflectTypeProvider(
     }
 
     private fun nextStandardOrNull(classRef: KClass<*>, type: KType): Any? = when (classRef) {
-        Int::class -> fixture.nextInt()
-        Long::class -> fixture.nextLong()
+        Boolean::class -> fixture.nextBoolean()
+        Char::class -> fixture.nextChar()
         Double::class -> fixture.nextDouble()
         Float::class -> fixture.nextFloat()
-        Char::class -> fixture.nextString()
+        Int::class -> fixture.nextInt()
+        Long::class -> fixture.nextLong()
         String::class -> fixture.nextString()
         List::class, Collection::class -> nextRandomList(classRef, type)
         Map::class -> nextRandomMap(classRef, type)
@@ -78,10 +77,16 @@ class ReflectTypeProvider(
         return when (val classifier = paramType.classifier) {
             is KClass<*> -> {
                 if (classifier.isSealed) {
+                    // If is a sealed class, takes the first sealed sub class.
+                    val sealedSubClass = classifier.sealedSubclasses.firstOrNull()
+                    if (sealedSubClass != null) {
+                        return fixture.reflectNextOf(sealedSubClass, paramType)
+                    }
+
                     // If is a sealed class, takes the first nested class.
-                    val nestedClass = classifier.sealedSubclasses.firstOrNull()
-                    if (nestedClass != null) {
-                        return fixture.reflectNextOf(nestedClass, paramType)
+                    val nestedSubClass = classifier.nestedClasses.firstOrNull()
+                    if (nestedSubClass != null) {
+                        return fixture.reflectNextOf(nestedSubClass, paramType)
                     }
                 }
                 // If it is an interface, creates a Proxy instance.
