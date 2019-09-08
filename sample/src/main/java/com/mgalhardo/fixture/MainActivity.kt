@@ -3,8 +3,10 @@ package com.mgalhardo.fixture
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import java.time.LocalDate
+import kotlin.system.measureTimeMillis
 
 @SuppressLint("NewApi")
 class MainActivity : AppCompatActivity() {
@@ -25,8 +27,12 @@ class MainActivity : AppCompatActivity() {
     private fun testFixture(textView: TextView) {
         textView.text = "Fixture Test"
         textView.setOnClickListener {
-            val person = fixture.create<Person>().copy(age = 65)
-            textView.text = "${person.name.firstName}.${person.birthday.month}.${person.birthday.year}"
+            var person: Person? = null
+            val time = measureTimeMillis {
+                person = fixture.nextOf()
+            }
+            Toast.makeText(this, time.toString(), Toast.LENGTH_LONG).show()
+//            textView.text = "${person?.name?.firstName}.${person?.birthday?.month}.${person?.birthday?.year}"
         }
     }
 
@@ -36,7 +42,9 @@ data class Person(
     val id: PersonId,
     val name: PersonName,
     val age: Int,
-    val birthday: LocalDate
+    val birthday: LocalDate,
+    val type: Type,
+    val objectAny: ObjectTest
 )
 
 data class PersonName(
@@ -48,4 +56,8 @@ inline class PersonId(
     val id: Long
 )
 
+sealed class Type {
+    class One : Type()
+}
 
+object ObjectTest

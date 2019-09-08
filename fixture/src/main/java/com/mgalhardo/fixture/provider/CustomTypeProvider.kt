@@ -1,16 +1,16 @@
-package com.mgalhardo.fixture.generator
+package com.mgalhardo.fixture.provider
 
-interface TypeGenerator<T : Any> {
+interface CustomTypeProvider<T : Any> {
 
     fun register(provider: () -> T)
 
     fun register(key: String, provider: () -> T)
 
-    fun create(): T
+    fun nextOf(): T
 
-    fun create(key: String): T
+    fun nextOf(key: String): T
 
-    class Default<T : Any> : TypeGenerator<T> {
+    class Default<T : Any> : CustomTypeProvider<T> {
 
         private val providerMap = hashMapOf<String, () -> T>()
 
@@ -22,11 +22,11 @@ interface TypeGenerator<T : Any> {
             providerMap[key] = provider
         }
 
-        override fun create(): T {
-            return create("")
+        override fun nextOf(): T {
+            return nextOf("")
         }
 
-        override fun create(key: String): T {
+        override fun nextOf(key: String): T {
             return providerMap[key]!!.invoke()
         }
 
