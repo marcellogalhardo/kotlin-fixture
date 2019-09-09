@@ -3,7 +3,6 @@
 package com.mgalhardo.fixture
 
 import com.google.common.truth.Truth.assertThat
-import org.junit.Ignore
 import org.junit.Test
 
 class FixtureTest {
@@ -18,7 +17,6 @@ class FixtureTest {
             .isInstanceOf(TestObject::class.java)
     }
 
-    @Ignore
     @Test
     fun nextOf_createsInterface() {
         val sut = Fixture()
@@ -29,7 +27,6 @@ class FixtureTest {
             .isInstanceOf(TestInterface::class.java)
     }
 
-    @Ignore
     @Test
     fun nextOf_createsSealedClassWithAtLeastOneSubClass() {
         val sut = Fixture()
@@ -60,7 +57,6 @@ class FixtureTest {
             .isInstanceOf(TestDataClass::class.java)
     }
 
-    @Ignore
     @Test
     fun nextOf_createsBoolean() {
         val sut = Fixture()
@@ -71,7 +67,6 @@ class FixtureTest {
             .isInstanceOf(Boolean::class.java)
     }
 
-    @Ignore
     @Test
     fun nextOf_createsChar() {
         val sut = Fixture()
@@ -82,7 +77,6 @@ class FixtureTest {
             .isInstanceOf(Char::class.java)
     }
 
-    @Ignore
     @Test
     fun nextOf_createsDouble() {
         val sut = Fixture()
@@ -93,7 +87,6 @@ class FixtureTest {
             .isInstanceOf(Double::class.java)
     }
 
-    @Ignore
     @Test
     fun nextOf_createsFloat() {
         val sut = Fixture()
@@ -104,7 +97,6 @@ class FixtureTest {
             .isInstanceOf(Float::class.java)
     }
 
-    @Ignore
     @Test
     fun nextOf_createsInt() {
         val sut = Fixture()
@@ -115,7 +107,6 @@ class FixtureTest {
             .isInstanceOf(Int::class.java)
     }
 
-    @Ignore
     @Test
     fun nextOf_createsLong() {
         val sut = Fixture()

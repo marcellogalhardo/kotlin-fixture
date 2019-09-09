@@ -32,6 +32,32 @@ class ReflectTypeProvider(
             return primitive
         }
 
+        // If is a Sealed Class, get the first sealed sub class
+        if (classRef.isSealed) {
+            val sealedSubClass = classRef.sealedSubclasses.firstOrNull()
+            if (sealedSubClass != null) {
+                return fixture.reflectNextOf(sealedSubClass, type)
+            }
+        }
+
+        // If it is an Interface, creates a Proxy instance.
+        val paramClass = classRef.javaObjectType
+        if (paramClass.isInterface) {
+            return Proxy.newProxyInstance(
+                paramClass.classLoader,
+                arrayOf(paramClass)
+            ) { proxy: Any, method: Method, args: Array<out Any> ->
+                val methodReturnType = method.kotlinFunction
+                    ?.returnType
+                    ?.jvmErasure
+                if (methodReturnType != null) {
+                    fixture.reflectNextOf(methodReturnType, type)
+                } else {
+                    null
+                }
+            }
+        }
+
         // Get the first non-private constructor with the least number of arguments.
         val constructors = classRef.constructors
 //            .filter { it.visibility != KVisibility.PRIVATE }
@@ -76,31 +102,6 @@ class ReflectTypeProvider(
 
         return when (val classifier = paramType.classifier) {
             is KClass<*> -> {
-                if (classifier.isSealed) {
-                    // If is a sealed class, takes the first sealed sub class.
-                    val sealedSubClass = classifier.sealedSubclasses.firstOrNull()
-                    if (sealedSubClass != null) {
-                        return fixture.reflectNextOf(sealedSubClass, paramType)
-                    }
-                }
-                // If it is an interface, creates a Proxy instance.
-                val paramClass = classifier.javaObjectType
-                if (paramClass.isInterface) {
-                    return Proxy.newProxyInstance(
-                        paramClass.classLoader,
-                        arrayOf(paramClass)
-                    ) { proxy: Any, method: Method, args: Array<out Any> ->
-                        val methodReturnType = method.kotlinFunction
-                            ?.returnType
-                            ?.jvmErasure
-                        if (methodReturnType != null) {
-                            fixture.reflectNextOf(methodReturnType, paramType)
-                        } else {
-                            null
-                        }
-                    }
-                }
-                // If it is a normal object, creates it.
                 fixture.reflectNextOf(classifier, paramType)
             }
             is KTypeParameter -> {
