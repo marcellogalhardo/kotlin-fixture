@@ -82,12 +82,6 @@ class ReflectTypeProvider(
                     if (sealedSubClass != null) {
                         return fixture.reflectNextOf(sealedSubClass, paramType)
                     }
-
-                    // If is a sealed class, takes the first nested class.
-                    val nestedSubClass = classifier.nestedClasses.firstOrNull()
-                    if (nestedSubClass != null) {
-                        return fixture.reflectNextOf(nestedSubClass, paramType)
-                    }
                 }
                 // If it is an interface, creates a Proxy instance.
                 val paramClass = classifier.javaObjectType

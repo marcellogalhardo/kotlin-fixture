@@ -202,11 +202,9 @@ internal object TestObject
 internal interface TestInterface
 
 internal sealed class TestSealedClass {
-    class TestSubClass
+    object TestSubClass : TestSealedClass()
 }
 
 internal class TestClass
 
-internal data class TestDataClass(
-    private val id: Int
-)
+internal data class TestDataClass(private val id: Int)
