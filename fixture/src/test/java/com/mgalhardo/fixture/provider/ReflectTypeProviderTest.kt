@@ -1,16 +1,25 @@
-@file:Suppress("unused")
-
-package com.mgalhardo.fixture
+package com.mgalhardo.fixture.provider
 
 import com.google.common.truth.Truth.assertThat
-import com.mgalhardo.fixture.provider.NoUsableConstructor
+import com.mgalhardo.fixture.*
+import com.mgalhardo.fixture.TestClass
+import com.mgalhardo.fixture.TestClassWithClassParam
+import com.mgalhardo.fixture.TestClassWithDataClassParam
+import com.mgalhardo.fixture.TestClassWithInterfaceParam
+import com.mgalhardo.fixture.TestClassWithObjectParam
+import com.mgalhardo.fixture.TestClassWithPrivateConstructor
+import com.mgalhardo.fixture.TestClassWithSealedClassParam
+import com.mgalhardo.fixture.TestDataClass
+import com.mgalhardo.fixture.TestInterface
+import com.mgalhardo.fixture.TestObject
+import com.mgalhardo.fixture.TestSealedClass
 import org.junit.Test
 
-class FixtureTest {
+class ReflectTypeProviderTest {
 
     @Test
     fun nextOf_createsObjectType() {
-        val sut = Fixture()
+        val sut = ReflectTypeProvider(Fixture()::reflectNextOf, StandardTypeProvider.Default())
 
         val result = sut.nextOf<TestObject>()
 
@@ -20,7 +29,7 @@ class FixtureTest {
 
     @Test
     fun nextOf_createsInterface() {
-        val sut = Fixture()
+        val sut = ReflectTypeProvider(Fixture()::reflectNextOf, StandardTypeProvider.Default())
 
         val result = sut.nextOf<TestInterface>()
 
@@ -30,7 +39,7 @@ class FixtureTest {
 
     @Test
     fun nextOf_createsSealedClassWithAtLeastOneSubClass() {
-        val sut = Fixture()
+        val sut = ReflectTypeProvider(Fixture()::reflectNextOf, StandardTypeProvider.Default())
 
         val result = sut.nextOf<TestSealedClass>()
 
@@ -40,7 +49,7 @@ class FixtureTest {
 
     @Test
     fun nextOf_createsClass() {
-        val sut = Fixture()
+        val sut = ReflectTypeProvider(Fixture()::reflectNextOf, StandardTypeProvider.Default())
 
         val result = sut.nextOf<TestClass>()
 
@@ -50,7 +59,7 @@ class FixtureTest {
 
     @Test
     fun nextOf_createsDataClass() {
-        val sut = Fixture()
+        val sut = ReflectTypeProvider(Fixture()::reflectNextOf, StandardTypeProvider.Default())
 
         val result = sut.nextOf<TestDataClass>()
 
@@ -59,78 +68,8 @@ class FixtureTest {
     }
 
     @Test
-    fun nextOf_createsBoolean() {
-        val sut = Fixture()
-
-        val result = sut.nextOf<Boolean>()
-
-        assertThat(result)
-            .isInstanceOf(Boolean::class.javaObjectType)
-    }
-
-    @Test
-    fun nextOf_createsChar() {
-        val sut = Fixture()
-
-        val result = sut.nextOf<Char>()
-
-        assertThat(result)
-            .isInstanceOf(Char::class.javaObjectType)
-    }
-
-    @Test
-    fun nextOf_createsDouble() {
-        val sut = Fixture()
-
-        val result = sut.nextOf<Double>()
-
-        assertThat(result)
-            .isInstanceOf(Double::class.javaObjectType)
-    }
-
-    @Test
-    fun nextOf_createsFloat() {
-        val sut = Fixture()
-
-        val result = sut.nextOf<Float>()
-
-        assertThat(result)
-            .isInstanceOf(Float::class.javaObjectType)
-    }
-
-    @Test
-    fun nextOf_createsInt() {
-        val sut = Fixture()
-
-        val result = sut.nextOf<Int>()
-
-        assertThat(result)
-            .isInstanceOf(Integer::class.javaObjectType)
-    }
-
-    @Test
-    fun nextOf_createsLong() {
-        val sut = Fixture()
-
-        val result = sut.nextOf<Long>()
-
-        assertThat(result)
-            .isInstanceOf(Long::class.javaObjectType)
-    }
-
-    @Test
-    fun nextOf_createsString() {
-        val sut = Fixture()
-
-        val result = sut.nextOf<String>()
-
-        assertThat(result)
-            .isInstanceOf(String::class.java)
-    }
-
-    @Test
     fun nextOf_createsClassWithObjectParam() {
-        val sut = Fixture()
+        val sut = ReflectTypeProvider(Fixture()::reflectNextOf, StandardTypeProvider.Default())
 
         val result = sut.nextOf<TestClassWithObjectParam>()
 
@@ -140,7 +79,7 @@ class FixtureTest {
 
     @Test
     fun nextOf_createsClassWithInterfaceParam() {
-        val sut = Fixture()
+        val sut = ReflectTypeProvider(Fixture()::reflectNextOf, StandardTypeProvider.Default())
 
         val result = sut.nextOf<TestClassWithInterfaceParam>()
 
@@ -150,7 +89,7 @@ class FixtureTest {
 
     @Test
     fun nextOf_createsClassWithSealedClassParam() {
-        val sut = Fixture()
+        val sut = ReflectTypeProvider(Fixture()::reflectNextOf, StandardTypeProvider.Default())
 
         val result = sut.nextOf<TestClassWithSealedClassParam>()
 
@@ -160,7 +99,7 @@ class FixtureTest {
 
     @Test
     fun nextOf_createsClassWithClassParam() {
-        val sut = Fixture()
+        val sut = ReflectTypeProvider(Fixture()::reflectNextOf, StandardTypeProvider.Default())
 
         val result = sut.nextOf<TestClassWithClassParam>()
 
@@ -170,7 +109,7 @@ class FixtureTest {
 
     @Test
     fun nextOf_createsClassWithDataClassParam() {
-        val sut = Fixture()
+        val sut = ReflectTypeProvider(Fixture()::reflectNextOf, StandardTypeProvider.Default())
 
         val result = sut.nextOf<TestClassWithDataClassParam>()
 
@@ -180,7 +119,7 @@ class FixtureTest {
 
     @Test
     fun nextOf_throwsNoUsableConstructor() {
-        val sut = Fixture()
+        val sut = ReflectTypeProvider(Fixture()::reflectNextOf, StandardTypeProvider.Default())
 
         var error: Throwable? = null
         try {
@@ -192,4 +131,5 @@ class FixtureTest {
         assertThat(error)
             .isInstanceOf(NoUsableConstructor::class.java)
     }
+
 }

@@ -34,7 +34,7 @@ class Fixture(
         }
     }
 
-    private fun reflectNextOf(classRef: KClass<*>, type: KType): Any? {
+    internal fun reflectNextOf(classRef: KClass<*>, type: KType): Any? {
         val typeGenerator = customTypeProvider[classRef.jvmName]
         if (typeGenerator != null) {
             return typeGenerator.nextOf()

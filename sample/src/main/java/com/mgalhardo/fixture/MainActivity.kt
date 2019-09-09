@@ -49,7 +49,7 @@ class MainActivity : AppCompatActivity() {
 //            }
 //        )
 
-//        val coolPerson = fixture.nextOf<Person>()
+        val coolPerson = fixture.nextOf<Person>()
 
 
         textView.text = "Fixture Test"
