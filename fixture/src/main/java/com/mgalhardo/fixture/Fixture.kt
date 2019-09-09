@@ -1,8 +1,8 @@
 package com.mgalhardo.fixture
 
-import com.mgalhardo.fixture.provider.StandardTypeProvider
-import com.mgalhardo.fixture.provider.ReflectTypeProvider
 import com.mgalhardo.fixture.provider.CustomTypeProvider
+import com.mgalhardo.fixture.provider.ReflectTypeProvider
+import com.mgalhardo.fixture.provider.StandardTypeProvider
 import kotlin.reflect.KClass
 import kotlin.reflect.KType
 import kotlin.reflect.jvm.jvmName

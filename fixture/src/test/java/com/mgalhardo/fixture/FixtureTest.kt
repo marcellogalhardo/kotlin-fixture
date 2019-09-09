@@ -3,6 +3,7 @@
 package com.mgalhardo.fixture
 
 import com.google.common.truth.Truth.assertThat
+import com.mgalhardo.fixture.provider.NoUsableConstructor
 import org.junit.Test
 
 class FixtureTest {
@@ -176,6 +177,21 @@ class FixtureTest {
         assertThat(result)
             .isInstanceOf(TestClassWithDataClassParam::class.java)
     }
+
+    @Test
+    fun nextOf_throwsNoUsableConstructor() {
+        val sut = Fixture()
+
+        var error: Throwable? = null
+        try {
+            sut.nextOf<TestClassWithPrivateConstructor>()
+        } catch (ex: Throwable) {
+            error = ex
+        }
+
+        assertThat(error)
+            .isInstanceOf(NoUsableConstructor::class.java)
+    }
 }
 
 internal class TestClassWithObjectParam(private val testParam: TestObject)
@@ -197,5 +213,7 @@ internal sealed class TestSealedClass {
 }
 
 internal class TestClass
+
+internal class TestClassWithPrivateConstructor private constructor()
 
 internal data class TestDataClass(private val id: Int)

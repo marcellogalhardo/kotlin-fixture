@@ -7,6 +7,7 @@ import java.lang.reflect.Proxy
 import kotlin.reflect.KClass
 import kotlin.reflect.KType
 import kotlin.reflect.KTypeParameter
+import kotlin.reflect.KVisibility
 import kotlin.reflect.full.createInstance
 import kotlin.reflect.jvm.jvmErasure
 import kotlin.reflect.jvm.kotlinFunction
@@ -66,11 +67,14 @@ class ReflectTypeProvider(
             return classRef.objectInstance ?: classRef.createInstance()
         } else {
             for (constructor in constructors) {
-                val arguments = constructor.parameters
-                    .map { nextRandomOfParameter(it.type, classRef, type) }
-                    .toTypedArray()
+                // I need to filter here, otherwise it might think it is an object.
+                if (constructor.visibility != KVisibility.PRIVATE) {
+                    val arguments = constructor.parameters
+                        .map { nextRandomOfParameter(it.type, classRef, type) }
+                        .toTypedArray()
 
-                return constructor.call(*arguments)
+                    return constructor.call(*arguments)
+                }
             }
         }
 

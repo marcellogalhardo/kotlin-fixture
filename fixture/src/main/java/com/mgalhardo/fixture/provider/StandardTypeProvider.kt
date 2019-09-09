@@ -8,19 +8,7 @@ interface StandardTypeProvider {
 
     fun nextAny(): Any
 
-    fun nextBits(bitCount: Int): Int
-
     fun nextBoolean(): Boolean
-
-    fun nextBytes(
-        array: ByteArray,
-        fromIndex: Int = 0,
-        toIndex: Int = array.size
-    ): ByteArray
-
-    fun nextBytes(array: ByteArray): ByteArray
-
-    fun nextBytes(size: Int): ByteArray
 
     fun nextChar(): Char
 
@@ -46,6 +34,10 @@ interface StandardTypeProvider {
 
     fun nextLong(from: Long, until: Long): Long
 
+    fun nextLong(range: IntRange): Long = nextLong(range.first.toLong(), range.last.toLong())
+
+    fun nextLong(range: LongRange): Long = nextLong(range.first, range.last)
+
     fun nextString(): String
 
     fun nextString(prefix: String): String
@@ -54,31 +46,9 @@ interface StandardTypeProvider {
         private val random: Random = Random.Default
     ) : StandardTypeProvider {
 
-        override fun nextAny(): Any {
-            return when (nextInt(0, 6)) {
-                0 -> nextBoolean()
-                1 -> nextChar()
-                2 -> nextDouble()
-                3 -> nextFloat()
-                4 -> nextLong()
-                5 -> nextString()
-                else -> nextInt()
-            }
-        }
-
-        override fun nextBits(bitCount: Int): Int = random.nextBits(bitCount)
+        override fun nextAny(): Any = Any()
 
         override fun nextBoolean(): Boolean = random.nextBoolean()
-
-        override fun nextBytes(
-            array: ByteArray,
-            fromIndex: Int,
-            toIndex: Int
-        ): ByteArray = random.nextBytes(array, fromIndex, toIndex)
-
-        override fun nextBytes(array: ByteArray): ByteArray = random.nextBytes(array)
-
-        override fun nextBytes(size: Int): ByteArray = random.nextBytes(size)
 
         override fun nextChar(): Char = ('A'..'z').random(random)
 
