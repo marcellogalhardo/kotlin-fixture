@@ -1,6 +1,5 @@
 package com.mgalhardo.fixture.provider
 
-import com.mgalhardo.fixture.Fixture
 import com.mgalhardo.fixture.external.getKType
 import java.lang.reflect.Method
 import java.lang.reflect.Proxy
@@ -13,7 +12,8 @@ import kotlin.reflect.jvm.jvmErasure
 import kotlin.reflect.jvm.kotlinFunction
 
 class ReflectTypeProvider(
-    val fixture: Fixture,
+    private val reflectNextOfFunction: (classRef: KClass<*>, type: KType) -> Any?,
+    private val standardTypeProvider: StandardTypeProvider,
     private val config: ReflectTypeProviderConfig = ReflectTypeProviderConfig()
 ) {
 
@@ -36,7 +36,7 @@ class ReflectTypeProvider(
         if (classRef.isSealed) {
             val sealedSubClass = classRef.sealedSubclasses.firstOrNull()
             if (sealedSubClass != null) {
-                return fixture.reflectNextOf(sealedSubClass, type)
+                return reflectNextOfFunction(sealedSubClass, type)
             }
         }
 
@@ -51,7 +51,7 @@ class ReflectTypeProvider(
                     ?.returnType
                     ?.jvmErasure
                 if (methodReturnType != null) {
-                    fixture.reflectNextOf(methodReturnType, type)
+                    reflectNextOfFunction(methodReturnType, type)
                 } else {
                     null
                 }
@@ -82,14 +82,14 @@ class ReflectTypeProvider(
     }
 
     private fun nextStandardOrNull(classRef: KClass<*>, type: KType): Any? = when (classRef) {
-        Any::class -> fixture.nextAny()
-        Boolean::class -> fixture.nextBoolean()
-        Char::class -> fixture.nextChar()
-        Double::class -> fixture.nextDouble()
-        Float::class -> fixture.nextFloat()
-        Int::class -> fixture.nextInt()
-        Long::class -> fixture.nextLong()
-        String::class -> fixture.nextString()
+        Any::class -> standardTypeProvider.nextAny()
+        Boolean::class -> standardTypeProvider.nextBoolean()
+        Char::class -> standardTypeProvider.nextChar()
+        Double::class -> standardTypeProvider.nextDouble()
+        Float::class -> standardTypeProvider.nextFloat()
+        Int::class -> standardTypeProvider.nextInt()
+        Long::class -> standardTypeProvider.nextLong()
+        String::class -> standardTypeProvider.nextString()
         List::class, Collection::class -> nextRandomList(classRef, type)
         Map::class -> nextRandomMap(classRef, type)
         else -> null
@@ -105,14 +105,17 @@ class ReflectTypeProvider(
 
         return when (val classifier = paramType.classifier) {
             is KClass<*> -> {
-                fixture.reflectNextOf(classifier, paramType)
+                reflectNextOfFunction(classifier, paramType)
             }
             is KTypeParameter -> {
                 val typeParameterName = classifier.name
                 val typeParameterId =
                     classRef.typeParameters.indexOfFirst { it.name == typeParameterName }
                 val parameterType = classType.arguments[typeParameterId].type ?: getKType<Any>()
-                fixture.reflectNextOf(parameterType.classifier as KClass<*>, parameterType)
+                reflectNextOfFunction(
+                    parameterType.classifier as KClass<*>,
+                    parameterType
+                )
             }
             else -> {
                 throw Error("Type of the classifier $classifier is not supported")
@@ -121,7 +124,7 @@ class ReflectTypeProvider(
     }
 
     private fun nextRandomList(classRef: KClass<*>, type: KType): List<Any?> {
-        val numOfElements = fixture.nextInt(config.collectionRange)
+        val numOfElements = standardTypeProvider.nextInt(config.collectionRange)
 
         val elemType = type.arguments[0].type!!
 
@@ -130,7 +133,7 @@ class ReflectTypeProvider(
     }
 
     private fun nextRandomMap(classRef: KClass<*>, type: KType): Map<Any?, Any?> {
-        val numOfElements = fixture.nextInt(config.collectionRange)
+        val numOfElements = standardTypeProvider.nextInt(config.collectionRange)
 
         val keyType = type.arguments[0].type!!
         val valType = type.arguments[1].type!!

@@ -12,7 +12,7 @@ class Fixture(
     private val standardTypeProvider: StandardTypeProvider = StandardTypeProvider.Default()
 ) : StandardTypeProvider by standardTypeProvider {
 
-    val reflectTypeProvider: ReflectTypeProvider = ReflectTypeProvider(this)
+    val reflectTypeProvider: ReflectTypeProvider = ReflectTypeProvider(this::reflectNextOf, standardTypeProvider)
 
     val customTypeProvider = hashMapOf<String, CustomTypeProvider<out Any>>()
 
@@ -34,7 +34,7 @@ class Fixture(
         }
     }
 
-    internal fun reflectNextOf(classRef: KClass<*>, type: KType): Any? {
+    private fun reflectNextOf(classRef: KClass<*>, type: KType): Any? {
         val typeGenerator = customTypeProvider[classRef.jvmName]
         if (typeGenerator != null) {
             return typeGenerator.nextOf()
