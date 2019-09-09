@@ -1,8 +1,6 @@
 package com.mgalhardo.fixture.provider
 
 import com.mgalhardo.fixture.Fixture
-import com.mgalhardo.fixture.external.MakeRandomInstanceConfig
-import com.mgalhardo.fixture.external.NoUsableConstructor
 import com.mgalhardo.fixture.external.getKType
 import java.lang.reflect.Method
 import java.lang.reflect.Proxy
@@ -19,7 +17,8 @@ class ReflectTypeProvider(
 ) {
 
     inline fun <reified T : Any> nextOf(): T {
-        return nextRandomInstance(T::class, getKType<T>()) as T
+        val kType = getKType<T>()
+        return nextRandomInstance(T::class, kType) as T
     }
 
     fun nextRandomInstance(classRef: KClass<*>, type: KType): Any? {
@@ -118,22 +117,20 @@ class ReflectTypeProvider(
     }
 
     private fun nextRandomList(classRef: KClass<*>, type: KType): List<Any?> {
-        val numOfElements = fixture.nextInt(
-            config.possibleCollectionSizes.first,
-            config.possibleCollectionSizes.last + 1
-        )
+        val numOfElements = fixture.nextInt(config.collectionRange)
+
         val elemType = type.arguments[0].type!!
+
         return (1..numOfElements)
             .map { nextRandomOfParameter(elemType, classRef, type) }
     }
 
     private fun nextRandomMap(classRef: KClass<*>, type: KType): Map<Any?, Any?> {
-        val numOfElements = fixture.nextInt(
-            config.possibleCollectionSizes.first,
-            config.possibleCollectionSizes.last + 1
-        )
+        val numOfElements = fixture.nextInt(config.collectionRange)
+
         val keyType = type.arguments[0].type!!
         val valType = type.arguments[1].type!!
+
         val keys = (1..numOfElements)
             .map { nextRandomOfParameter(keyType, classRef, type) }
         val values = (1..numOfElements)
@@ -143,5 +140,7 @@ class ReflectTypeProvider(
 }
 
 class ReflectTypeProviderConfig(
-    var possibleCollectionSizes: IntRange = 1..5
+    var collectionRange: IntRange = 1..5
 )
+
+class NoUsableConstructor : Error()

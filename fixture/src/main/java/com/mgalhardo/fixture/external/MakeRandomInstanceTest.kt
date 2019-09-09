@@ -175,7 +175,7 @@
 //
 //    @Test
 //    fun `When user expects empty collections, both Map and List are empty`() {
-//        val config = MakeRandomInstanceConfig(possibleCollectionSizes = 0..0)
+//        val config = MakeRandomInstanceConfig(collectionRange = 0..0)
 //        repeat(10) {
 //            assertEquals(emptyList(), nextRandomInstance<List<Int>>(config = config))
 //            assertEquals(emptyList(), nextRandomInstance<List<List<Int>>>(config = config))
@@ -185,7 +185,7 @@
 //
 //    @Test
 //    fun `When user expects concrete collection size, both Map and List are of this size`() {
-//        val config = MakeRandomInstanceConfig(possibleCollectionSizes = 5..5)
+//        val config = MakeRandomInstanceConfig(collectionRange = 5..5)
 //        repeat(10) {
 //            assertEquals(5, nextRandomInstance<List<Int>>(config = config).size)
 //            assertEquals(5, nextRandomInstance<List<List<Int>>>(config = config).size)
@@ -195,7 +195,7 @@
 //
 //    @Test
 //    fun `When user expects concrete String length, all Strings have this length`() {
-//        val config = MakeRandomInstanceConfig(possibleStringSizes = 5..5, possibleCollectionSizes = 2..2)
+//        val config = MakeRandomInstanceConfig(possibleStringSizes = 5..5, collectionRange = 2..2)
 //        repeat(10) {
 //            assertEquals(5, nextRandomInstance<String>(config = config).length)
 //            assertEquals(5, nextRandomInstance<List<String>>(config = config)[0].length)

@@ -38,6 +38,8 @@ interface StandardTypeProvider {
 
     fun nextInt(from: Int, until: Int): Int
 
+    fun nextInt(range: IntRange): Int = nextInt(range.first, range.last)
+
     fun nextLong(): Long
 
     fun nextLong(until: Long): Long
