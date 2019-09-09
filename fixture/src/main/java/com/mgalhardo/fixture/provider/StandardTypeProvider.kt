@@ -6,6 +6,8 @@ import kotlin.random.Random
 
 interface StandardTypeProvider {
 
+    fun nextAny(): Any
+
     fun nextBits(bitCount: Int): Int
 
     fun nextBoolean(): Boolean
@@ -50,6 +52,18 @@ interface StandardTypeProvider {
         private val random: Random = Random.Default
     ) : StandardTypeProvider {
 
+        override fun nextAny(): Any {
+            return when (nextInt(0, 6)) {
+                0 -> nextBoolean()
+                1 -> nextChar()
+                2 -> nextDouble()
+                3 -> nextFloat()
+                4 -> nextLong()
+                5 -> nextString()
+                else -> nextInt()
+            }
+        }
+
         override fun nextBits(bitCount: Int): Int = random.nextBits(bitCount)
 
         override fun nextBoolean(): Boolean = random.nextBoolean()
@@ -92,6 +106,5 @@ interface StandardTypeProvider {
         override fun nextString(): String = UUID.randomUUID().toString()
 
         override fun nextString(prefix: String): String = "$prefix-${nextString()}"
-
     }
 }

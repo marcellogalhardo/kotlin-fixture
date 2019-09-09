@@ -64,7 +64,7 @@ class FixtureTest {
         val result = sut.nextOf<Boolean>()
 
         assertThat(result)
-            .isInstanceOf(java.lang.Boolean::class.java)
+            .isInstanceOf(Boolean::class.javaObjectType)
     }
 
     @Test
@@ -74,7 +74,7 @@ class FixtureTest {
         val result = sut.nextOf<Char>()
 
         assertThat(result)
-            .isInstanceOf(java.lang.Character::class.java)
+            .isInstanceOf(Char::class.javaObjectType)
     }
 
     @Test
@@ -84,7 +84,7 @@ class FixtureTest {
         val result = sut.nextOf<Double>()
 
         assertThat(result)
-            .isInstanceOf(java.lang.Double::class.java)
+            .isInstanceOf(Double::class.javaObjectType)
     }
 
     @Test
@@ -94,7 +94,7 @@ class FixtureTest {
         val result = sut.nextOf<Float>()
 
         assertThat(result)
-            .isInstanceOf(java.lang.Float::class.java)
+            .isInstanceOf(Float::class.javaObjectType)
     }
 
     @Test
@@ -104,7 +104,7 @@ class FixtureTest {
         val result = sut.nextOf<Int>()
 
         assertThat(result)
-            .isInstanceOf(java.lang.Integer::class.java)
+            .isInstanceOf(Integer::class.javaObjectType)
     }
 
     @Test
@@ -114,7 +114,7 @@ class FixtureTest {
         val result = sut.nextOf<Long>()
 
         assertThat(result)
-            .isInstanceOf(java.lang.Long::class.java)
+            .isInstanceOf(Long::class.javaObjectType)
     }
 
     @Test

@@ -15,7 +15,7 @@ import kotlin.reflect.jvm.kotlinFunction
 
 class ReflectTypeProvider(
     val fixture: Fixture,
-    private val config: MakeRandomInstanceConfig = MakeRandomInstanceConfig()
+    private val config: ReflectTypeProviderConfig = ReflectTypeProviderConfig()
 ) {
 
     inline fun <reified T : Any> nextOf(): T {
@@ -46,7 +46,7 @@ class ReflectTypeProvider(
             return Proxy.newProxyInstance(
                 paramClass.classLoader,
                 arrayOf(paramClass)
-            ) { proxy: Any, method: Method, args: Array<out Any> ->
+            ) { _: Any, method: Method, _: Array<out Any> ->
                 val methodReturnType = method.kotlinFunction
                     ?.returnType
                     ?.jvmErasure
@@ -60,7 +60,6 @@ class ReflectTypeProvider(
 
         // Get the first non-private constructor with the least number of arguments.
         val constructors = classRef.constructors
-//            .filter { it.visibility != KVisibility.PRIVATE }
             .sortedBy { it.parameters.size }
 
         // If it doesn't have a constructor, try to check if it is an Object Type.
@@ -80,6 +79,7 @@ class ReflectTypeProvider(
     }
 
     private fun nextStandardOrNull(classRef: KClass<*>, type: KType): Any? = when (classRef) {
+        Any::class -> fixture.nextAny()
         Boolean::class -> fixture.nextBoolean()
         Char::class -> fixture.nextChar()
         Double::class -> fixture.nextDouble()
@@ -141,3 +141,7 @@ class ReflectTypeProvider(
         return keys.zip(values).toMap()
     }
 }
+
+class ReflectTypeProviderConfig(
+    var possibleCollectionSizes: IntRange = 1..5
+)
