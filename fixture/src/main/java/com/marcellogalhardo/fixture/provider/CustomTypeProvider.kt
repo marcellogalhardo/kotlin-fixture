@@ -1,5 +1,8 @@
 package com.marcellogalhardo.fixture.provider
 
+@Deprecated(
+    message = "Replaced by FixtureTypeMap."
+)
 interface CustomTypeProvider<T : Any> {
 
     fun register(key: String, provider: () -> T)

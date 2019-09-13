@@ -1,6 +1,7 @@
 package com.marcellogalhardo.fixture.provider
 
 import com.marcellogalhardo.fixture.FixtureRandom
+import com.marcellogalhardo.fixture.NextFunction
 import com.marcellogalhardo.fixture.external.getKType
 import java.lang.reflect.Method
 import java.lang.reflect.Proxy
@@ -13,7 +14,7 @@ import kotlin.reflect.jvm.jvmErasure
 import kotlin.reflect.jvm.kotlinFunction
 
 class ReflectTypeProvider(
-    private val reflectNextOfFunction: (classRef: KClass<*>, type: KType) -> Any?,
+    private val reflectNextOfFunction: NextFunction,
     private val fixtureRandom: FixtureRandom,
     private val config: ReflectTypeProviderConfig = ReflectTypeProviderConfig()
 ) {
@@ -66,7 +67,7 @@ class ReflectTypeProvider(
                 // I need to filter here, otherwise it might think it is an object.
                 if (constructor.visibility != KVisibility.PRIVATE) {
                     val arguments = constructor.parameters
-                        .map { nextRandomOfParameter(it.type, classRef, type) }
+                        .map { nextParameter(it.type, classRef, type) }
                         .toTypedArray()
 
                     return constructor.call(*arguments)
@@ -91,7 +92,7 @@ class ReflectTypeProvider(
         else -> null
     }
 
-    private fun nextRandomOfParameter(
+    private fun nextParameter(
         paramType: KType,
         classRef: KClass<*>,
         classType: KType
@@ -125,7 +126,7 @@ class ReflectTypeProvider(
         val elemType = type.arguments[0].type!!
 
         return (1..numOfElements)
-            .map { nextRandomOfParameter(elemType, classRef, type) }
+            .map { nextParameter(elemType, classRef, type) }
     }
 
     private fun nextRandomMap(classRef: KClass<*>, type: KType): Map<Any?, Any?> {
@@ -135,9 +136,9 @@ class ReflectTypeProvider(
         val valType = type.arguments[1].type!!
 
         val keys = (1..numOfElements)
-            .map { nextRandomOfParameter(keyType, classRef, type) }
+            .map { nextParameter(keyType, classRef, type) }
         val values = (1..numOfElements)
-            .map { nextRandomOfParameter(valType, classRef, type) }
+            .map { nextParameter(valType, classRef, type) }
         return keys.zip(values).toMap()
     }
 }

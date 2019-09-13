@@ -3,7 +3,6 @@ package com.marcellogalhardo.fixture
 import java.util.*
 import kotlin.random.Random
 
-
 interface FixtureRandom {
 
     fun nextAny(): Any
@@ -42,7 +41,7 @@ interface FixtureRandom {
 
     fun nextString(prefix: String): String
 
-    class Default(
+    class Default internal constructor(
         private val random: Random = Random.Default
     ) : FixtureRandom {
 
@@ -80,3 +79,6 @@ interface FixtureRandom {
         override fun nextString(prefix: String): String = "$prefix-${nextString()}"
     }
 }
+
+@Suppress("FunctionName")
+fun FixtureRandom(): FixtureRandom = FixtureRandom.Default()

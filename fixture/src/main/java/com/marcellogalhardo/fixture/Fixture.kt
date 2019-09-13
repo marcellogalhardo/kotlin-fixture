@@ -1,11 +1,9 @@
 package com.marcellogalhardo.fixture
 
 import com.marcellogalhardo.fixture.external.getKType
-import com.marcellogalhardo.fixture.provider.CustomTypeProvider
 import com.marcellogalhardo.fixture.provider.ReflectTypeProvider
 import kotlin.reflect.KClass
 import kotlin.reflect.KType
-import kotlin.reflect.jvm.jvmName
 
 internal typealias NextFunction = (classRef: KClass<*>, type: KType) -> Any?
 
@@ -18,7 +16,7 @@ interface Fixture : FixtureRandom {
 
     fun <T : Any> register(classRef: KClass<T>, providerFunction: ProviderFunction<T>)
 
-    fun <T : Any> register(key: String, classRef: KClass<T>, providerFunction: ProviderFunction<T>)
+    fun <T : Any> register(classRef: KClass<T>, key: String, providerFunction: ProviderFunction<T>)
 
     /**
      * Creates a new instance based on a [KClass] and [KType].
@@ -30,53 +28,48 @@ interface Fixture : FixtureRandom {
     fun next(key: String, classRef: KClass<*>, typeRef: KType): Any?
 
     class Default internal constructor(
-        private val fixtureRandom: FixtureRandom = FixtureRandom.Default()
+        private val fixtureRandom: FixtureRandom = FixtureRandom()
     ) : Fixture, FixtureRandom by fixtureRandom {
 
         private val reflectTypeProvider: ReflectTypeProvider =
             ReflectTypeProvider(this::next, fixtureRandom)
 
-        private val customTypeProvider = hashMapOf<String, CustomTypeProvider<out Any>>()
+        private val typeMap = FixtureTypeMap()
 
         override fun <T : Any> register(
             classRef: KClass<T>,
             providerFunction: ProviderFunction<T>
         ) {
-            register("", classRef, providerFunction)
+            register(classRef, NO_KEY, providerFunction)
         }
 
-        @Suppress("UNCHECKED_CAST")
         override fun <T : Any> register(
-            key: String,
             classRef: KClass<T>,
+            key: String,
             providerFunction: ProviderFunction<T>
         ) {
-            val provider = customTypeProvider.getOrPut(classRef.jvmName) {
-                CustomTypeProvider.Default<T>()
-            } as CustomTypeProvider<T>
-            provider.register(key) {
-                providerFunction(this)
-            }
+            typeMap.put(classRef, key, providerFunction)
         }
 
         override fun next(classRef: KClass<*>, typeRef: KType): Any? {
-            return next("", classRef, typeRef)
+            return next(NO_KEY, classRef, typeRef)
         }
 
         override fun next(key: String, classRef: KClass<*>, typeRef: KType): Any? {
-            val typeGenerator = customTypeProvider[classRef.jvmName]
-            if (typeGenerator != null) {
-                return typeGenerator.nextOf(key)
-            }
-            return reflectTypeProvider.nextRandomInstance(classRef, typeRef)
+            if (typeRef.isMarkedNullable) return null
+
+            return typeMap.get(classRef, key)?.invoke(this)
+                ?: reflectTypeProvider.nextRandomInstance(classRef, typeRef)
         }
     }
 
 }
 
-fun Fixture() = Fixture.Default()
+@Suppress("FunctionName")
+fun Fixture(): Fixture = Fixture.Default()
 
-fun Fixture(apply: Fixture.() -> Unit) = Fixture.Default().apply(apply)
+@Suppress("FunctionName")
+fun Fixture(apply: Fixture.() -> Unit): Fixture = Fixture.Default().apply(apply)
 
 inline fun <reified T : Any> Fixture.register(noinline providerFunction: ProviderFunction<T>) {
     register(T::class, providerFunction)
@@ -86,7 +79,7 @@ inline fun <reified T : Any> Fixture.register(
     key: String,
     noinline providerFunction: (Fixture) -> T
 ) {
-    register(key, T::class, providerFunction)
+    register(T::class, key, providerFunction)
 }
 
 inline fun <reified T : Any> Fixture.next(): T {
