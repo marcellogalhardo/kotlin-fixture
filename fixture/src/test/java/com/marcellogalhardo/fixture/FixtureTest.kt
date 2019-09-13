@@ -1,18 +1,18 @@
 @file:Suppress("unused")
 
-package com.mgalhardo.fixture
+package com.marcellogalhardo.fixture
 
 import com.google.common.truth.Truth.assertThat
-import com.mgalhardo.fixture.provider.NoUsableConstructor
+import com.marcellogalhardo.fixture.provider.NoUsableConstructor
 import org.junit.Test
 
 class FixtureTest {
 
     @Test
     fun nextOf_createsObjectType() {
-        val sut = Fixture()
+        val sut = FixtureFactory.create()
 
-        val result = sut.nextOf<TestObject>()
+        val result = sut.next<TestObject>()
 
         assertThat(result)
             .isInstanceOf(TestObject::class.java)
@@ -20,9 +20,9 @@ class FixtureTest {
 
     @Test
     fun nextOf_createsInterface() {
-        val sut = Fixture()
+        val sut = FixtureFactory.create()
 
-        val result = sut.nextOf<TestInterface>()
+        val result = sut.next<TestInterface>()
 
         assertThat(result)
             .isInstanceOf(TestInterface::class.java)
@@ -30,9 +30,9 @@ class FixtureTest {
 
     @Test
     fun nextOf_createsSealedClassWithAtLeastOneSubClass() {
-        val sut = Fixture()
+        val sut = FixtureFactory.create()
 
-        val result = sut.nextOf<TestSealedClass>()
+        val result = sut.next<TestSealedClass>()
 
         assertThat(result)
             .isInstanceOf(TestSealedClass::class.java)
@@ -40,9 +40,9 @@ class FixtureTest {
 
     @Test
     fun nextOf_createsClass() {
-        val sut = Fixture()
+        val sut = FixtureFactory.create()
 
-        val result = sut.nextOf<TestClass>()
+        val result = sut.next<TestClass>()
 
         assertThat(result)
             .isInstanceOf(TestClass::class.java)
@@ -50,9 +50,9 @@ class FixtureTest {
 
     @Test
     fun nextOf_createsDataClass() {
-        val sut = Fixture()
+        val sut = FixtureFactory.create()
 
-        val result = sut.nextOf<TestDataClass>()
+        val result = sut.next<TestDataClass>()
 
         assertThat(result)
             .isInstanceOf(TestDataClass::class.java)
@@ -60,9 +60,9 @@ class FixtureTest {
 
     @Test
     fun nextOf_createsBoolean() {
-        val sut = Fixture()
+        val sut = FixtureFactory.create()
 
-        val result = sut.nextOf<Boolean>()
+        val result = sut.next<Boolean>()
 
         assertThat(result)
             .isInstanceOf(Boolean::class.javaObjectType)
@@ -70,9 +70,9 @@ class FixtureTest {
 
     @Test
     fun nextOf_createsChar() {
-        val sut = Fixture()
+        val sut = FixtureFactory.create()
 
-        val result = sut.nextOf<Char>()
+        val result = sut.next<Char>()
 
         assertThat(result)
             .isInstanceOf(Char::class.javaObjectType)
@@ -80,9 +80,9 @@ class FixtureTest {
 
     @Test
     fun nextOf_createsDouble() {
-        val sut = Fixture()
+        val sut = FixtureFactory.create()
 
-        val result = sut.nextOf<Double>()
+        val result = sut.next<Double>()
 
         assertThat(result)
             .isInstanceOf(Double::class.javaObjectType)
@@ -90,9 +90,9 @@ class FixtureTest {
 
     @Test
     fun nextOf_createsFloat() {
-        val sut = Fixture()
+        val sut = FixtureFactory.create()
 
-        val result = sut.nextOf<Float>()
+        val result = sut.next<Float>()
 
         assertThat(result)
             .isInstanceOf(Float::class.javaObjectType)
@@ -100,9 +100,9 @@ class FixtureTest {
 
     @Test
     fun nextOf_createsInt() {
-        val sut = Fixture()
+        val sut = FixtureFactory.create()
 
-        val result = sut.nextOf<Int>()
+        val result = sut.next<Int>()
 
         assertThat(result)
             .isInstanceOf(Integer::class.javaObjectType)
@@ -110,9 +110,9 @@ class FixtureTest {
 
     @Test
     fun nextOf_createsLong() {
-        val sut = Fixture()
+        val sut = FixtureFactory.create()
 
-        val result = sut.nextOf<Long>()
+        val result = sut.next<Long>()
 
         assertThat(result)
             .isInstanceOf(Long::class.javaObjectType)
@@ -120,9 +120,9 @@ class FixtureTest {
 
     @Test
     fun nextOf_createsString() {
-        val sut = Fixture()
+        val sut = FixtureFactory.create()
 
-        val result = sut.nextOf<String>()
+        val result = sut.next<String>()
 
         assertThat(result)
             .isInstanceOf(String::class.java)
@@ -130,9 +130,9 @@ class FixtureTest {
 
     @Test
     fun nextOf_createsClassWithObjectParam() {
-        val sut = Fixture()
+        val sut = FixtureFactory.create()
 
-        val result = sut.nextOf<TestClassWithObjectParam>()
+        val result = sut.next<TestClassWithObjectParam>()
 
         assertThat(result)
             .isInstanceOf(TestClassWithObjectParam::class.java)
@@ -140,9 +140,9 @@ class FixtureTest {
 
     @Test
     fun nextOf_createsClassWithInterfaceParam() {
-        val sut = Fixture()
+        val sut = FixtureFactory.create()
 
-        val result = sut.nextOf<TestClassWithInterfaceParam>()
+        val result = sut.next<TestClassWithInterfaceParam>()
 
         assertThat(result)
             .isInstanceOf(TestClassWithInterfaceParam::class.java)
@@ -150,9 +150,9 @@ class FixtureTest {
 
     @Test
     fun nextOf_createsClassWithSealedClassParam() {
-        val sut = Fixture()
+        val sut = FixtureFactory.create()
 
-        val result = sut.nextOf<TestClassWithSealedClassParam>()
+        val result = sut.next<TestClassWithSealedClassParam>()
 
         assertThat(result)
             .isInstanceOf(TestClassWithSealedClassParam::class.java)
@@ -160,9 +160,9 @@ class FixtureTest {
 
     @Test
     fun nextOf_createsClassWithClassParam() {
-        val sut = Fixture()
+        val sut = FixtureFactory.create()
 
-        val result = sut.nextOf<TestClassWithClassParam>()
+        val result = sut.next<TestClassWithClassParam>()
 
         assertThat(result)
             .isInstanceOf(TestClassWithClassParam::class.java)
@@ -170,9 +170,9 @@ class FixtureTest {
 
     @Test
     fun nextOf_createsClassWithDataClassParam() {
-        val sut = Fixture()
+        val sut = FixtureFactory.create()
 
-        val result = sut.nextOf<TestClassWithDataClassParam>()
+        val result = sut.next<TestClassWithDataClassParam>()
 
         assertThat(result)
             .isInstanceOf(TestClassWithDataClassParam::class.java)
@@ -180,11 +180,11 @@ class FixtureTest {
 
     @Test
     fun nextOf_throwsNoUsableConstructor() {
-        val sut = Fixture()
+        val sut = FixtureFactory.create()
 
         var error: Throwable? = null
         try {
-            sut.nextOf<TestClassWithPrivateConstructor>()
+            sut.next<TestClassWithPrivateConstructor>()
         } catch (ex: Throwable) {
             error = ex
         }

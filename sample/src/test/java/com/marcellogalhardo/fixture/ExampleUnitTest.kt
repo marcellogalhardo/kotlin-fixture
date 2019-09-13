@@ -1,4 +1,4 @@
-package com.mgalhardo.fixture
+package com.marcellogalhardo.fixture
 
 import org.junit.Test
 

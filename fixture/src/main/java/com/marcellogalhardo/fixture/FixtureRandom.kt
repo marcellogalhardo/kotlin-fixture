@@ -1,10 +1,10 @@
-package com.mgalhardo.fixture.provider
+package com.marcellogalhardo.fixture
 
 import java.util.*
 import kotlin.random.Random
 
 
-interface StandardTypeProvider {
+interface FixtureRandom {
 
     fun nextAny(): Any
 
@@ -44,7 +44,7 @@ interface StandardTypeProvider {
 
     class Default(
         private val random: Random = Random.Default
-    ) : StandardTypeProvider {
+    ) : FixtureRandom {
 
         override fun nextAny(): Any = Any()
 

@@ -1,4 +1,4 @@
-package com.mgalhardo.fixture.external
+package com.marcellogalhardo.fixture.external
 
 import java.lang.reflect.*
 import kotlin.reflect.KClass

@@ -1,4 +1,4 @@
-package com.mgalhardo.fixture
+package com.marcellogalhardo.fixture
 
 internal class TestClassWithObjectParam(private val testParam: TestObject)
 

@@ -1,4 +1,4 @@
-package com.mgalhardo.fixture
+package com.marcellogalhardo.fixture
 
 import android.annotation.SuppressLint
 import android.os.Bundle
@@ -6,13 +6,12 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import java.time.LocalDate
-import kotlin.random.Random
 import kotlin.system.measureTimeMillis
 
 @SuppressLint("NewApi")
 class MainActivity : AppCompatActivity() {
 
-    private val fixture = Fixture().apply {
+    private val fixture = FixtureFactory.create().apply {
         register {
             LocalDate.of(1990, 6, 28)
         }
@@ -49,14 +48,13 @@ class MainActivity : AppCompatActivity() {
 //            }
 //        )
 
-        val coolPerson = fixture.nextOf<Person>()
-
+        val coolPerson = fixture.next<Person>()
 
         textView.text = "Fixture Test"
         textView.setOnClickListener {
             var person: Person? = null
             val time = measureTimeMillis {
-                person = fixture.nextOf()
+                person = fixture.next()
             }
             Toast.makeText(this, time.toString(), Toast.LENGTH_LONG).show()
 //            textView.text = "${person?.name?.firstName}.${person?.birthday?.month}.${person?.birthday?.year}"

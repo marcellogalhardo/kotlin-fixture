@@ -1,6 +1,7 @@
-package com.mgalhardo.fixture.provider
+package com.marcellogalhardo.fixture.provider
 
-import com.mgalhardo.fixture.external.getKType
+import com.marcellogalhardo.fixture.FixtureRandom
+import com.marcellogalhardo.fixture.external.getKType
 import java.lang.reflect.Method
 import java.lang.reflect.Proxy
 import kotlin.reflect.KClass
@@ -13,14 +14,9 @@ import kotlin.reflect.jvm.kotlinFunction
 
 class ReflectTypeProvider(
     private val reflectNextOfFunction: (classRef: KClass<*>, type: KType) -> Any?,
-    private val standardTypeProvider: StandardTypeProvider,
+    private val fixtureRandom: FixtureRandom,
     private val config: ReflectTypeProviderConfig = ReflectTypeProviderConfig()
 ) {
-
-    inline fun <reified T : Any> nextOf(): T {
-        val kType = getKType<T>()
-        return nextRandomInstance(T::class, kType) as T
-    }
 
     fun nextRandomInstance(classRef: KClass<*>, type: KType): Any? {
         // Nullable variables will always returns null.
@@ -82,14 +78,14 @@ class ReflectTypeProvider(
     }
 
     private fun nextStandardOrNull(classRef: KClass<*>, type: KType): Any? = when (classRef) {
-        Any::class -> standardTypeProvider.nextAny()
-        Boolean::class -> standardTypeProvider.nextBoolean()
-        Char::class -> standardTypeProvider.nextChar()
-        Double::class -> standardTypeProvider.nextDouble()
-        Float::class -> standardTypeProvider.nextFloat()
-        Int::class -> standardTypeProvider.nextInt()
-        Long::class -> standardTypeProvider.nextLong()
-        String::class -> standardTypeProvider.nextString()
+        Any::class -> fixtureRandom.nextAny()
+        Boolean::class -> fixtureRandom.nextBoolean()
+        Char::class -> fixtureRandom.nextChar()
+        Double::class -> fixtureRandom.nextDouble()
+        Float::class -> fixtureRandom.nextFloat()
+        Int::class -> fixtureRandom.nextInt()
+        Long::class -> fixtureRandom.nextLong()
+        String::class -> fixtureRandom.nextString()
         List::class, Collection::class -> nextRandomList(classRef, type)
         Map::class -> nextRandomMap(classRef, type)
         else -> null
@@ -124,7 +120,7 @@ class ReflectTypeProvider(
     }
 
     private fun nextRandomList(classRef: KClass<*>, type: KType): List<Any?> {
-        val numOfElements = standardTypeProvider.nextInt(config.collectionRange)
+        val numOfElements = fixtureRandom.nextInt(config.collectionRange)
 
         val elemType = type.arguments[0].type!!
 
@@ -133,7 +129,7 @@ class ReflectTypeProvider(
     }
 
     private fun nextRandomMap(classRef: KClass<*>, type: KType): Map<Any?, Any?> {
-        val numOfElements = standardTypeProvider.nextInt(config.collectionRange)
+        val numOfElements = fixtureRandom.nextInt(config.collectionRange)
 
         val keyType = type.arguments[0].type!!
         val valType = type.arguments[1].type!!
@@ -144,6 +140,11 @@ class ReflectTypeProvider(
             .map { nextRandomOfParameter(valType, classRef, type) }
         return keys.zip(values).toMap()
     }
+}
+
+inline fun <reified T : Any> ReflectTypeProvider.next(): T {
+    val kType = getKType<T>()
+    return nextRandomInstance(T::class, kType) as T
 }
 
 class ReflectTypeProviderConfig(
