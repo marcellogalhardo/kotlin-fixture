@@ -11,13 +11,7 @@ internal const val NO_KEY = ""
 
 interface FixtureTypeMap {
 
-    fun <T : Any> put(classRef: KClass<T>, providerFunction: ProviderFunction<T>) {
-        put(classRef, NO_KEY, providerFunction)
-    }
-
     fun <T : Any> put(classRef: KClass<T>, key: String, providerFunction: ProviderFunction<T>)
-
-    fun <T : Any> get(classRef: KClass<T>): ProviderFunction<T>? = get(classRef, NO_KEY)
 
     fun <T : Any> get(classRef: KClass<T>, key: String): ProviderFunction<T>?
 

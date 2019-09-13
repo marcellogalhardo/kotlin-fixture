@@ -25,15 +25,11 @@ interface Fixture : FixtureRandom {
     fun next(key: String, classRef: KClass<*>, typeRef: KType): Any?
 
     class Default internal constructor(
-        private val fixtureConfigs: FixtureConfigs,
+        fixtureConfigs: FixtureConfigs,
         private val fixtureRandom: FixtureRandom = FixtureRandom()
     ) : Fixture, FixtureRandom by fixtureRandom {
 
         private val resolver = FixtureResolver(::next, fixtureConfigs, fixtureRandom)
-
-//        FIXME: Might not be used anymore.
-//        private val reflectTypeProvider: ReflectTypeProvider =
-//            ReflectTypeProvider(this::next, fixtureRandom)
 
         private val typeMap = FixtureTypeMap()
 
@@ -61,8 +57,6 @@ interface Fixture : FixtureRandom {
 
             return typeMap.get(classRef, key)?.invoke(this)
                 ?: resolver.resolve(classRef, typeRef)
-//                FIXME: Might not be used anymore.
-//                ?: reflectTypeProvider.nextRandomInstance(classRef, typeRef)
         }
     }
 
