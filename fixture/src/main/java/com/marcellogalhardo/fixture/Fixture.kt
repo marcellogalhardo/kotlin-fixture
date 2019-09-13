@@ -1,7 +1,6 @@
 package com.marcellogalhardo.fixture
 
 import com.marcellogalhardo.fixture.external.getKType
-import com.marcellogalhardo.fixture.provider.ReflectTypeProvider
 import kotlin.reflect.KClass
 import kotlin.reflect.KType
 
@@ -21,18 +20,20 @@ interface Fixture : FixtureRandom {
     /**
      * Creates a new instance based on a [KClass] and [KType].
      */
-    @Throws(FixtureException::class)
     fun next(classRef: KClass<*>, typeRef: KType): Any?
 
-    @Throws(FixtureException::class)
     fun next(key: String, classRef: KClass<*>, typeRef: KType): Any?
 
     class Default internal constructor(
+        private val fixtureConfigs: FixtureConfigs,
         private val fixtureRandom: FixtureRandom = FixtureRandom()
     ) : Fixture, FixtureRandom by fixtureRandom {
 
-        private val reflectTypeProvider: ReflectTypeProvider =
-            ReflectTypeProvider(this::next, fixtureRandom)
+        private val resolver = FixtureResolver(::next, fixtureConfigs, fixtureRandom)
+
+//        FIXME: Might not be used anymore.
+//        private val reflectTypeProvider: ReflectTypeProvider =
+//            ReflectTypeProvider(this::next, fixtureRandom)
 
         private val typeMap = FixtureTypeMap()
 
@@ -59,17 +60,20 @@ interface Fixture : FixtureRandom {
             if (typeRef.isMarkedNullable) return null
 
             return typeMap.get(classRef, key)?.invoke(this)
-                ?: reflectTypeProvider.nextRandomInstance(classRef, typeRef)
+                ?: resolver.resolve(classRef, typeRef)
+//                FIXME: Might not be used anymore.
+//                ?: reflectTypeProvider.nextRandomInstance(classRef, typeRef)
         }
     }
 
 }
 
 @Suppress("FunctionName")
-fun Fixture(): Fixture = Fixture.Default()
+fun Fixture(configs: FixtureConfigs = FixtureConfigs()): Fixture = Fixture.Default(configs)
 
 @Suppress("FunctionName")
-fun Fixture(apply: Fixture.() -> Unit): Fixture = Fixture.Default().apply(apply)
+fun Fixture(configs: FixtureConfigs = FixtureConfigs(), apply: Fixture.() -> Unit): Fixture =
+    Fixture.Default(configs).apply(apply)
 
 inline fun <reified T : Any> Fixture.register(noinline providerFunction: ProviderFunction<T>) {
     register(T::class, providerFunction)

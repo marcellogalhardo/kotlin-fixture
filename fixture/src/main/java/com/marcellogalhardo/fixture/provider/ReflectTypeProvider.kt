@@ -13,6 +13,9 @@ import kotlin.reflect.full.createInstance
 import kotlin.reflect.jvm.jvmErasure
 import kotlin.reflect.jvm.kotlinFunction
 
+@Deprecated(
+    message = "Replaced by FixtureResolver."
+)
 class ReflectTypeProvider(
     private val reflectNextOfFunction: NextFunction,
     private val fixtureRandom: FixtureRandom,

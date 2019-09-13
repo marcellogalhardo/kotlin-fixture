@@ -14,6 +14,8 @@ internal object TestObject
 
 internal interface TestInterface
 
+internal abstract class TestAbstractClass
+
 internal sealed class TestSealedClass {
     object TestSubClass : TestSealedClass()
 }

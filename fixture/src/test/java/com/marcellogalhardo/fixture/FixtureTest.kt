@@ -3,7 +3,6 @@
 package com.marcellogalhardo.fixture
 
 import com.google.common.truth.Truth.assertThat
-import com.marcellogalhardo.fixture.provider.NoUsableConstructor
 import org.junit.Test
 
 class FixtureTest {
@@ -191,5 +190,20 @@ class FixtureTest {
 
         assertThat(error)
             .isInstanceOf(NoUsableConstructor::class.java)
+    }
+
+    @Test
+    fun nextOf_createsAbstractClass_throwsException() {
+        val sut = Fixture()
+
+        var error: Throwable? = null
+        try {
+            sut.next<TestAbstractClass>()
+        } catch (ex: Throwable) {
+            error = ex
+        }
+
+        assertThat(error)
+            .isInstanceOf(AbstractClassNotSupportedException::class.java)
     }
 }
