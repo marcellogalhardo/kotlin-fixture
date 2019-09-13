@@ -19,7 +19,7 @@ class ReflectTypeProviderTest {
 
     @Test
     fun nextOf_createsObjectType() {
-        val fixture = FixtureFactory.create()
+        val fixture = Fixture()
         val sut = ReflectTypeProvider(fixture::next, FixtureRandom.Default())
 
         val result = sut.next<TestObject>()
@@ -30,7 +30,7 @@ class ReflectTypeProviderTest {
 
     @Test
     fun nextOf_createsInterface() {
-        val fixture = FixtureFactory.create()
+        val fixture = Fixture()
         val sut = ReflectTypeProvider(fixture::next, FixtureRandom.Default())
 
         val result = sut.next<TestInterface>()
@@ -41,7 +41,7 @@ class ReflectTypeProviderTest {
 
     @Test
     fun nextOf_createsSealedClassWithAtLeastOneSubClass() {
-        val fixture = FixtureFactory.create()
+        val fixture = Fixture()
         val sut = ReflectTypeProvider(fixture::next, FixtureRandom.Default())
 
         val result = sut.next<TestSealedClass>()
@@ -52,7 +52,7 @@ class ReflectTypeProviderTest {
 
     @Test
     fun nextOf_createsClass() {
-        val fixture = FixtureFactory.create()
+        val fixture = Fixture()
         val sut = ReflectTypeProvider(fixture::next, FixtureRandom.Default())
 
         val result = sut.next<TestClass>()
@@ -63,7 +63,7 @@ class ReflectTypeProviderTest {
 
     @Test
     fun nextOf_createsDataClass() {
-        val fixture = FixtureFactory.create()
+        val fixture = Fixture()
         val sut = ReflectTypeProvider(fixture::next, FixtureRandom.Default())
 
         val result = sut.next<TestDataClass>()
@@ -74,7 +74,7 @@ class ReflectTypeProviderTest {
 
     @Test
     fun nextOf_createsClassWithObjectParam() {
-        val fixture = FixtureFactory.create()
+        val fixture = Fixture()
         val sut = ReflectTypeProvider(fixture::next, FixtureRandom.Default())
 
         val result = sut.next<TestClassWithObjectParam>()
@@ -85,7 +85,7 @@ class ReflectTypeProviderTest {
 
     @Test
     fun nextOf_createsClassWithInterfaceParam() {
-        val fixture = FixtureFactory.create()
+        val fixture = Fixture()
         val sut = ReflectTypeProvider(fixture::next, FixtureRandom.Default())
 
         val result = sut.next<TestClassWithInterfaceParam>()
@@ -96,7 +96,7 @@ class ReflectTypeProviderTest {
 
     @Test
     fun nextOf_createsClassWithSealedClassParam() {
-        val fixture = FixtureFactory.create()
+        val fixture = Fixture()
         val sut = ReflectTypeProvider(fixture::next, FixtureRandom.Default())
 
         val result = sut.next<TestClassWithSealedClassParam>()
@@ -107,7 +107,7 @@ class ReflectTypeProviderTest {
 
     @Test
     fun nextOf_createsClassWithClassParam() {
-        val fixture = FixtureFactory.create()
+        val fixture = Fixture()
         val sut = ReflectTypeProvider(fixture::next, FixtureRandom.Default())
 
         val result = sut.next<TestClassWithClassParam>()
@@ -118,7 +118,7 @@ class ReflectTypeProviderTest {
 
     @Test
     fun nextOf_createsClassWithDataClassParam() {
-        val fixture = FixtureFactory.create()
+        val fixture = Fixture()
         val sut = ReflectTypeProvider(fixture::next, FixtureRandom.Default())
 
         val result = sut.next<TestClassWithDataClassParam>()
@@ -129,7 +129,7 @@ class ReflectTypeProviderTest {
 
     @Test
     fun nextOf_throwsNoUsableConstructor() {
-        val fixture = FixtureFactory.create()
+        val fixture = Fixture()
         val sut = ReflectTypeProvider(fixture::next, FixtureRandom.Default())
 
         var error: Throwable? = null

@@ -10,7 +10,7 @@ class FixtureTest {
 
     @Test
     fun nextOf_createsObjectType() {
-        val sut = FixtureFactory.create()
+        val sut = Fixture()
 
         val result = sut.next<TestObject>()
 
@@ -20,7 +20,7 @@ class FixtureTest {
 
     @Test
     fun nextOf_createsInterface() {
-        val sut = FixtureFactory.create()
+        val sut = Fixture()
 
         val result = sut.next<TestInterface>()
 
@@ -30,7 +30,7 @@ class FixtureTest {
 
     @Test
     fun nextOf_createsSealedClassWithAtLeastOneSubClass() {
-        val sut = FixtureFactory.create()
+        val sut = Fixture()
 
         val result = sut.next<TestSealedClass>()
 
@@ -40,7 +40,7 @@ class FixtureTest {
 
     @Test
     fun nextOf_createsClass() {
-        val sut = FixtureFactory.create()
+        val sut = Fixture()
 
         val result = sut.next<TestClass>()
 
@@ -50,7 +50,7 @@ class FixtureTest {
 
     @Test
     fun nextOf_createsDataClass() {
-        val sut = FixtureFactory.create()
+        val sut = Fixture()
 
         val result = sut.next<TestDataClass>()
 
@@ -60,7 +60,7 @@ class FixtureTest {
 
     @Test
     fun nextOf_createsBoolean() {
-        val sut = FixtureFactory.create()
+        val sut = Fixture()
 
         val result = sut.next<Boolean>()
 
@@ -70,7 +70,7 @@ class FixtureTest {
 
     @Test
     fun nextOf_createsChar() {
-        val sut = FixtureFactory.create()
+        val sut = Fixture()
 
         val result = sut.next<Char>()
 
@@ -80,7 +80,7 @@ class FixtureTest {
 
     @Test
     fun nextOf_createsDouble() {
-        val sut = FixtureFactory.create()
+        val sut = Fixture()
 
         val result = sut.next<Double>()
 
@@ -90,7 +90,7 @@ class FixtureTest {
 
     @Test
     fun nextOf_createsFloat() {
-        val sut = FixtureFactory.create()
+        val sut = Fixture()
 
         val result = sut.next<Float>()
 
@@ -100,7 +100,7 @@ class FixtureTest {
 
     @Test
     fun nextOf_createsInt() {
-        val sut = FixtureFactory.create()
+        val sut = Fixture()
 
         val result = sut.next<Int>()
 
@@ -110,7 +110,7 @@ class FixtureTest {
 
     @Test
     fun nextOf_createsLong() {
-        val sut = FixtureFactory.create()
+        val sut = Fixture()
 
         val result = sut.next<Long>()
 
@@ -120,7 +120,7 @@ class FixtureTest {
 
     @Test
     fun nextOf_createsString() {
-        val sut = FixtureFactory.create()
+        val sut = Fixture()
 
         val result = sut.next<String>()
 
@@ -130,7 +130,7 @@ class FixtureTest {
 
     @Test
     fun nextOf_createsClassWithObjectParam() {
-        val sut = FixtureFactory.create()
+        val sut = Fixture()
 
         val result = sut.next<TestClassWithObjectParam>()
 
@@ -140,7 +140,7 @@ class FixtureTest {
 
     @Test
     fun nextOf_createsClassWithInterfaceParam() {
-        val sut = FixtureFactory.create()
+        val sut = Fixture()
 
         val result = sut.next<TestClassWithInterfaceParam>()
 
@@ -150,7 +150,7 @@ class FixtureTest {
 
     @Test
     fun nextOf_createsClassWithSealedClassParam() {
-        val sut = FixtureFactory.create()
+        val sut = Fixture()
 
         val result = sut.next<TestClassWithSealedClassParam>()
 
@@ -160,7 +160,7 @@ class FixtureTest {
 
     @Test
     fun nextOf_createsClassWithClassParam() {
-        val sut = FixtureFactory.create()
+        val sut = Fixture()
 
         val result = sut.next<TestClassWithClassParam>()
 
@@ -170,7 +170,7 @@ class FixtureTest {
 
     @Test
     fun nextOf_createsClassWithDataClassParam() {
-        val sut = FixtureFactory.create()
+        val sut = Fixture()
 
         val result = sut.next<TestClassWithDataClassParam>()
 
@@ -180,7 +180,7 @@ class FixtureTest {
 
     @Test
     fun nextOf_throwsNoUsableConstructor() {
-        val sut = FixtureFactory.create()
+        val sut = Fixture()
 
         var error: Throwable? = null
         try {

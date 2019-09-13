@@ -11,7 +11,7 @@ import kotlin.system.measureTimeMillis
 @SuppressLint("NewApi")
 class MainActivity : AppCompatActivity() {
 
-    private val fixture = FixtureFactory.create().apply {
+    private val fixture = Fixture {
         register {
             LocalDate.of(1990, 6, 28)
         }

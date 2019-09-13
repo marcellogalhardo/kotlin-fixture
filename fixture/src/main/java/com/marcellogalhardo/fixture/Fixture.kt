@@ -74,6 +74,10 @@ interface Fixture : FixtureRandom {
 
 }
 
+fun Fixture() = Fixture.Default()
+
+fun Fixture(apply: Fixture.() -> Unit) = Fixture.Default().apply(apply)
+
 inline fun <reified T : Any> Fixture.register(noinline providerFunction: ProviderFunction<T>) {
     register(T::class, providerFunction)
 }
