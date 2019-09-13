@@ -27,9 +27,7 @@ interface FixtureParamResolver {
                         parameterType
                     )
                 }
-                else -> {
-                    throw Error("Type of the classifier $classifier is not supported")
-                }
+                else -> throw ClassifierNotSupportedException(classifier)
             }
         }
 
