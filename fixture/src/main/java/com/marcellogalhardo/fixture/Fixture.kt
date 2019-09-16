@@ -8,21 +8,11 @@ internal typealias NextFunction = (classRef: KClass<*>, type: KType) -> Any?
 
 internal typealias ProviderFunction<T> = (Fixture) -> T
 
-/**
- * Provides object creation services.
- */
 interface Fixture : FixtureRandom {
 
     fun <T : Any> register(classRef: KClass<T>, providerFunction: ProviderFunction<T>)
 
-    fun <T : Any> register(classRef: KClass<T>, key: String, providerFunction: ProviderFunction<T>)
-
-    /**
-     * Creates a new instance based on a [KClass] and [KType].
-     */
     fun next(classRef: KClass<*>, typeRef: KType): Any?
-
-    fun next(key: String, classRef: KClass<*>, typeRef: KType): Any?
 
     class Default internal constructor(
         fixtureConfigs: FixtureConfigs,
@@ -31,31 +21,19 @@ interface Fixture : FixtureRandom {
 
         private val resolver = FixtureResolver(::next, fixtureConfigs, fixtureRandom)
 
-        private val typeMap = FixtureTypeMap()
+        private val typeMap: HashMap<KClass<*>, ProviderFunction<*>> = hashMapOf()
 
         override fun <T : Any> register(
             classRef: KClass<T>,
             providerFunction: ProviderFunction<T>
         ) {
-            register(classRef, NO_KEY, providerFunction)
-        }
-
-        override fun <T : Any> register(
-            classRef: KClass<T>,
-            key: String,
-            providerFunction: ProviderFunction<T>
-        ) {
-            typeMap.put(classRef, key, providerFunction)
+            typeMap[classRef] = providerFunction
         }
 
         override fun next(classRef: KClass<*>, typeRef: KType): Any? {
-            return next(NO_KEY, classRef, typeRef)
-        }
-
-        override fun next(key: String, classRef: KClass<*>, typeRef: KType): Any? {
             if (typeRef.isMarkedNullable) return null
 
-            return typeMap.get(classRef, key)?.invoke(this)
+            return typeMap[classRef]?.invoke(this)
                 ?: resolver.resolve(classRef, typeRef)
         }
     }
@@ -73,21 +51,9 @@ inline fun <reified T : Any> Fixture.register(noinline providerFunction: Provide
     register(T::class, providerFunction)
 }
 
-inline fun <reified T : Any> Fixture.register(
-    key: String,
-    noinline providerFunction: (Fixture) -> T
-) {
-    register(T::class, key, providerFunction)
-}
-
 inline fun <reified T : Any> Fixture.next(): T {
     val kType = getKType<T>()
     return next(T::class, kType) as T
-}
-
-inline fun <reified T : Any> Fixture.next(key: String): T {
-    val kType = getKType<T>()
-    return next(key, T::class, kType) as T
 }
 
 inline fun <reified T : Any> Fixture.nextListOf(size: Int): List<T> = List(size) {
