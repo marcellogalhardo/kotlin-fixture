@@ -1,7 +1,7 @@
 package com.marcellogalhardo.fixture.resolver.type
 
+import com.marcellogalhardo.fixture.FixtureBuilder
 import com.marcellogalhardo.fixture.resolver.FixtureTypeResolver
-import com.marcellogalhardo.fixture.NextFunction
 import java.lang.reflect.Method
 import java.lang.reflect.Proxy
 import kotlin.reflect.KClass
@@ -10,7 +10,7 @@ import kotlin.reflect.jvm.jvmErasure
 import kotlin.reflect.jvm.kotlinFunction
 
 internal class InterfaceTypeResolver(
-    private val nextFunction: NextFunction
+    private val builder: FixtureBuilder
 ) : FixtureTypeResolver {
 
     override fun resolve(classRef: KClass<*>, typeRef: KType): Any? {
@@ -25,7 +25,7 @@ internal class InterfaceTypeResolver(
                     ?.jvmErasure
                     ?: return@newProxyInstance null
 
-                nextFunction(methodReturnType, typeRef)
+                builder.next(methodReturnType, typeRef)
             }
         }
         return null

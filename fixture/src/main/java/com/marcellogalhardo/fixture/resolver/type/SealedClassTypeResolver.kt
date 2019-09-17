@@ -1,21 +1,21 @@
 package com.marcellogalhardo.fixture.resolver.type
 
-import com.marcellogalhardo.fixture.resolver.FixtureTypeResolver
-import com.marcellogalhardo.fixture.NextFunction
+import com.marcellogalhardo.fixture.FixtureBuilder
 import com.marcellogalhardo.fixture.SealedClassWithoutSubClassesException
+import com.marcellogalhardo.fixture.resolver.FixtureTypeResolver
 import kotlin.reflect.KClass
 import kotlin.reflect.KType
 
 internal class SealedClassTypeResolver(
-    private val nextFunction: NextFunction
+    private val builder: FixtureBuilder
 ) : FixtureTypeResolver {
 
     override fun resolve(classRef: KClass<*>, typeRef: KType): Any? {
         if (classRef.isSealed) {
             val sealedSubClass = classRef.sealedSubclasses.firstOrNull()
                 ?: throw SealedClassWithoutSubClassesException()
-            
-            return nextFunction(sealedSubClass, typeRef)
+
+            return builder.next(sealedSubClass, typeRef)
         }
         return null
     }

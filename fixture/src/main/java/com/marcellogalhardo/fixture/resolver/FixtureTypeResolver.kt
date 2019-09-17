@@ -1,8 +1,7 @@
 package com.marcellogalhardo.fixture.resolver
 
+import com.marcellogalhardo.fixture.FixtureBuilder
 import com.marcellogalhardo.fixture.FixtureConfigs
-import com.marcellogalhardo.fixture.FixtureRandom
-import com.marcellogalhardo.fixture.NextFunction
 import com.marcellogalhardo.fixture.linkedListOf
 import com.marcellogalhardo.fixture.resolver.type.*
 import kotlin.reflect.KClass
@@ -15,27 +14,26 @@ interface FixtureTypeResolver {
 
 @Suppress("FunctionName")
 fun FixtureTypeResolver(
-    configs: FixtureConfigs,
-    random: FixtureRandom,
-    nextFunction: NextFunction
+    builder: FixtureBuilder,
+    configs: FixtureConfigs
 ): FixtureTypeResolver {
-    val paramResolver = FixtureParamResolver(nextFunction)
+    val paramResolver = FixtureParamResolver(builder)
     val typeResolvers = linkedListOf(
-        StandardTypeResolver(random),
+        StandardTypeResolver(builder),
         CollectionTypeResolver(
             configs,
-            random,
+            builder,
             paramResolver
         ),
         MapTypeResolver(
             configs,
-            random,
+            builder,
             paramResolver
         ),
         AbstractClassTypeResolver(),
-        InterfaceTypeResolver(nextFunction),
+        InterfaceTypeResolver(builder),
         ObjectTypeResolver(),
-        SealedClassTypeResolver(nextFunction),
+        SealedClassTypeResolver(builder),
         ClassTypeResolver(paramResolver)
     )
     return CompositeTypeResolver(typeResolvers)

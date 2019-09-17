@@ -1,5 +1,6 @@
 package com.marcellogalhardo.fixture.resolver
 
+import com.marcellogalhardo.fixture.FixtureBuilder
 import com.marcellogalhardo.fixture.NextFunction
 import com.marcellogalhardo.fixture.linkedListOf
 import com.marcellogalhardo.fixture.resolver.param.ClassParamResolver
@@ -14,10 +15,10 @@ interface FixtureParamResolver {
 }
 
 @Suppress("FunctionName")
-fun FixtureParamResolver(nextFunction: NextFunction): FixtureParamResolver {
+fun FixtureParamResolver(builder: FixtureBuilder): FixtureParamResolver {
     val paramResolvers = linkedListOf(
-        ClassParamResolver(nextFunction),
-        TypeParamResolver(nextFunction)
+        ClassParamResolver(builder),
+        TypeParamResolver(builder)
     )
     return CompositeParamResolver(paramResolvers)
 }
