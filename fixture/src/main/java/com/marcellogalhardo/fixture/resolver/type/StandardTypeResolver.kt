@@ -1,7 +1,7 @@
-package com.marcellogalhardo.fixture.resolver
+package com.marcellogalhardo.fixture.resolver.type
 
 import com.marcellogalhardo.fixture.FixtureRandom
-import com.marcellogalhardo.fixture.FixtureTypeResolver
+import com.marcellogalhardo.fixture.resolver.FixtureTypeResolver
 import kotlin.reflect.KClass
 import kotlin.reflect.KType
 

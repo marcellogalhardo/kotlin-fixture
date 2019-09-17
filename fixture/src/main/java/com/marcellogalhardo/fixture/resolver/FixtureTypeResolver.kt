@@ -1,4 +1,4 @@
-package com.marcellogalhardo.fixture
+package com.marcellogalhardo.fixture.resolver
 
 import kotlin.reflect.KClass
 import kotlin.reflect.KType

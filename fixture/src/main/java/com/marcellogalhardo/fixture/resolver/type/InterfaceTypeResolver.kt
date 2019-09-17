@@ -1,6 +1,6 @@
-package com.marcellogalhardo.fixture.resolver
+package com.marcellogalhardo.fixture.resolver.type
 
-import com.marcellogalhardo.fixture.FixtureTypeResolver
+import com.marcellogalhardo.fixture.resolver.FixtureTypeResolver
 import com.marcellogalhardo.fixture.NextFunction
 import java.lang.reflect.Method
 import java.lang.reflect.Proxy

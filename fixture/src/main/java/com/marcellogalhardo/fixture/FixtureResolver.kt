@@ -1,6 +1,8 @@
 package com.marcellogalhardo.fixture
 
-import com.marcellogalhardo.fixture.resolver.*
+import com.marcellogalhardo.fixture.resolver.FixtureParamResolver
+import com.marcellogalhardo.fixture.resolver.FixtureTypeResolver
+import com.marcellogalhardo.fixture.resolver.type.*
 import kotlin.reflect.KClass
 import kotlin.reflect.KType
 
@@ -11,8 +13,16 @@ class FixtureResolver(
     private val fixtureParamResolver: FixtureParamResolver = FixtureParamResolver(nextFunction),
     private val resolvers: List<FixtureTypeResolver> = listOf(
         StandardTypeResolver(fixtureRandom),
-        CollectionTypeResolver(fixtureConfigs, fixtureRandom, fixtureParamResolver),
-        MapTypeResolver(fixtureConfigs, fixtureRandom, fixtureParamResolver),
+        CollectionTypeResolver(
+            fixtureConfigs,
+            fixtureRandom,
+            fixtureParamResolver
+        ),
+        MapTypeResolver(
+            fixtureConfigs,
+            fixtureRandom,
+            fixtureParamResolver
+        ),
         AbstractClassTypeResolver(),
         InterfaceTypeResolver(nextFunction),
         ObjectTypeResolver(),
