@@ -1,7 +1,6 @@
 package com.marcellogalhardo.fixture.provider
 
 import com.marcellogalhardo.fixture.FixtureRandom
-import com.marcellogalhardo.fixture.NextFunction
 import com.marcellogalhardo.fixture.external.getKType
 import java.lang.reflect.Method
 import java.lang.reflect.Proxy
@@ -12,6 +11,8 @@ import kotlin.reflect.KVisibility
 import kotlin.reflect.full.createInstance
 import kotlin.reflect.jvm.jvmErasure
 import kotlin.reflect.jvm.kotlinFunction
+
+internal typealias NextFunction = (classRef: KClass<*>, type: KType) -> Any?
 
 @Deprecated(
     message = "Replaced by FixtureResolver."

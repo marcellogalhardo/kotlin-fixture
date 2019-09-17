@@ -1,7 +1,6 @@
 package com.marcellogalhardo.fixture.resolver
 
 import com.marcellogalhardo.fixture.FixtureBuilder
-import com.marcellogalhardo.fixture.NextFunction
 import com.marcellogalhardo.fixture.linkedListOf
 import com.marcellogalhardo.fixture.resolver.param.ClassParamResolver
 import com.marcellogalhardo.fixture.resolver.param.CompositeParamResolver
