@@ -1,6 +1,7 @@
 package com.marcellogalhardo.fixture
 
 import com.marcellogalhardo.fixture.external.getKType
+import com.marcellogalhardo.fixture.resolver.FixtureTypeResolver
 import kotlin.reflect.KClass
 import kotlin.reflect.KType
 
@@ -15,13 +16,17 @@ interface Fixture : FixtureRandom {
     fun next(classRef: KClass<*>, typeRef: KType): Any?
 
     class Default internal constructor(
-        fixtureConfigs: FixtureConfigs,
-        private val fixtureRandom: FixtureRandom = FixtureRandom()
-    ) : Fixture, FixtureRandom by fixtureRandom {
-
-        private val resolver = FixtureResolver(::next, fixtureConfigs, fixtureRandom)
+        configs: FixtureConfigs,
+        private val random: FixtureRandom = FixtureRandom()
+    ) : Fixture, FixtureRandom by random {
 
         private val typeMap: HashMap<KClass<*>, ProviderFunction<*>> = hashMapOf()
+
+        private val typeResolver: FixtureTypeResolver = FixtureTypeResolver(
+            configs,
+            random,
+            ::next
+        )
 
         override fun <T : Any> register(
             classRef: KClass<T>,
@@ -34,7 +39,7 @@ interface Fixture : FixtureRandom {
             if (typeRef.isMarkedNullable) return null
 
             return typeMap[classRef]?.invoke(this)
-                ?: resolver.resolve(classRef, typeRef)
+                ?: typeResolver.resolve(classRef, typeRef)
         }
     }
 

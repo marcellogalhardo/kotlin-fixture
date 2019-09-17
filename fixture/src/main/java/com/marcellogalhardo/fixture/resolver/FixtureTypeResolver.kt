@@ -17,9 +17,9 @@ interface FixtureTypeResolver {
 fun FixtureTypeResolver(
     configs: FixtureConfigs,
     random: FixtureRandom,
-    paramResolver: FixtureParamResolver,
     nextFunction: NextFunction
 ): FixtureTypeResolver {
+    val paramResolver = FixtureParamResolver(nextFunction)
     val typeResolvers = linkedListOf(
         StandardTypeResolver(random),
         CollectionTypeResolver(
