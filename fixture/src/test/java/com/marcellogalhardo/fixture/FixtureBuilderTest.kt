@@ -62,6 +62,17 @@ class FixtureBuilderTest {
     }
 
     @Test
+    fun next_shouldReturnRandom_whenGivenClassWithGenerics() {
+        val result = sut.next<TestClassWithGenerics<String>>()
+
+        assertThat(result)
+            .isInstanceOf(TestClassWithGenerics::class.java)
+
+        assertThat(result.testParam)
+            .isInstanceOf(String::class.java)
+    }
+
+    @Test
     fun next_shouldReturnRandom_whenGivenDataClass() {
         val result = sut.next<TestDataClass>()
 

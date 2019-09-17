@@ -24,6 +24,10 @@ internal sealed class TestSealedClassWithoutSubClasses
 
 internal class TestClass
 
+internal class TestClassWithGenerics<T> constructor(
+    val testParam: T
+)
+
 internal class TestClassWithPrivateConstructor private constructor()
 
 internal data class TestDataClass(private val id: Int)
