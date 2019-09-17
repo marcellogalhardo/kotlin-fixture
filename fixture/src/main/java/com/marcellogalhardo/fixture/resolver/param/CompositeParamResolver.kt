@@ -2,17 +2,21 @@ package com.marcellogalhardo.fixture.resolver.param
 
 import com.marcellogalhardo.fixture.ClassifierNotSupportedException
 import com.marcellogalhardo.fixture.resolver.FixtureParamResolver
+import java.util.*
 import kotlin.reflect.KClass
 import kotlin.reflect.KType
 
 class CompositeParamResolver(
-    private val classParamResolver: ClassParamResolver,
-    private val typeParamResolver: TypeParamResolver
+    private val resolvers: LinkedList<FixtureParamResolver>
 ) : FixtureParamResolver {
 
     override fun resolve(classRef: KClass<*>, classType: KType, paramType: KType): Any? {
-        return classParamResolver.resolve(classRef, classType, paramType)
-            ?: typeParamResolver.resolve(classRef, classType, paramType)
-            ?: throw ClassifierNotSupportedException(paramType.classifier)
+        for (resolver in resolvers) {
+            val instance = resolver.resolve(classRef, classType, paramType)
+            if (instance != null) {
+                return instance
+            }
+        }
+        throw ClassifierNotSupportedException(paramType.classifier)
     }
 }

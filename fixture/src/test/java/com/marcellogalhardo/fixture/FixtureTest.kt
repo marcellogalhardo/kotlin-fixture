@@ -189,7 +189,7 @@ class FixtureTest {
         }
 
         assertThat(error)
-            .isInstanceOf(NoUsableConstructor::class.java)
+            .isInstanceOf(TypeNotSupportedException::class.java)
     }
 
     @Test
