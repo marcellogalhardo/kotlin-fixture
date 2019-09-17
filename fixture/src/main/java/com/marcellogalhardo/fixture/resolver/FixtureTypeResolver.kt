@@ -26,7 +26,7 @@ fun FixtureTypeResolver(
         IntTypeResolver(builder),
         LongTypeResolver(builder),
         StringTypeResolver(builder),
-        CollectionTypeResolver(
+        ListTypeResolver(
             builder,
             configs,
             paramResolver
