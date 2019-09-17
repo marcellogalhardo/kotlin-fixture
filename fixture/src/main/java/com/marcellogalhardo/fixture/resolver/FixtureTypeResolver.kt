@@ -19,15 +19,21 @@ fun FixtureTypeResolver(
 ): FixtureTypeResolver {
     val paramResolver = FixtureParamResolver(builder)
     val typeResolvers = linkedListOf(
-        StandardTypeResolver(builder),
+        BooleanTypeResolver(builder),
+        CharTypeResolver(builder),
+        DoubleTypeResolver(builder),
+        FloatTypeResolver(builder),
+        IntTypeResolver(builder),
+        LongTypeResolver(builder),
+        StringTypeResolver(builder),
         CollectionTypeResolver(
-            configs,
             builder,
+            configs,
             paramResolver
         ),
         MapTypeResolver(
-            configs,
             builder,
+            configs,
             paramResolver
         ),
         AbstractClassTypeResolver(),

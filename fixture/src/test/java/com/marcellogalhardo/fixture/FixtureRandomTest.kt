@@ -6,18 +6,6 @@ import org.junit.Test
 class FixtureRandomTest {
 
     @Test
-    fun nextAny_returnsRandom() {
-        val sut = FixtureRandom()
-
-        val result = sut.nextAny()
-
-        assertThat(result).apply {
-            isNotNull()
-            isInstanceOf(Any::class.javaObjectType)
-        }
-    }
-
-    @Test
     fun nextBoolean_returnsRandom() {
         val sut = FixtureRandom()
 

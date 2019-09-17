@@ -8,8 +8,8 @@ import kotlin.reflect.KClass
 import kotlin.reflect.KType
 
 internal class CollectionTypeResolver(
-    private val configs: FixtureConfigs,
     private val random: FixtureRandom,
+    private val configs: FixtureConfigs,
     private val paramResolver: FixtureParamResolver
 ) : FixtureTypeResolver {
 

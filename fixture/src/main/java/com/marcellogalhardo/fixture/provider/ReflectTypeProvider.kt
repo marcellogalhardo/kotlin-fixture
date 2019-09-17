@@ -83,7 +83,6 @@ class ReflectTypeProvider(
     }
 
     private fun nextStandardOrNull(classRef: KClass<*>, type: KType): Any? = when (classRef) {
-        Any::class -> fixtureRandom.nextAny()
         Boolean::class -> fixtureRandom.nextBoolean()
         Char::class -> fixtureRandom.nextChar()
         Double::class -> fixtureRandom.nextDouble()

@@ -8,8 +8,8 @@ import kotlin.reflect.KClass
 import kotlin.reflect.KType
 
 internal class MapTypeResolver(
-    private val fixtureConfigs: FixtureConfigs,
     private val fixtureRandom: FixtureRandom,
+    private val fixtureConfigs: FixtureConfigs,
     private val fixtureParamResolver: FixtureParamResolver
 ) : FixtureTypeResolver {
 
