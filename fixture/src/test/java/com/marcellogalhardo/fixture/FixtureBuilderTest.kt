@@ -3,14 +3,21 @@
 package com.marcellogalhardo.fixture
 
 import com.google.common.truth.Truth.assertThat
+import com.marcellogalhardo.fixture.utils.*
+import org.junit.Before
 import org.junit.Test
 
-class FixtureTest {
+class FixtureBuilderTest {
+
+    private lateinit var sut: FixtureBuilder
+
+    @Before
+    fun setup() {
+        sut = Fixture()
+    }
 
     @Test
-    fun nextOf_createsObjectType() {
-        val sut = Fixture()
-
+    fun next_shouldReturnRandom_whenGivenObject() {
         val result = sut.next<TestObject>()
 
         assertThat(result)
@@ -18,9 +25,7 @@ class FixtureTest {
     }
 
     @Test
-    fun nextOf_createsInterface() {
-        val sut = Fixture()
-
+    fun next_shouldReturnRandom_whenGivenInterface() {
         val result = sut.next<TestInterface>()
 
         assertThat(result)
@@ -28,19 +33,28 @@ class FixtureTest {
     }
 
     @Test
-    fun nextOf_createsSealedClassWithAtLeastOneSubClass() {
-        val sut = Fixture()
-
-        val result = sut.next<TestSealedClass>()
+    fun next_shouldReturnRandom_whenGivenSealedClass_withAtLeastOneSubclass() {
+        val result = sut.next<TestSealedClassWithSubClasses>()
 
         assertThat(result)
-            .isInstanceOf(TestSealedClass::class.java)
+            .isInstanceOf(TestSealedClassWithSubClasses::class.java)
     }
 
     @Test
-    fun nextOf_createsClass() {
-        val sut = Fixture()
+    fun next_shouldThrow_whenGivenSealedClass_withoutSubClasses() {
+        var error: Throwable? = null
+        try {
+            sut.next<TestSealedClassWithoutSubClasses>()
+        } catch (ex: Throwable) {
+            error = ex
+        }
 
+        assertThat(error)
+            .isInstanceOf(SealedClassWithoutSubClassesException::class.java)
+    }
+
+    @Test
+    fun next_shouldReturnRandom_whenGivenClass() {
         val result = sut.next<TestClass>()
 
         assertThat(result)
@@ -48,9 +62,7 @@ class FixtureTest {
     }
 
     @Test
-    fun nextOf_createsDataClass() {
-        val sut = Fixture()
-
+    fun next_shouldReturnRandom_whenGivenDataClass() {
         val result = sut.next<TestDataClass>()
 
         assertThat(result)
@@ -58,9 +70,7 @@ class FixtureTest {
     }
 
     @Test
-    fun nextOf_createsBoolean() {
-        val sut = Fixture()
-
+    fun next_shouldReturnRandom_whenGivenBoolean() {
         val result = sut.next<Boolean>()
 
         assertThat(result)
@@ -68,9 +78,7 @@ class FixtureTest {
     }
 
     @Test
-    fun nextOf_createsChar() {
-        val sut = Fixture()
-
+    fun next_shouldReturnRandom_whenGivenChar() {
         val result = sut.next<Char>()
 
         assertThat(result)
@@ -78,9 +86,7 @@ class FixtureTest {
     }
 
     @Test
-    fun nextOf_createsDouble() {
-        val sut = Fixture()
-
+    fun next_shouldReturnRandom_whenGivenDouble() {
         val result = sut.next<Double>()
 
         assertThat(result)
@@ -88,9 +94,7 @@ class FixtureTest {
     }
 
     @Test
-    fun nextOf_createsFloat() {
-        val sut = Fixture()
-
+    fun next_shouldReturnRandom_whenGivenFloat() {
         val result = sut.next<Float>()
 
         assertThat(result)
@@ -98,9 +102,7 @@ class FixtureTest {
     }
 
     @Test
-    fun nextOf_createsInt() {
-        val sut = Fixture()
-
+    fun next_shouldReturnRandom_whenGivenInt() {
         val result = sut.next<Int>()
 
         assertThat(result)
@@ -108,9 +110,7 @@ class FixtureTest {
     }
 
     @Test
-    fun nextOf_createsLong() {
-        val sut = Fixture()
-
+    fun next_shouldReturnRandom_whenGivenLong() {
         val result = sut.next<Long>()
 
         assertThat(result)
@@ -118,9 +118,7 @@ class FixtureTest {
     }
 
     @Test
-    fun nextOf_createsString() {
-        val sut = Fixture()
-
+    fun next_shouldReturnRandom_whenGivenString() {
         val result = sut.next<String>()
 
         assertThat(result)
@@ -128,9 +126,7 @@ class FixtureTest {
     }
 
     @Test
-    fun nextOf_createsClassWithObjectParam() {
-        val sut = Fixture()
-
+    fun next_shouldReturnRandom_whenGivenClass_withObjectParam() {
         val result = sut.next<TestClassWithObjectParam>()
 
         assertThat(result)
@@ -138,9 +134,7 @@ class FixtureTest {
     }
 
     @Test
-    fun nextOf_createsClassWithInterfaceParam() {
-        val sut = Fixture()
-
+    fun next_shouldReturnRandom_whenGivenClass_withInterfaceParam() {
         val result = sut.next<TestClassWithInterfaceParam>()
 
         assertThat(result)
@@ -148,9 +142,7 @@ class FixtureTest {
     }
 
     @Test
-    fun nextOf_createsClassWithSealedClassParam() {
-        val sut = Fixture()
-
+    fun next_shouldReturnRandom_whenGivenClass_withSealedClassParam() {
         val result = sut.next<TestClassWithSealedClassParam>()
 
         assertThat(result)
@@ -158,9 +150,7 @@ class FixtureTest {
     }
 
     @Test
-    fun nextOf_createsClassWithClassParam() {
-        val sut = Fixture()
-
+    fun next_shouldReturnRandom_whenGivenClass_withClassParam() {
         val result = sut.next<TestClassWithClassParam>()
 
         assertThat(result)
@@ -168,9 +158,7 @@ class FixtureTest {
     }
 
     @Test
-    fun nextOf_createsClassWithDataClassParam() {
-        val sut = Fixture()
-
+    fun next_shouldReturnRandom_whenGivenClass_withDataClassParam() {
         val result = sut.next<TestClassWithDataClassParam>()
 
         assertThat(result)
@@ -178,9 +166,7 @@ class FixtureTest {
     }
 
     @Test
-    fun nextOf_throwsNoUsableConstructor() {
-        val sut = Fixture()
-
+    fun next_shouldThrow_whenGivenClass_withoutConstructors() {
         var error: Throwable? = null
         try {
             sut.next<TestClassWithPrivateConstructor>()
@@ -193,9 +179,7 @@ class FixtureTest {
     }
 
     @Test
-    fun nextOf_createsAbstractClass_throwsException() {
-        val sut = Fixture()
-
+    fun next_shouldThrow_whenGivenAbstractClass() {
         var error: Throwable? = null
         try {
             sut.next<TestAbstractClass>()

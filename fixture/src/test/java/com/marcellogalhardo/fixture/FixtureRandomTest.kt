@@ -6,7 +6,7 @@ import org.junit.Test
 class FixtureRandomTest {
 
     @Test
-    fun nextBoolean_returnsRandom() {
+    fun nextBoolean_shouldReturnRandom() {
         val sut = FixtureRandom()
 
         val result = sut.nextBoolean()
@@ -18,7 +18,7 @@ class FixtureRandomTest {
     }
 
     @Test
-    fun nextChar_returnsRandom() {
+    fun nextChar_shouldReturnRandom() {
         val sut = FixtureRandom()
 
         val result = sut.nextChar()
@@ -30,7 +30,7 @@ class FixtureRandomTest {
     }
 
     @Test
-    fun nextDouble_returnsRandom() {
+    fun nextDouble_shouldReturnRandom() {
         val sut = FixtureRandom()
 
         val result = sut.nextDouble()
@@ -42,7 +42,7 @@ class FixtureRandomTest {
     }
 
     @Test
-    fun nextDouble_withUntil_returnsRandom() {
+    fun nextDouble_shouldReturnRandom_whenGivenUntil() {
         val sut = FixtureRandom()
 
         val result = sut.nextDouble(5.0)
@@ -55,7 +55,7 @@ class FixtureRandomTest {
     }
 
     @Test
-    fun nextDouble_withFromUntil_returnsRandom() {
+    fun nextDouble_shouldReturnRandom_whenGivenFromAndUntil() {
         val sut = FixtureRandom()
 
         val result = sut.nextDouble(0.0, 5.0)
@@ -69,7 +69,7 @@ class FixtureRandomTest {
     }
 
     @Test
-    fun nextFloat_returnsRandom() {
+    fun nextFloat_shouldReturnRandom() {
         val sut = FixtureRandom()
 
         val result = sut.nextFloat()
@@ -81,7 +81,7 @@ class FixtureRandomTest {
     }
 
     @Test
-    fun nextInt_returnsRandom() {
+    fun nextInt_shouldReturnRandom() {
         val sut = FixtureRandom()
 
         val result = sut.nextInt()
@@ -93,7 +93,7 @@ class FixtureRandomTest {
     }
 
     @Test
-    fun nextInt_withUntil_returnsRandom() {
+    fun nextInt_shouldReturnRandom_whenGivenUntil() {
         val sut = FixtureRandom()
 
         val result = sut.nextInt(5)
@@ -106,7 +106,7 @@ class FixtureRandomTest {
     }
 
     @Test
-    fun nextInt_withFromUntil_returnsRandom() {
+    fun nextInt_shouldReturnRandom_whenGivenFromAndUntil() {
         val sut = FixtureRandom()
 
         val result = sut.nextInt(0, 5)
@@ -120,7 +120,7 @@ class FixtureRandomTest {
     }
 
     @Test
-    fun nextInt_withIntRange_returnsRandom() {
+    fun nextInt_shouldReturnRandom_whenGivenRange() {
         val sut = FixtureRandom()
 
         val result = sut.nextInt(0..5)
@@ -134,7 +134,7 @@ class FixtureRandomTest {
     }
 
     @Test
-    fun nextLong_returnsRandom() {
+    fun nextLong_shouldReturnRandom() {
         val sut = FixtureRandom()
 
         val result = sut.nextLong()
@@ -147,7 +147,7 @@ class FixtureRandomTest {
 
 
     @Test
-    fun nextLong_withUntil_returnsRandom() {
+    fun nextLong_shouldReturnRandom_whenGivenUntil() {
         val sut = FixtureRandom()
 
         val result = sut.nextLong(5)
@@ -160,7 +160,7 @@ class FixtureRandomTest {
     }
 
     @Test
-    fun nextLong_withFromUntil_returnsRandom() {
+    fun nextLong_shouldReturnRandom_whenGivenFromAndUntil() {
         val sut = FixtureRandom()
 
         val result = sut.nextLong(0, 5)
@@ -174,7 +174,7 @@ class FixtureRandomTest {
     }
 
     @Test
-    fun nextLong_withIntRange_returnsRandom() {
+    fun nextLong_shouldReturnRandom_whenGivenIntRange() {
         val sut = FixtureRandom()
 
         val result = sut.nextLong(0..5)
@@ -188,7 +188,7 @@ class FixtureRandomTest {
     }
 
     @Test
-    fun nextLong_withLongRange_returnsRandom() {
+    fun nextLong_shouldReturnRandom_whenGivenLongRange() {
         val sut = FixtureRandom()
 
         val result = sut.nextLong(0.toLong()..5.toLong())
@@ -202,7 +202,7 @@ class FixtureRandomTest {
     }
 
     @Test
-    fun nextString_returnsRandom() {
+    fun nextString_shouldReturnRandom() {
         val sut = FixtureRandom()
 
         val result = sut.nextString()
@@ -215,7 +215,7 @@ class FixtureRandomTest {
     }
 
     @Test
-    fun nextString_withPrefix_returnsRandom() {
+    fun nextString_shouldReturnRandom_whenGivenPrefix() {
         val sut = FixtureRandom()
 
         val result = sut.nextString("prefix")

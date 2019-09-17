@@ -22,11 +22,9 @@ open class SuperTypeTokenHolder<T>
 fun SuperTypeTokenHolder<*>.getKTypeImpl(): KType =
     javaClass.genericSuperclass.toKType().arguments.single().type!!
 
-fun KClass<*>.toInvariantFlexibleProjection(
+private fun KClass<*>.toInvariantFlexibleProjection(
     arguments: List<KTypeProjection> = emptyList()
 ): KTypeProjection {
-    // TODO: there should be an API in kotlin-reflect which creates KType instances corresponding to flexible types
-    // Currently we always produce a non-null type, which is obviously wrong
     val args = if (java.isArray) {
         listOf(java.componentType.kotlin.toInvariantFlexibleProjection())
     } else {
@@ -35,9 +33,8 @@ fun KClass<*>.toInvariantFlexibleProjection(
     return KTypeProjection.invariant(createType(args, nullable = false))
 }
 
-fun Type.toKTypeProjection(): KTypeProjection = when (this) {
+private fun Type.toKTypeProjection(): KTypeProjection = when (this) {
     is Class<*> -> this.kotlin.toInvariantFlexibleProjection()
-//    is Class<*> -> this.kotlin.toInvariantFlexibleProjection(if(this.isArray) listOf(this.componentType.toKTypeProjection()) else emptyList())
     is ParameterizedType -> {
         val erasure = (rawType as Class<*>).kotlin
         erasure.toInvariantFlexibleProjection((erasure.typeParameters.zip(actualTypeArguments).map { (parameter, argument) ->
@@ -54,19 +51,13 @@ fun Type.toKTypeProjection(): KTypeProjection = when (this) {
         // This looks impossible to obtain through Java reflection API, but someone may construct and pass such an instance here anyway
         else -> KTypeProjection.STAR
     }
-    is GenericArrayType -> Array<Any>::class.toInvariantFlexibleProjection(listOf(genericComponentType.toKTypeProjection()))
+    is GenericArrayType -> Array<Any>::class.toInvariantFlexibleProjection(
+        listOf(
+            genericComponentType.toKTypeProjection()
+        )
+    )
     is TypeVariable<*> -> TODO() // TODO
     else -> throw IllegalArgumentException("Unsupported type: $this")
 }
 
-fun Type.toKType(): KType = toKTypeProjection().type!!
-
-// --- Usage example ---
-
-fun main(args: Array<String>) {
-    println(getKType<List<Map<String, Array<Double>>>>())
-    println(getKType<List<*>>())
-    println(getKType<Array<*>>())
-    println(getKType<Array<Array<String>>>())
-    println(getKType<Unit>())
-}
+private fun Type.toKType(): KType = toKTypeProjection().type!!

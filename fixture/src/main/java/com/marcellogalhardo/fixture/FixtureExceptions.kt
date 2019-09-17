@@ -14,7 +14,5 @@ class TypeNotSupportedException(classRef: KClass<*>) :
 class ClassifierNotSupportedException(classifier: KClassifier?) :
     FixtureException("Type of the classifier $classifier is not supported")
 
-class NoUsableConstructor : FixtureException("No usable constructor")
-
 class SealedClassWithoutSubClassesException :
     FixtureException("Sealed class without subclasses are not supported")

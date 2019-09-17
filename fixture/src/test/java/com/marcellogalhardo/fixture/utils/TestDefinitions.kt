@@ -1,10 +1,10 @@
-package com.marcellogalhardo.fixture
+package com.marcellogalhardo.fixture.utils
 
 internal class TestClassWithObjectParam(private val testParam: TestObject)
 
 internal class TestClassWithInterfaceParam(private val testParam: TestInterface)
 
-internal class TestClassWithSealedClassParam(private val testParam: TestSealedClass)
+internal class TestClassWithSealedClassParam(private val testParam: TestSealedClassWithSubClasses)
 
 internal class TestClassWithClassParam(private val testParam: TestClass)
 
@@ -16,9 +16,11 @@ internal interface TestInterface
 
 internal abstract class TestAbstractClass
 
-internal sealed class TestSealedClass {
-    object TestSubClass : TestSealedClass()
+internal sealed class TestSealedClassWithSubClasses {
+    object TestSubClass : TestSealedClassWithSubClasses()
 }
+
+internal sealed class TestSealedClassWithoutSubClasses
 
 internal class TestClass
 
