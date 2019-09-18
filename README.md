@@ -23,11 +23,11 @@ allprojects {
 **Step 2.** Add the dependency
 ```gradle
 dependencies {
-	testImplementation 'com.github.marcellogalhardo:Fixture:x.y.z'
-	androidTestImplementation 'com.github.marcellogalhardo:Fixture:x.y.z'
+	testImplementation 'com.github.marcellogalhardo:kotlin-fixture:{Tag}'
+	androidTestImplementation 'com.github.marcellogalhardo:kotlin-fixture:{Tag}'
 }
 ```
-(Please replace x.y.z with the [latest version numbers](https://github.com/marcellogalhardo/kotlin-fixture/releases))
+(Please replace `{Tag}` with the [latest version numbers](https://github.com/marcellogalhardo/kotlin-fixture/releases))
 
 That's it!
 
