@@ -129,7 +129,7 @@ var person = fixture.next<Person>().copy(name = "Marcello Galhardo")
 - Sample result: 
   - Person:
     - Name: `Marcello Galhardo`
-    - Age: `int: 25`
+    - Age: `Int: 25`
 
 ### Replaced Default Algorithm
 
@@ -137,7 +137,7 @@ var person = fixture.next<Person>().copy(name = "Marcello Galhardo")
 fixture.register<String> { "Marcello Galhardo" }
 val result = fixture.next<String>()
 ```
-- Sample result: `string: "Marcello Galhardo"`
+- Sample result: `String: "Marcello Galhardo"`
 
 
 #### Abstract Types
