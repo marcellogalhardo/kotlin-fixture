@@ -33,6 +33,8 @@ That's it!
 
 **Warning:** This library does work outside tests but it was not design for it. Use it at your own risk.
 
+**Disclaimer:** This library will be migrated to [Maven Central](https://search.maven.org/) as soon as it moves out of experimental status.
+
 ## Overview
 
 Kotlin.Fixture is designed to make Test-Driven Development more productive and unit tests more refactoring-safe. It does so by removing the need for hand-coding anonymous variables as part of a test's Fixture Setup phase. 
