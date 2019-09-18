@@ -1,31 +1,29 @@
 package com.marcellogalhardo.fixture.resolver.type
 
 import com.marcellogalhardo.fixture.FixtureConfigs
+import com.marcellogalhardo.fixture.FixtureContext
 import com.marcellogalhardo.fixture.FixtureRandom
-import com.marcellogalhardo.fixture.resolver.FixtureParamResolver
-import com.marcellogalhardo.fixture.resolver.FixtureTypeResolver
-import kotlin.reflect.KClass
-import kotlin.reflect.KType
+import com.marcellogalhardo.fixture.FixtureResolver
 
 internal class MapTypeResolver(
-    private val fixtureRandom: FixtureRandom,
-    private val fixtureConfigs: FixtureConfigs,
-    private val fixtureParamResolver: FixtureParamResolver
-) : FixtureTypeResolver {
+    private val random: FixtureRandom,
+    private val configs: FixtureConfigs,
+    private val resolver: FixtureResolver
+) : FixtureResolver.Type {
 
-    override fun resolve(classRef: KClass<*>, typeRef: KType): Any? {
+    override fun resolveType(context: FixtureContext.Type): Any? = context.run {
         return when (classRef) {
             Map::class -> {
-                val size = fixtureRandom.nextInt(fixtureConfigs.collectionRange)
+                val size = random.nextInt(configs.collectionRange)
 
-                val keyType = typeRef.arguments[0].type!!
-                val valType = typeRef.arguments[1].type!!
+                val keyType = classType.arguments[0].type!!
+                val valType = classType.arguments[1].type!!
 
                 val keys = List(size) {
-                    fixtureParamResolver.resolve(classRef, typeRef, keyType)
+                    resolver.resolve(classRef, classType, keyType)
                 }
                 val values = List(size) {
-                    fixtureParamResolver.resolve(classRef, typeRef, valType)
+                    resolver.resolve(classRef, classType, valType)
                 }
                 return keys.zip(values).toMap()
             }

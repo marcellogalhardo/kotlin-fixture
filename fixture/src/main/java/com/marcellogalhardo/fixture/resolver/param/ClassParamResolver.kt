@@ -1,17 +1,16 @@
 package com.marcellogalhardo.fixture.resolver.param
 
 import com.marcellogalhardo.fixture.FixtureBuilder
-import com.marcellogalhardo.fixture.resolver.FixtureParamResolver
+import com.marcellogalhardo.fixture.FixtureContext
+import com.marcellogalhardo.fixture.FixtureResolver
 import kotlin.reflect.KClass
-import kotlin.reflect.KType
 
 class ClassParamResolver(
     private val builder: FixtureBuilder
-) : FixtureParamResolver {
-
-    override fun resolve(classRef: KClass<*>, classType: KType, paramType: KType): Any? {
+) : FixtureResolver.Param {
+    override fun resolveParam(context: FixtureContext.Param): Any? = context.run {
         return when (val classifier = paramType.classifier) {
-            is KClass<*> -> builder.next(classifier, paramType)
+            is KClass<*> -> builder.next(classifier, context.paramType)
             else -> null
         }
     }

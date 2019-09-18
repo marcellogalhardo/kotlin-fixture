@@ -186,7 +186,7 @@ class FixtureBuilderTest {
         }
 
         assertThat(error)
-            .isInstanceOf(TypeNotSupportedException::class.java)
+            .isInstanceOf(ContextNotSupported::class.java)
     }
 
     @Test

@@ -1,6 +1,5 @@
 package com.marcellogalhardo.fixture
 
-import com.marcellogalhardo.fixture.resolver.FixtureTypeResolver
 import kotlin.reflect.KClass
 import kotlin.reflect.KType
 
@@ -13,7 +12,7 @@ class DefaultFixture internal constructor(
 
     private val customTypeMap: HashMap<KClass<*>, ProviderFunction<*>> = hashMapOf()
 
-    private val typeResolver: FixtureTypeResolver = FixtureTypeResolver(this, configs)
+    private val typeResolver: FixtureResolver = FixtureResolver(this, configs)
 
     override fun <T : Any> register(
         classRef: KClass<T>,

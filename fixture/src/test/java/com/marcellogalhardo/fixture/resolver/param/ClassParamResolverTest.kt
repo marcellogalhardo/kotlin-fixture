@@ -1,8 +1,8 @@
 package com.marcellogalhardo.fixture.resolver.param
 
 import com.google.common.truth.Truth.assertThat
+import com.marcellogalhardo.fixture.FixtureResolver
 import com.marcellogalhardo.fixture.register
-import com.marcellogalhardo.fixture.resolver.FixtureParamResolver
 import com.marcellogalhardo.fixture.utils.TestFixture
 import org.junit.Before
 import org.junit.Test
@@ -12,7 +12,7 @@ class ClassParamResolverTest {
 
     private lateinit var testFixture: TestFixture
 
-    private lateinit var sut: FixtureParamResolver
+    private lateinit var sut: FixtureResolver
 
     @Before
     fun setup() {

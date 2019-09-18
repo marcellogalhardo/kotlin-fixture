@@ -1,17 +1,16 @@
 package com.marcellogalhardo.fixture.resolver.type
 
+import com.marcellogalhardo.fixture.FixtureContext
 import com.marcellogalhardo.fixture.FixtureRandom
-import com.marcellogalhardo.fixture.resolver.FixtureTypeResolver
-import kotlin.reflect.KClass
-import kotlin.reflect.KType
+import com.marcellogalhardo.fixture.FixtureResolver
 
 internal class BooleanTypeResolver(
     private val random: FixtureRandom
-) : FixtureTypeResolver {
+) : FixtureResolver.Type {
 
-    override fun resolve(classRef: KClass<*>, typeRef: KType): Any? = random.run {
+    override fun resolveType(context: FixtureContext.Type): Any? = context.run {
         return when (classRef) {
-            Boolean::class -> nextBoolean()
+            Boolean::class -> random.nextBoolean()
             else -> null
         }
     }
