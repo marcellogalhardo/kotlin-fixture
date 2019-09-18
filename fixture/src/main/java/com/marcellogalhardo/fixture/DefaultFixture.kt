@@ -22,8 +22,6 @@ internal class DefaultFixture constructor(
     }
 
     override fun next(classRef: KClass<*>, classType: KType): Any? {
-        if (classType.isMarkedNullable) return null
-
         return customTypeMap[classRef]?.invoke(this)
             ?: typeResolver.resolve(classRef, classType)
     }
