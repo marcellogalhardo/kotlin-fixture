@@ -13,6 +13,7 @@ class TestFixture(
     var providerFunction: ProviderFunction<*>? = null
     var classRef: KClass<*>? = null
     var typeRef: KType? = null
+    var result: Any? = Any()
 
     override fun <T : Any> register(classRef: KClass<T>, providerFunction: ProviderFunction<T>) {
         this.providerFunction = providerFunction
@@ -21,7 +22,7 @@ class TestFixture(
     override fun next(classRef: KClass<*>, classType: KType): Any? {
         this.classRef = classRef
         this.typeRef = classType
-        return Any()
+        return result
     }
 
 }
