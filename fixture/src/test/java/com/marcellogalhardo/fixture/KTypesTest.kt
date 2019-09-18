@@ -1,9 +1,10 @@
-package com.marcellogalhardo.fixture.external
+package com.marcellogalhardo.fixture
 
 import com.google.common.truth.Truth.assertThat
+import com.marcellogalhardo.fixture.getKType
 import org.junit.Test
 
-class GetKTypeTest {
+class KTypesTest {
 
     @Test
     fun getKType_shouldKType_whenGivenListWith_withNestedTypes() {

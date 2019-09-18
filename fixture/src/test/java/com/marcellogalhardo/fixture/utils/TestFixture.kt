@@ -10,14 +10,18 @@ class TestFixture(
     private val random: FixtureRandom = FixtureRandom()
 ) : Fixture, FixtureRandom by random {
 
-    val map = hashMapOf<KClass<*>, ProviderFunction<*>>()
+    var providerFunction: ProviderFunction<*>? = null
+    var classRef: KClass<*>? = null
+    var typeRef: KType? = null
 
     override fun <T : Any> register(classRef: KClass<T>, providerFunction: ProviderFunction<T>) {
-        map[classRef] = providerFunction
+        this.providerFunction = providerFunction
     }
 
-    override fun next(classRef: KClass<*>, typeRef: KType): Any? {
-        return map[classRef]?.invoke(this)
+    override fun next(classRef: KClass<*>, classType: KType): Any? {
+        this.classRef = classRef
+        this.typeRef = classType
+        return Any()
     }
 
 }

@@ -5,7 +5,7 @@ import kotlin.reflect.KType
 
 internal typealias ProviderFunction<T> = (FixtureBuilder) -> T
 
-class DefaultFixture internal constructor(
+internal class DefaultFixture constructor(
     configs: FixtureConfigs,
     private val random: FixtureRandom = FixtureRandom()
 ) : Fixture, FixtureRandom by random {
@@ -21,10 +21,10 @@ class DefaultFixture internal constructor(
         customTypeMap[classRef] = providerFunction
     }
 
-    override fun next(classRef: KClass<*>, typeRef: KType): Any? {
-        if (typeRef.isMarkedNullable) return null
+    override fun next(classRef: KClass<*>, classType: KType): Any? {
+        if (classType.isMarkedNullable) return null
 
         return customTypeMap[classRef]?.invoke(this)
-            ?: typeResolver.resolve(classRef, typeRef)
+            ?: typeResolver.resolve(classRef, classType)
     }
 }

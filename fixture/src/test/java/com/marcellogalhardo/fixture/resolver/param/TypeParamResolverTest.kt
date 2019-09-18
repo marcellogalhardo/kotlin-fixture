@@ -12,7 +12,7 @@ import kotlin.reflect.KTypeProjection
 import kotlin.reflect.KVariance
 import kotlin.reflect.full.createType
 
-class ClassParamResolverTest {
+class TypeParamResolverTest {
 
     private lateinit var testFixture: TestFixture
 
@@ -21,7 +21,7 @@ class ClassParamResolverTest {
     @Before
     fun setup() {
         testFixture = TestFixture()
-        sut = ClassParamResolver(testFixture)
+        sut = TypeParamResolver(testFixture)
     }
 
     @Test
@@ -39,7 +39,7 @@ class ClassParamResolverTest {
         )
 
         assertThat(testFixture.classRef)
-            .isEqualTo(TestObject::class)
+            .isNull()
     }
 
     @Test
@@ -58,7 +58,7 @@ class ClassParamResolverTest {
         )
 
         assertThat(testFixture.classRef)
-            .isNull()
+            .isEqualTo(String::class)
     }
 
 }

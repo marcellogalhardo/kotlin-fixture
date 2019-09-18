@@ -201,4 +201,28 @@ class FixtureBuilderTest {
         assertThat(error)
             .isInstanceOf(AbstractClassNotSupportedException::class.java)
     }
+
+    @Test
+    fun nextListOf_shouldReturnRandomList() {
+        val result = sut.nextListOf<TestClass>()
+
+        assertThat(result).apply {
+            isInstanceOf(List::class.java)
+            isNotEmpty()
+        }
+        assertThat(result.first())
+            .isInstanceOf(TestClass::class.java)
+    }
+
+    @Test
+    fun nextListOf_shouldReturnRandomList_givenSize() {
+        val result = sut.nextListOf<TestClass>(5)
+
+        assertThat(result).apply {
+            isInstanceOf(List::class.java)
+            hasSize(5)
+        }
+        assertThat(result.first())
+            .isInstanceOf(TestClass::class.java)
+    }
 }

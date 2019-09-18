@@ -1,14 +1,14 @@
 package com.marcellogalhardo.fixture.utils
 
-internal class TestClassWithObjectParam(private val testParam: TestObject)
+internal class TestClassWithObjectParam(val testParam: TestObject)
 
-internal class TestClassWithInterfaceParam(private val testParam: TestInterface)
+internal class TestClassWithInterfaceParam(val testParam: TestInterface)
 
-internal class TestClassWithSealedClassParam(private val testParam: TestSealedClassWithSubClasses)
+internal class TestClassWithSealedClassParam(val testParam: TestSealedClassWithSubClasses)
 
-internal class TestClassWithClassParam(private val testParam: TestClass)
+internal class TestClassWithClassParam(val testParam: TestClass)
 
-internal class TestClassWithDataClassParam(private val testParam: TestDataClass)
+internal class TestClassWithDataClassParam(val testParam: TestDataClass)
 
 internal object TestObject
 
@@ -30,4 +30,4 @@ internal class TestClassWithGenerics<T> constructor(
 
 internal class TestClassWithPrivateConstructor private constructor()
 
-internal data class TestDataClass(private val id: Int)
+internal data class TestDataClass(val id: Int)

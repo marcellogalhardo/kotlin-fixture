@@ -3,7 +3,7 @@ package com.marcellogalhardo.fixture.resolver.param
 import com.marcellogalhardo.fixture.FixtureBuilder
 import com.marcellogalhardo.fixture.FixtureContext
 import com.marcellogalhardo.fixture.FixtureResolver
-import com.marcellogalhardo.fixture.external.getKType
+import com.marcellogalhardo.fixture.getKType
 import kotlin.reflect.KClass
 import kotlin.reflect.KTypeParameter
 

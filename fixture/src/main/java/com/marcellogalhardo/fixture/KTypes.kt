@@ -1,26 +1,29 @@
-package com.marcellogalhardo.fixture.external
+package com.marcellogalhardo.fixture
 
-import java.lang.reflect.*
+import java.lang.reflect.GenericArrayType
+import java.lang.reflect.ParameterizedType
+import java.lang.reflect.Type
+import java.lang.reflect.WildcardType
 import kotlin.reflect.KClass
 import kotlin.reflect.KType
 import kotlin.reflect.KTypeProjection
 import kotlin.reflect.KVariance
 import kotlin.reflect.full.createType
 
-// https://gist.github.com/udalov/bb6f398c2e643ee69586356fdd67e9b1
-
-// --- Interface ---
-
+/**
+ * Returns KType of an Reified.
+ * This code was taken from https://gist.github.com/udalov/bb6f398c2e643ee69586356fdd67e9b1
+ */
 inline fun <reified T : Any> getKType(): KType =
     object : SuperTypeTokenHolder<T>() {}.getKTypeImpl()
 
-// --- Implementation ---
-
-@Suppress("unused")
 open class SuperTypeTokenHolder<T>
 
-fun SuperTypeTokenHolder<*>.getKTypeImpl(): KType =
-    javaClass.genericSuperclass.toKType().arguments.single().type!!
+fun SuperTypeTokenHolder<*>.getKTypeImpl(): KType = javaClass.genericSuperclass
+    .toKType()
+    .arguments
+    .single()
+    .type!!
 
 private fun KClass<*>.toInvariantFlexibleProjection(
     arguments: List<KTypeProjection> = emptyList()
@@ -37,18 +40,23 @@ private fun Type.toKTypeProjection(): KTypeProjection = when (this) {
     is Class<*> -> this.kotlin.toInvariantFlexibleProjection()
     is ParameterizedType -> {
         val erasure = (rawType as Class<*>).kotlin
-        erasure.toInvariantFlexibleProjection((erasure.typeParameters.zip(actualTypeArguments).map { (parameter, argument) ->
-            val projection = argument.toKTypeProjection()
-            projection.takeIf {
-                // Get rid of use-site projections on arguments, where the corresponding parameters already have a declaration-site projection
-                parameter.variance == KVariance.INVARIANT || parameter.variance != projection.variance
-            } ?: KTypeProjection.invariant(projection.type!!)
-        }))
+        erasure.toInvariantFlexibleProjection(
+            (erasure.typeParameters.zip(actualTypeArguments)
+                .map { (parameter, argument) ->
+                    val projection = argument.toKTypeProjection()
+                    projection.takeIf {
+                        // Get rid of use-site projections on arguments, where the corresponding
+                        // parameters already have a declaration-site projection
+                        parameter.variance == KVariance.INVARIANT || parameter.variance != projection.variance
+                    } ?: KTypeProjection.invariant(projection.type!!)
+                })
+        )
     }
     is WildcardType -> when {
         lowerBounds.isNotEmpty() -> KTypeProjection.contravariant(lowerBounds.single().toKType())
         upperBounds.isNotEmpty() -> KTypeProjection.covariant(upperBounds.single().toKType())
-        // This looks impossible to obtain through Java reflection API, but someone may construct and pass such an instance here anyway
+        // This looks impossible to obtain through Java reflection API, but someone may construct
+        // and pass such an instance here anyway
         else -> KTypeProjection.STAR
     }
     is GenericArrayType -> Array<Any>::class.toInvariantFlexibleProjection(
@@ -56,7 +64,6 @@ private fun Type.toKTypeProjection(): KTypeProjection = when (this) {
             genericComponentType.toKTypeProjection()
         )
     )
-    is TypeVariable<*> -> TODO() // TODO
     else -> throw IllegalArgumentException("Unsupported type: $this")
 }
 
