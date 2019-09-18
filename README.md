@@ -159,5 +159,3 @@ Sample result: Every time the fixture instance is asked to create an instance of
 These are the list of well known issues with Kotlin.Fixture.
 
 - Abstract Classes: if not registered a custom abstract type, Kotlin.Fixture will throw "AbstractClassNotSupportedException"
-
-- Nullability: by default, any reference that can be null will be null.
