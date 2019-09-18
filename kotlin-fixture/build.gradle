@@ -1,5 +1,8 @@
 apply plugin: 'java-library'
 apply plugin: 'kotlin'
+apply plugin: 'maven'
+
+group = 'com.github.marcellogalhardo'
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
