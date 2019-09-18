@@ -23,10 +23,15 @@ allprojects {
 **Step 2.** Add the dependency
 ```gradle
 dependencies {
-	compile 'com.github.marcellogalhardo:Fixture:0.1.0'
+	testImplementation 'com.github.marcellogalhardo:Fixture:x.y.z'
+	androidTestImplementation 'com.github.marcellogalhardo:Fixture:x.y.z'
 }
 ```
+(Please replace x.y.z with the [latest version numbers](https://github.com/marcellogalhardo/kotlin-fixture/releases))
+
 That's it!
+
+**Warning:** This library does work outside tests but it was not design for it. Use it at your own risk.
 
 ## Overview
 
