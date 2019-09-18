@@ -13,7 +13,7 @@ class MainActivity : AppCompatActivity() {
 
     private val fixture = Fixture {
         register {
-            LocalDate.of(1990, 6, 28)
+            LocalDate.of(1800, 2, 1)
         }
         register<AbstractClass> {
             object : AbstractClass() {
@@ -33,8 +33,8 @@ class MainActivity : AppCompatActivity() {
 //        val person = Person(
 //            id = PersonId(1),
 //            name = PersonName(
-//                firstName = "Maria",
-//                lastName = "Chietera"
+//                firstName = "Marcello",
+//                lastName = "Galhardo"
 //            ),
 //            age = 45,
 //            birthday = LocalDate.now(),
@@ -48,8 +48,6 @@ class MainActivity : AppCompatActivity() {
 //            }
 //        )
 
-        val coolPerson = fixture.next<Person>()
-
         textView.text = "Fixture Test"
         textView.setOnClickListener {
             var person: Person? = null
@@ -57,14 +55,14 @@ class MainActivity : AppCompatActivity() {
                 person = fixture.next()
             }
             Toast.makeText(this, time.toString(), Toast.LENGTH_LONG).show()
-//            textView.text = "${person?.name?.firstName}.${person?.birthday?.month}.${person?.birthday?.year}"
+            textView.text = "${person?.name?.firstName}.${person?.birthday?.month}.${person?.birthday?.year}"
         }
     }
 
 }
 
 data class Person(
-    val id: PersonId,
+    val id: Int,
     val name: PersonName,
     val age: Int,
     val birthday: LocalDate,
@@ -77,10 +75,6 @@ data class Person(
 data class PersonName(
     val firstName: String,
     val lastName: String
-)
-
-inline class PersonId(
-    val id: Long
 )
 
 sealed class Type {
