@@ -174,20 +174,6 @@ class FixtureRandomTest {
     }
 
     @Test
-    fun nextLong_shouldReturnRandom_whenGivenIntRange() {
-        val sut = FixtureRandom()
-
-        val result = sut.nextLong(0..5)
-
-        assertThat(result).apply {
-            isNotNull()
-            isInstanceOf(Long::class.javaObjectType)
-            isAtLeast(0)
-            isAtMost(5)
-        }
-    }
-
-    @Test
     fun nextLong_shouldReturnRandom_whenGivenLongRange() {
         val sut = FixtureRandom()
 

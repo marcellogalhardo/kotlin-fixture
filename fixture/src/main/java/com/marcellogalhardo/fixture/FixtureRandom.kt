@@ -6,11 +6,18 @@ interface FixtureRandom {
 
     fun nextChar(): Char
 
+    fun nextChar(range: CharRange): Char
+
     fun nextDouble(): Double
 
     fun nextDouble(until: Double): Double
 
     fun nextDouble(from: Double, until: Double): Double
+
+    fun nextDouble(range: IntRange): Double = nextDouble(
+        range.first.toDouble(),
+        range.last.toDouble()
+    )
 
     fun nextFloat(): Float
 
@@ -27,8 +34,6 @@ interface FixtureRandom {
     fun nextLong(until: Long): Long
 
     fun nextLong(from: Long, until: Long): Long
-
-    fun nextLong(range: IntRange): Long = nextLong(range.first.toLong(), range.last.toLong())
 
     fun nextLong(range: LongRange): Long = nextLong(range.first, range.last)
 

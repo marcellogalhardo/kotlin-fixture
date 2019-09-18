@@ -15,15 +15,15 @@ class FixtureTest {
 
         assertThat(sut).isInstanceOf(Fixture::class.java)
         assertThat(result.size).apply {
-            isAtLeast(configs.collectionRange.first)
-            isAtMost(configs.collectionRange.last)
+            isAtLeast(configs.listRange.first)
+            isAtMost(configs.listRange.last)
         }
     }
 
     @Test
     fun fixture_shouldReturnFixture_givenConfigs() {
         val configs = FixtureConfigs(
-            collectionRange = 5..10
+            listRange = 5..10
         )
         val sut = Fixture(configs)
 
@@ -31,8 +31,8 @@ class FixtureTest {
 
         assertThat(sut).isInstanceOf(Fixture::class.java)
         assertThat(result.size).apply {
-            isAtLeast(configs.collectionRange.first)
-            isAtMost(configs.collectionRange.last)
+            isAtLeast(configs.listRange.first)
+            isAtMost(configs.listRange.last)
         }
     }
 

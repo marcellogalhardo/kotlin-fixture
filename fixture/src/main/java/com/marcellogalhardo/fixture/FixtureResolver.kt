@@ -64,11 +64,23 @@ fun FixtureResolver(
     )
     return CompositeResolver(
         BooleanTypeResolver(builder),
-        CharTypeResolver(builder),
-        DoubleTypeResolver(builder),
+        CharTypeResolver(
+            configs,
+            builder
+        ),
+        DoubleTypeResolver(
+            configs,
+            builder
+        ),
         FloatTypeResolver(builder),
-        IntTypeResolver(builder),
-        LongTypeResolver(builder),
+        IntTypeResolver(
+            configs,
+            builder
+        ),
+        LongTypeResolver(
+            configs,
+            builder
+        ),
         StringTypeResolver(builder),
         ListTypeResolver(
             builder,

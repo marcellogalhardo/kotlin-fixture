@@ -11,6 +11,8 @@ class DefaultRandom internal constructor(
 
     override fun nextChar(): Char = ('A'..'z').random(random)
 
+    override fun nextChar(range: CharRange): Char = range.random(random)
+
     override fun nextDouble(): Double = random.nextDouble()
 
     override fun nextDouble(until: Double): Double = random.nextDouble(until)
