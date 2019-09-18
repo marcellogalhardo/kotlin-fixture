@@ -14,12 +14,10 @@ internal class ClassTypeResolver(
             .sortedBy { it.parameters.size }
 
         for (constructor in constructors) {
-            if (constructor.visibility != KVisibility.PRIVATE) {
-                val arguments = constructor.parameters
-                    .map { resolver.resolve(classRef, classType, it.type) }
-                    .toTypedArray()
-                return constructor.call(*arguments)
-            }
+            val arguments = constructor.parameters
+                .map { resolver.resolve(classRef, classType, it.type) }
+                .toTypedArray()
+            return constructor.call(*arguments)
         }
         return null
     }
