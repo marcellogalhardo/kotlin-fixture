@@ -27,7 +27,7 @@ dependencies {
 	androidTestImplementation 'com.github.marcellogalhardo:kotlin-fixture:{Tag}'
 }
 ```
-(Please replace `{Tag}` with the [latest version numbers](https://github.com/marcellogalhardo/kotlin-fixture/releases))
+(Please replace `{Tag}` with the [latest version numbers](https://github.com/marcellogalhardo/kotlin-fixture/releases): [![](https://jitpack.io/v/marcellogalhardo/kotlin-fixture.svg)](https://jitpack.io/#marcellogalhardo/kotlin-fixture))
 
 That's it!
 
