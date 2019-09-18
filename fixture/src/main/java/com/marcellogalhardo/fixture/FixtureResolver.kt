@@ -62,7 +62,7 @@ fun FixtureResolver(
         ClassParamResolver(builder),
         TypeParamResolver(builder)
     )
-    val typeResolvers = CompositeResolver(
+    return CompositeResolver(
         BooleanTypeResolver(builder),
         CharTypeResolver(builder),
         DoubleTypeResolver(builder),
@@ -86,6 +86,4 @@ fun FixtureResolver(
         SealedClassTypeResolver(builder),
         ClassTypeResolver(paramResolvers)
     )
-    val resolvers = typeResolvers.union(typeResolvers).toList()
-    return CompositeResolver(resolvers)
 }
