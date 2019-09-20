@@ -10,31 +10,6 @@ Write maintainable unit tests, faster.
 
 Kotlin.Fixture makes it easier for developers to do Test-Driven Development by automating non-relevant Test Fixture Setup, allowing the Test Developer to focus on the essentials of each test case.
 
-## Download
-
-**Step 1.** Add it in your root *build.gradle* at the end of repositories:
-```gradle
-allprojects {
-	repositories {
-		maven { url "https://jitpack.io" }
-	}
-}
-```
-**Step 2.** Add the dependency
-```gradle
-dependencies {
-	testImplementation 'com.github.marcellogalhardo:kotlin-fixture:{Tag}'
-	androidTestImplementation 'com.github.marcellogalhardo:kotlin-fixture:{Tag}'
-}
-```
-(Please replace `{Tag}` with the [latest version numbers](https://github.com/marcellogalhardo/kotlin-fixture/releases): [![](https://jitpack.io/v/marcellogalhardo/kotlin-fixture.svg)](https://jitpack.io/#marcellogalhardo/kotlin-fixture))
-
-That's it!
-
-**Warning:** This library does work outside tests but it was not designed for it. Use it at your own risk.
-
-**Disclaimer:** This library will be migrated to [Maven Central](https://search.maven.org/) as soon as it moves out of experimental status.
-
 ## Overview
 
 Kotlin.Fixture is designed to make Test-Driven Development more productive and unit tests more refactoring-safe. It does so by removing the need for hand-coding anonymous variables as part of a test's Fixture Setup phase. 
@@ -69,6 +44,31 @@ This example illustrates the basic principle of Kotlin.Fixture: It can create va
 The example also illustrates how Kotlin.Fixture can be used as a [SUT Factory](http://blog.ploeh.dk/2009/02/13/SUTFactory.aspx) that creates the actual System Under Test (the MyClass instance).
 
 Using Kotlin.Fixture is as easy as referencing the library and creating a new instance of the Fixture class!
+
+## Download
+
+**Step 1.** Add it in your root *build.gradle* at the end of repositories:
+```gradle
+allprojects {
+	repositories {
+		maven { url "https://jitpack.io" }
+	}
+}
+```
+**Step 2.** Add the dependency
+```gradle
+dependencies {
+	testImplementation 'com.github.marcellogalhardo:kotlin-fixture:{Tag}'
+	androidTestImplementation 'com.github.marcellogalhardo:kotlin-fixture:{Tag}'
+}
+```
+(Please replace `{Tag}` with the [latest version numbers](https://github.com/marcellogalhardo/kotlin-fixture/releases): [![](https://jitpack.io/v/marcellogalhardo/kotlin-fixture.svg)](https://jitpack.io/#marcellogalhardo/kotlin-fixture))
+
+That's it!
+
+**Warning:** This library does work outside tests but it was not designed for it. Use it at your own risk.
+
+**Disclaimer:** This library will be migrated to [Maven Central](https://search.maven.org/) as soon as it moves out of experimental status.
 
 ## Usage
 
