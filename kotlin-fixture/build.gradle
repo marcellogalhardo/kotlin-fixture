@@ -10,6 +10,7 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
     testImplementation 'junit:junit:4.12'
     testImplementation "com.google.truth:truth:1.0"
+    testImplementation "io.mockk:mockk:1.9.3"
 }
 
 jacocoTestReport {
