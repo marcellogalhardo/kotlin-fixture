@@ -33,6 +33,19 @@ class FixtureBuilderTest {
     }
 
     @Test
+    fun next_shouldReturnRandom_whenInvokeAnyMethodOfProxyInterface() {
+        val proxyInterface = sut.next<TestInterface>()
+
+        val result = proxyInterface.echo()
+
+        assertThat(result).apply {
+            isInstanceOf(String::class.java)
+            isNotEmpty()
+            isNotNull()
+        }
+    }
+
+    @Test
     fun next_shouldReturnRandom_whenGivenSealedClass_withAtLeastOneSubclass() {
         val result = sut.next<TestSealedClassWithSubClasses>()
 

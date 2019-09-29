@@ -19,13 +19,12 @@ internal class InterfaceTypeResolver(
             return Proxy.newProxyInstance(
                 javaClass.classLoader,
                 arrayOf(javaClass)
-            ) { _: Any, method: Method, _: Array<out Any> ->
-                val methodReturnType = method.kotlinFunction
-                    ?.returnType
-                    ?.jvmErasure
-                    ?: return@newProxyInstance null
-
-                builder.next(methodReturnType, classType)
+            ) { _: Any?, method: Method?, _: Array<out Any?>? ->
+                val methodReturnType = method?.kotlinFunction?.returnType?.jvmErasure
+                return@newProxyInstance when {
+                    methodReturnType != null -> builder.next(methodReturnType, classType)
+                    else -> null
+                }
             }
         }
         return null
