@@ -3,16 +3,22 @@ package com.marcellogalhardo.fixture.resolver
 import com.google.common.truth.Truth.assertThat
 import com.marcellogalhardo.fixture.FixtureContext
 import io.mockk.mockk
+import org.junit.Before
 import org.junit.Test
 
 class SimpleResolverTest {
 
-    private val sut = object : SimpleResolver() {
-        val anyType = FixtureContext.Type::class.simpleName
-        val anyParam = FixtureContext.Param::class.simpleName
+    val anyType = FixtureContext.Type::class.simpleName
+    val anyParam = FixtureContext.Param::class.simpleName
 
-        override fun resolveType(context: FixtureContext.Type) = anyType
-        override fun resolveParam(context: FixtureContext.Param) = anyParam
+    private lateinit var sut: SimpleResolver
+
+    @Before
+    fun setup() {
+        sut = object : SimpleResolver() {
+            override fun resolveType(context: FixtureContext.Type) = anyType
+            override fun resolveParam(context: FixtureContext.Param) = anyParam
+        }
     }
 
     @Test
@@ -21,7 +27,7 @@ class SimpleResolverTest {
 
         val result = sut.resolve(context)
 
-        assertThat(result).isEqualTo(sut.anyType)
+        assertThat(result).isEqualTo(anyType)
     }
 
     @Test
@@ -30,6 +36,6 @@ class SimpleResolverTest {
 
         val result = sut.resolve(context)
 
-        assertThat(result).isEqualTo(sut.anyParam)
+        assertThat(result).isEqualTo(anyParam)
     }
 }

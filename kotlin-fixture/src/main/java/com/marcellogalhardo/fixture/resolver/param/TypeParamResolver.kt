@@ -15,9 +15,10 @@ class TypeParamResolver(
         return when (val classifier = paramType.classifier) {
             is KTypeParameter -> {
                 val typeParameterName = classifier.name
-                val typeParameterId =
-                    classRef.typeParameters.indexOfFirst { it.name == typeParameterName }
-                val parameterType = classType.arguments[typeParameterId].type ?: getKType<Any>()
+                val typeParameterId = classRef.typeParameters
+                    .indexOfFirst { it.name == typeParameterName }
+                val parameterType = classType.arguments[typeParameterId].type
+                    ?: getKType<Any>()
                 builder.next(
                     parameterType.classifier as KClass<*>,
                     parameterType
