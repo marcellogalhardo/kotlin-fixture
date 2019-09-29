@@ -5,7 +5,3 @@ os: linux
 
 script:
   - ./gradlew :kotlin-fixture:assemble
-
-#branches:
-#  only:
-#    - master
