@@ -1,6 +1,7 @@
 package com.marcellogalhardo.fixture
 
 import com.google.common.truth.Truth
+import com.google.common.truth.Truth.assertThat
 import org.junit.Before
 import org.junit.Test
 
@@ -14,7 +15,7 @@ class FixtureRegistryTest {
     }
 
     @Test
-    fun register_shouldKeepObjectCreation() {
+    fun register_shouldDefineCustomCreation() {
         val person = "Marcello Galhardo"
         sut.register {
             person
@@ -22,12 +23,12 @@ class FixtureRegistryTest {
 
         val result = sut.next<String>()
 
-        Truth.assertThat(result)
+        assertThat(result)
             .isEqualTo(person)
     }
 
     @Test
-    fun register_shouldReplaceObjectCreation() {
+    fun register_shouldReplaceCustomCreation() {
         val name1 = "Marcello"
         val name2 = "Galhardo"
         sut.register {
@@ -39,7 +40,7 @@ class FixtureRegistryTest {
 
         val result = sut.next<String>()
 
-        Truth.assertThat(result)
+        assertThat(result)
             .isEqualTo(name2)
     }
 
