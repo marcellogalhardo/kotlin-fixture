@@ -3,9 +3,9 @@ jdk: openjdk8
 sudo: false
 os: linux
 
-install: ./gradlew :kotlin-fixture:assemble --no-daemon
+install: ./gradlew :kotlin-fixture:assemble
 
 script:
-  - ./gradlew :kotlin-fixture:check --no-daemon
-  - ./gradlew :kotlin-fixture:jacocoTestReport --no-daemon
+  - ./gradlew :kotlin-fixture:check
+  - ./gradlew :kotlin-fixture:jacocoTestReport
   - bash <(curl -s https://codecov.io/bash)
