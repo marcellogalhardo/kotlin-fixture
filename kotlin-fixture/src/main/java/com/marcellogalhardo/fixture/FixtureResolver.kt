@@ -25,32 +25,6 @@ interface FixtureResolver {
     }
 
     fun resolve(context: FixtureContext): Any?
-
-    interface Type : FixtureResolver {
-
-        override fun resolve(context: FixtureContext): Any? {
-            return if (context is FixtureContext.Type) {
-                resolveType(context)
-            } else {
-                null
-            }
-        }
-
-        fun resolveType(context: FixtureContext.Type): Any?
-    }
-
-    interface Param : FixtureResolver {
-
-        override fun resolve(context: FixtureContext): Any? {
-            return if (context is FixtureContext.Param) {
-                resolveParam(context)
-            } else {
-                null
-            }
-        }
-
-        fun resolveParam(context: FixtureContext.Param): Any?
-    }
 }
 
 @Suppress("FunctionName")

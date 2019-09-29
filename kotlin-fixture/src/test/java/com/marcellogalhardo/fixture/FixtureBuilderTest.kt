@@ -225,4 +225,18 @@ class FixtureBuilderTest {
         assertThat(result.first())
             .isInstanceOf(TestClass::class.java)
     }
+
+    @Test
+    fun next_shouldReturnRandomMap_givenMap() {
+        val result = sut.next<Map<Int, String>>()
+
+        assertThat(result).apply {
+            isInstanceOf(Map::class.javaObjectType)
+            isNotEmpty()
+        }
+        assertThat(result.keys.first())
+            .isInstanceOf(Int::class.javaObjectType)
+        assertThat(result.values.first())
+            .isInstanceOf(String::class.java)
+    }
 }

@@ -210,7 +210,7 @@ class FixtureRandomTest {
             isNotNull()
             isInstanceOf(String::class.java)
             isNotEmpty()
-            contains("prefix")
+            startsWith("prefix")
         }
     }
 

@@ -1,16 +1,20 @@
 package com.marcellogalhardo.fixture.resolver.type
 
-import com.marcellogalhardo.fixture.*
+import com.marcellogalhardo.fixture.FixtureConfigs
+import com.marcellogalhardo.fixture.FixtureContext
+import com.marcellogalhardo.fixture.FixtureRandom
+import com.marcellogalhardo.fixture.FixtureResolver
+import com.marcellogalhardo.fixture.resolver.SimpleResolver
 
 internal class MapTypeResolver(
     private val random: FixtureRandom,
     private val configs: FixtureConfigs,
     private val resolver: FixtureResolver
-) : FixtureResolver.Type {
+) : SimpleResolver() {
 
     override fun resolveType(context: FixtureContext.Type): Any? = context.run {
         return when (classRef) {
-            Map::class -> try {
+            Map::class -> {
                 val size = random.nextInt(configs.mapRange)
 
                 val keyType = classType.arguments[0].type!!
@@ -23,8 +27,6 @@ internal class MapTypeResolver(
                     resolver.resolve(classRef, classType, valType)
                 }
                 return keys.zip(values).toMap()
-            } catch (error: Throwable) {
-                throw MapCreationFailedException(error.message)
             }
             else -> null
         }

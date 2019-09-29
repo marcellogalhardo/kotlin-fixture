@@ -19,3 +19,20 @@ sealed class FixtureContext {
         val paramType: KType
     ) : FixtureContext()
 }
+
+internal val FixtureContext.typeIsSealedClass
+    get() = classRef.isSealed
+
+internal val FixtureContext.typeIsAbstractClass
+    get() = classRef.isAbstract && !typeIsInterface
+
+internal val FixtureContext.typeIsInterface
+    get() = classRef.javaObjectType.isInterface
+
+internal val FixtureContext.typeIsClass
+    get() = !typeIsSealedClass && !typeIsAbstractClass && !typeIsInterface && classRef.constructors.isNotEmpty()
+
+internal val FixtureContext.typeIsObject
+    get() = !typeIsSealedClass && !typeIsAbstractClass && !typeIsInterface && classRef.constructors.isEmpty()
+
+
