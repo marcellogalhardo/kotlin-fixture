@@ -4,7 +4,7 @@ sudo: false
 os: linux
 
 script:
-  - ./gradlew :kotlin-fixture:assemble
-  - ./gradlew :kotlin-fixture:check
-  - ./gradlew :kotlin-fixture:jacocoTestReport
+  - ./gradlew :kotlin-fixture:assemble --no-daemon
+  - ./gradlew :kotlin-fixture:check --no-daemon
+  - ./gradlew :kotlin-fixture:jacocoTestReport --no-daemon
   - bash <(curl -s https://codecov.io/bash)
