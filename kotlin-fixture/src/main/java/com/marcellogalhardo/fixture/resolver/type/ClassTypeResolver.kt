@@ -2,22 +2,26 @@ package com.marcellogalhardo.fixture.resolver.type
 
 import com.marcellogalhardo.fixture.FixtureContext
 import com.marcellogalhardo.fixture.FixtureResolver
+import com.marcellogalhardo.fixture.resolver.SimpleResolver
+import com.marcellogalhardo.fixture.typeIsClass
 import kotlin.reflect.KVisibility
 
 internal class ClassTypeResolver(
     private val resolver: FixtureResolver
-) : FixtureResolver.Type {
+) : SimpleResolver() {
 
     override fun resolveType(context: FixtureContext.Type): Any? = context.run {
-        val constructors = classRef.constructors
-            .filter { it.visibility != KVisibility.PRIVATE }
-            .sortedBy { it.parameters.size }
+        if (typeIsClass) {
+            val constructors = classRef.constructors
+                .filter { it.visibility != KVisibility.PRIVATE }
+                .sortedBy { it.parameters.size }
 
-        for (constructor in constructors) {
-            val arguments = constructor.parameters
-                .map { resolver.resolve(classRef, classType, it.type) }
-                .toTypedArray()
-            return constructor.call(*arguments)
+            for (constructor in constructors) {
+                val arguments = constructor.parameters
+                    .map { resolver.resolve(classRef, classType, it.type) }
+                    .toTypedArray()
+                return constructor.call(*arguments)
+            }
         }
         return null
     }

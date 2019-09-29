@@ -2,15 +2,16 @@ package com.marcellogalhardo.fixture.resolver.type
 
 import com.marcellogalhardo.fixture.FixtureBuilder
 import com.marcellogalhardo.fixture.FixtureContext
-import com.marcellogalhardo.fixture.FixtureResolver
 import com.marcellogalhardo.fixture.SealedClassWithoutSubClassesException
+import com.marcellogalhardo.fixture.resolver.SimpleResolver
+import com.marcellogalhardo.fixture.typeIsSealedClass
 
 internal class SealedClassTypeResolver(
     private val builder: FixtureBuilder
-) : FixtureResolver.Type {
+) : SimpleResolver() {
 
     override fun resolveType(context: FixtureContext.Type): Any? = context.run {
-        if (classRef.isSealed) {
+        if (typeIsSealedClass) {
             val sealedSubClass = classRef.sealedSubclasses.firstOrNull()
                 ?: throw SealedClassWithoutSubClassesException()
 

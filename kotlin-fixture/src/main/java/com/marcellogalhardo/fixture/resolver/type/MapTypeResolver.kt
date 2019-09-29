@@ -1,12 +1,13 @@
 package com.marcellogalhardo.fixture.resolver.type
 
 import com.marcellogalhardo.fixture.*
+import com.marcellogalhardo.fixture.resolver.SimpleResolver
 
 internal class MapTypeResolver(
     private val random: FixtureRandom,
     private val configs: FixtureConfigs,
     private val resolver: FixtureResolver
-) : FixtureResolver.Type {
+) : SimpleResolver() {
 
     override fun resolveType(context: FixtureContext.Type): Any? = context.run {
         return when (classRef) {
