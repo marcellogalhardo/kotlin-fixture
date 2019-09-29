@@ -5,3 +5,6 @@ os: linux
 
 script:
   - ./gradlew :kotlin-fixture:assemble
+  - ./gradlew :kotlin-fixture:check
+  - ./gradlew :kotlin-fixture:jacocoTestReport
+  - bash <(curl -s https://codecov.io/bash)

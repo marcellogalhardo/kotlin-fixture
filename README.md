@@ -1,4 +1,4 @@
-[![Releases](https://img.shields.io/github/v/release/marcellogalhardo/kotlin-fixture?include_prereleases)](https://github.com/marcellogalhardo/kotlin-fixture/releases) [![Build Status](https://travis-ci.org/marcellogalhardo/kotlin-fixture.svg?branch=master)](https://travis-ci.org/marcellogalhardo/kotlin-fixture)
+[![Releases](https://img.shields.io/github/v/release/marcellogalhardo/kotlin-fixture?include_prereleases)](https://github.com/marcellogalhardo/kotlin-fixture/releases) [![Build Status](https://travis-ci.org/marcellogalhardo/kotlin-fixture.svg?branch=master)](https://travis-ci.org/marcellogalhardo/kotlin-fixture) [![CodeCov](https://codecov.io/gh/marcellogalhardo/kotlin-fixture/branch/master/graph/badge.svg)](https://codecov.io/gh/marcellogalhardo/kotlin-fixture)
 
 # Kotlin.Fixture
 
