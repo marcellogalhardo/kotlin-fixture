@@ -8,4 +8,6 @@ install: ./gradlew :kotlin-fixture:assemble
 script:
   - ./gradlew :kotlin-fixture:check
   - ./gradlew :kotlin-fixture:jacocoTestReport
+
+after_success:
   - bash <(curl -s https://codecov.io/bash)
