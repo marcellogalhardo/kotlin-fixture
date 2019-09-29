@@ -1,3 +1,5 @@
+[![Releases](https://img.shields.io/github/v/release/marcellogalhardo/kotlin-fixture?include_prereleases)](https://github.com/marcellogalhardo/kotlin-fixture/releases) [![Build Status](https://travis-ci.org/marcellogalhardo/kotlin-fixture.svg?branch=master)](https://travis-ci.org/marcellogalhardo/kotlin-fixture)
+
 # Kotlin.Fixture
 
 Kotlin.Fixture is an open source library based on the popular .NET library: [AutoFixture](https://github.com/AutoFixture/AutoFixture).
