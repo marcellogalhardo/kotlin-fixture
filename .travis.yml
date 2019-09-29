@@ -5,6 +5,8 @@ os: linux
 
 script:
   - ./gradlew :kotlin-fixture:assemble
+#  TODO: Detekt is disabled.
+#  - ./gradlew :kotlin-fixture:detekt
   - ./gradlew :kotlin-fixture:check
   - ./gradlew :kotlin-fixture:jacocoTestReport
   - bash <(curl -s https://codecov.io/bash)

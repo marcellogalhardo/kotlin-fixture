@@ -16,12 +16,17 @@ buildscript {
     }
 }
 
+plugins {
+    id "io.gitlab.arturbosch.detekt" version "1.0.1"
+}
+
 allprojects {
+//    TODO: Detekt is disabled.
+//    apply from: "$rootDir/detekt.gradle"
     repositories {
         google()
         jcenter()
         maven { url "https://jitpack.io" }
-        
     }
 }
 
