@@ -12,7 +12,9 @@ internal class TestClassWithDataClassParam(val testParam: TestDataClass)
 
 internal object TestObject
 
-internal interface TestInterface
+internal interface TestInterface {
+    fun echo(): String
+}
 
 internal abstract class TestAbstractClass
 
