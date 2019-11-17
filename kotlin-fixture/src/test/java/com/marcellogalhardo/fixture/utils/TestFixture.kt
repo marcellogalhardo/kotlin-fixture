@@ -2,7 +2,7 @@ package com.marcellogalhardo.fixture.utils
 
 import com.marcellogalhardo.fixture.Fixture
 import com.marcellogalhardo.fixture.FixtureRandom
-import com.marcellogalhardo.fixture.ProviderFunction
+import com.marcellogalhardo.fixture.internal.ProviderFunction
 import kotlin.reflect.KClass
 import kotlin.reflect.KType
 

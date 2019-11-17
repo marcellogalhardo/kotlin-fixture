@@ -1,5 +1,6 @@
 package com.marcellogalhardo.fixture
 
+import com.marcellogalhardo.fixture.internal.ProviderFunction
 import kotlin.reflect.KClass
 
 interface FixtureRegistry {
