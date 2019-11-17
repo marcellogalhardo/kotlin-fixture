@@ -3,6 +3,7 @@ package com.marcellogalhardo.fixture.internal.resolver
 import com.google.common.truth.Truth.assertThat
 import com.marcellogalhardo.fixture.FixtureContext
 import com.marcellogalhardo.fixture.FixtureResolver
+import com.marcellogalhardo.fixture.internal.resolver.composite.DefaultTypeResolver
 import com.marcellogalhardo.fixture.utils.TestFixture
 import io.mockk.every
 import io.mockk.mockk
@@ -19,7 +20,9 @@ class DefaultTypeResolverTest {
         val resolver = mockk<FixtureResolver>()
         every { resolver.resolve(testFixture, context) } answers { Any() }
 
-        val result = DefaultTypeResolver(resolver)
+        val result = DefaultTypeResolver(
+            resolver
+        )
             .resolve(testFixture, context)
 
         verify { resolver.resolve(testFixture, context) }
@@ -33,7 +36,9 @@ class DefaultTypeResolverTest {
         every { resolver.resolve(testFixture, context) } answers { null }
 
 
-        val result = DefaultTypeResolver(resolver)
+        val result = DefaultTypeResolver(
+            resolver
+        )
             .resolve(testFixture, context)
 
         assertThat(result).isNull()

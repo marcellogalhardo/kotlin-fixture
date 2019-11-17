@@ -1,4 +1,4 @@
-package com.marcellogalhardo.fixture.internal.resolver
+package com.marcellogalhardo.fixture.internal.resolver.composite
 
 import com.marcellogalhardo.fixture.FixtureConfigs
 import com.marcellogalhardo.fixture.FixtureContext

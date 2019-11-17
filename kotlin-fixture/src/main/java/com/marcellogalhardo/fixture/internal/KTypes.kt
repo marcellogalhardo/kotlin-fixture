@@ -12,7 +12,7 @@ import kotlin.reflect.full.createType
 
 /**
  * Returns KType of an Reified.
- * This code was taken from https://gist.github.com/udalov/bb6f398c2e643ee69586356fdd67e9b1
+ * Credits to https://gist.github.com/udalov/bb6f398c2e643ee69586356fdd67e9b1
  */
 inline fun <reified T : Any> getKType(): KType =
     object : SuperTypeTokenHolder<T>() {}.getKTypeImpl()
