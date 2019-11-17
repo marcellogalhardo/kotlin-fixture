@@ -1,5 +1,6 @@
 package com.marcellogalhardo.fixture
 
+import com.marcellogalhardo.fixture.internal.getKType
 import kotlin.reflect.KClass
 import kotlin.reflect.KType
 

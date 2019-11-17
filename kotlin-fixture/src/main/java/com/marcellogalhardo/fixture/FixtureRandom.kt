@@ -1,5 +1,7 @@
 package com.marcellogalhardo.fixture
 
+import com.marcellogalhardo.fixture.internal.DefaultRandom
+
 interface FixtureRandom {
 
     fun nextBoolean(): Boolean
@@ -43,4 +45,5 @@ interface FixtureRandom {
 }
 
 @Suppress("FunctionName")
-fun FixtureRandom(): FixtureRandom = DefaultRandom()
+fun FixtureRandom(): FixtureRandom =
+    DefaultRandom()
