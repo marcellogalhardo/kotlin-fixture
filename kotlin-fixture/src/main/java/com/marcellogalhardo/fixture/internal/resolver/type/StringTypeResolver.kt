@@ -10,7 +10,7 @@ internal class StringTypeResolver(
 
     override fun resolveType(context: FixtureContext.Type): Any? = context.run {
         return when (classRef) {
-            String::class -> random.nextString()
+            String::class -> random.createString()
             else -> null
         }
     }

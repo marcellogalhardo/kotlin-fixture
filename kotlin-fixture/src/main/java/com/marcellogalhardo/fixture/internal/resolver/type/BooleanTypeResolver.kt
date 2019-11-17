@@ -10,7 +10,7 @@ internal class BooleanTypeResolver(
 
     override fun resolveType(context: FixtureContext.Type): Any? = context.run {
         return when (classRef) {
-            Boolean::class -> random.nextBoolean()
+            Boolean::class -> random.createBoolean()
             else -> null
         }
     }

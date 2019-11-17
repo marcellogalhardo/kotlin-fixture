@@ -12,7 +12,7 @@ internal class CharTypeResolver(
 
     override fun resolveType(context: FixtureContext.Type): Any? = context.run {
         return when (classRef) {
-            Char::class -> random.nextChar(configs.charRange)
+            Char::class -> random.createChar(configs.charRange)
             else -> null
         }
     }

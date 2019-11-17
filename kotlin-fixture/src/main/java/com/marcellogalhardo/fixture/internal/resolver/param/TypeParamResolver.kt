@@ -1,6 +1,6 @@
 package com.marcellogalhardo.fixture.internal.resolver.param
 
-import com.marcellogalhardo.fixture.FixtureBuilder
+import com.marcellogalhardo.fixture.FixtureCreator
 import com.marcellogalhardo.fixture.FixtureContext
 import com.marcellogalhardo.fixture.internal.getKType
 import com.marcellogalhardo.fixture.internal.resolver.SimpleResolver
@@ -8,7 +8,7 @@ import kotlin.reflect.KClass
 import kotlin.reflect.KTypeParameter
 
 class TypeParamResolver(
-    private val builder: FixtureBuilder
+    private val creator: FixtureCreator
 ) : SimpleResolver() {
 
     override fun resolveParam(context: FixtureContext.Param): Any? = context.run {
@@ -19,7 +19,7 @@ class TypeParamResolver(
                     .indexOfFirst { it.name == typeParameterName }
                 val parameterType = classType.arguments[typeParameterId].type
                     ?: getKType<Any>()
-                builder.next(
+                creator.create(
                     parameterType.classifier as KClass<*>,
                     parameterType
                 )

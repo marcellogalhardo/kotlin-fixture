@@ -4,6 +4,7 @@ import com.marcellogalhardo.fixture.FixtureConfigs
 import com.marcellogalhardo.fixture.FixtureContext
 import com.marcellogalhardo.fixture.FixtureRandom
 import com.marcellogalhardo.fixture.FixtureResolver
+import com.marcellogalhardo.fixture.createInt
 import com.marcellogalhardo.fixture.internal.resolver.SimpleResolver
 
 internal class ListTypeResolver(
@@ -15,7 +16,7 @@ internal class ListTypeResolver(
     override fun resolveType(context: FixtureContext.Type): Any? = context.run {
         return when (classRef) {
             List::class, Collection::class -> {
-                val size = random.nextInt(configs.listRange)
+                val size = random.createInt(configs.listRange)
                 val paramType = classType.arguments[0].type!!
 
                 return List(size) {

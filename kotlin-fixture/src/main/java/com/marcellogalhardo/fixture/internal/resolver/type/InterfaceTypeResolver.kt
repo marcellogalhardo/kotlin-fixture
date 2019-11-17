@@ -1,6 +1,6 @@
 package com.marcellogalhardo.fixture.internal.resolver.type
 
-import com.marcellogalhardo.fixture.FixtureBuilder
+import com.marcellogalhardo.fixture.FixtureCreator
 import com.marcellogalhardo.fixture.FixtureContext
 import com.marcellogalhardo.fixture.internal.resolver.SimpleResolver
 import com.marcellogalhardo.fixture.typeIsInterface
@@ -10,7 +10,7 @@ import kotlin.reflect.jvm.jvmErasure
 import kotlin.reflect.jvm.kotlinFunction
 
 internal class InterfaceTypeResolver(
-    private val builder: FixtureBuilder
+    private val creator: FixtureCreator
 ) : SimpleResolver() {
 
     override fun resolveType(context: FixtureContext.Type): Any? = context.run {
@@ -22,7 +22,7 @@ internal class InterfaceTypeResolver(
             ) { _: Any?, method: Method?, _: Array<out Any?>? ->
                 val methodReturnType = method?.kotlinFunction?.returnType?.jvmErasure
                 return@newProxyInstance when {
-                    methodReturnType != null -> builder.next(methodReturnType, classType)
+                    methodReturnType != null -> creator.create(methodReturnType, classType)
                     else -> null
                 }
             }

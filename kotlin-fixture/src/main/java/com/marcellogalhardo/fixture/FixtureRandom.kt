@@ -4,45 +4,48 @@ import com.marcellogalhardo.fixture.internal.DefaultRandom
 
 interface FixtureRandom {
 
-    fun nextBoolean(): Boolean
+    fun createBoolean(): Boolean
 
-    fun nextChar(): Char
+    fun createChar(): Char
 
-    fun nextChar(range: CharRange): Char
+    fun createChar(range: CharRange): Char
 
-    fun nextDouble(): Double
+    fun createDouble(): Double
 
-    fun nextDouble(until: Double): Double
+    fun createDouble(until: Double): Double
 
-    fun nextDouble(from: Double, until: Double): Double
+    fun createDouble(from: Double, until: Double): Double
 
-    fun nextDouble(range: IntRange): Double = nextDouble(
-        range.first.toDouble(),
-        range.last.toDouble()
-    )
+    fun createFloat(): Float
 
-    fun nextFloat(): Float
+    fun createInt(): Int
 
-    fun nextInt(): Int
+    fun createInt(until: Int): Int
 
-    fun nextInt(until: Int): Int
+    fun createInt(from: Int, until: Int): Int
 
-    fun nextInt(from: Int, until: Int): Int
+    fun createLong(): Long
 
-    fun nextInt(range: IntRange): Int = nextInt(range.first, range.last)
+    fun createLong(until: Long): Long
 
-    fun nextLong(): Long
+    fun createLong(from: Long, until: Long): Long
 
-    fun nextLong(until: Long): Long
+    fun createString(): String
 
-    fun nextLong(from: Long, until: Long): Long
-
-    fun nextLong(range: LongRange): Long = nextLong(range.first, range.last)
-
-    fun nextString(): String
-
-    fun nextString(prefix: String): String
+    fun createString(prefix: String): String
 }
+
+fun FixtureRandom.createDouble(
+    range: IntRange
+): Double = createDouble(range.first.toDouble(), range.last.toDouble())
+
+fun FixtureRandom.createInt(
+    range: IntRange
+): Int = createInt(range.first, range.last)
+
+fun FixtureRandom.createLong(
+    range: LongRange
+): Long = createLong(range.first, range.last)
 
 @Suppress("FunctionName")
 fun FixtureRandom(): FixtureRandom =

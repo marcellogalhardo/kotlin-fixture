@@ -8,36 +8,36 @@ class DefaultRandom internal constructor(
     private val random: Random = Random.Default
 ) : FixtureRandom {
 
-    override fun nextBoolean(): Boolean = random.nextBoolean()
+    override fun createBoolean(): Boolean = random.nextBoolean()
 
-    override fun nextChar(): Char = ('A'..'z').random(random)
+    override fun createChar(): Char = ('A'..'z').random(random)
 
-    override fun nextChar(range: CharRange): Char = range.random(random)
+    override fun createChar(range: CharRange): Char = range.random(random)
 
-    override fun nextDouble(): Double = random.nextDouble()
+    override fun createDouble(): Double = random.nextDouble()
 
-    override fun nextDouble(until: Double): Double = random.nextDouble(until)
+    override fun createDouble(until: Double): Double = random.nextDouble(until)
 
-    override fun nextDouble(
+    override fun createDouble(
         from: Double,
         until: Double
     ): Double = random.nextDouble(from, until)
 
-    override fun nextFloat(): Float = random.nextFloat()
+    override fun createFloat(): Float = random.nextFloat()
 
-    override fun nextInt(): Int = random.nextInt()
+    override fun createInt(): Int = random.nextInt()
 
-    override fun nextInt(until: Int): Int = random.nextInt(until)
+    override fun createInt(until: Int): Int = random.nextInt(until)
 
-    override fun nextInt(from: Int, until: Int): Int = random.nextInt(from, until)
+    override fun createInt(from: Int, until: Int): Int = random.nextInt(from, until)
 
-    override fun nextLong(): Long = random.nextLong()
+    override fun createLong(): Long = random.nextLong()
 
-    override fun nextLong(until: Long): Long = random.nextLong(until)
+    override fun createLong(until: Long): Long = random.nextLong(until)
 
-    override fun nextLong(from: Long, until: Long): Long = random.nextLong(from, until)
+    override fun createLong(from: Long, until: Long): Long = random.nextLong(from, until)
 
-    override fun nextString(): String = UUID.randomUUID().toString()
+    override fun createString(): String = UUID.randomUUID().toString()
 
-    override fun nextString(prefix: String): String = "$prefix-${nextString()}"
+    override fun createString(prefix: String): String = "$prefix-${createString()}"
 }

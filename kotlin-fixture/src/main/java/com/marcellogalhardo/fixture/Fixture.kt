@@ -2,7 +2,7 @@ package com.marcellogalhardo.fixture
 
 import com.marcellogalhardo.fixture.internal.DefaultFixture
 
-interface Fixture : FixtureRegistry, FixtureBuilder
+interface Fixture : FixtureRegistry, FixtureCreator
 
 @Suppress("FunctionName")
 fun Fixture(

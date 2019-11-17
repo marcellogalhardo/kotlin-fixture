@@ -42,61 +42,61 @@ interface FixtureResolver {
 
 @Suppress("FunctionName")
 fun FixtureResolver(
-    builder: FixtureBuilder,
+    creator: FixtureCreator,
     configs: FixtureConfigs
 ): CompositeResolver {
     val paramResolvers =
         CompositeResolver(
             ClassParamResolver(
-                builder
+                creator
             ),
             TypeParamResolver(
-                builder
+                creator
             )
         )
     return CompositeResolver(
         BooleanTypeResolver(
-            builder
+            creator
         ),
         CharTypeResolver(
             configs,
-            builder
+            creator
         ),
         DoubleTypeResolver(
             configs,
-            builder
+            creator
         ),
         FloatTypeResolver(
-            builder
+            creator
         ),
         IntTypeResolver(
             configs,
-            builder
+            creator
         ),
         LongTypeResolver(
             configs,
-            builder
+            creator
         ),
         StringTypeResolver(
-            builder
+            creator
         ),
         ListTypeResolver(
-            builder,
+            creator,
             configs,
             paramResolvers
         ),
         MapTypeResolver(
-            builder,
+            creator,
             configs,
             paramResolvers
         ),
         AbstractClassTypeResolver(),
         InterfaceTypeResolver(
-            builder
+            creator
         ),
         ObjectTypeResolver(),
         SealedClassTypeResolver(
-            builder
+            creator
         ),
         ClassTypeResolver(
             paramResolvers

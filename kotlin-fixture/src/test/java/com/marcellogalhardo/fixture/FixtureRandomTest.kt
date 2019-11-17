@@ -9,7 +9,7 @@ class FixtureRandomTest {
     fun nextBoolean_shouldReturnRandom() {
         val sut = FixtureRandom()
 
-        val result = sut.nextBoolean()
+        val result = sut.createBoolean()
 
         assertThat(result).apply {
             isNotNull()
@@ -21,7 +21,7 @@ class FixtureRandomTest {
     fun nextChar_shouldReturnRandom() {
         val sut = FixtureRandom()
 
-        val result = sut.nextChar()
+        val result = sut.createChar()
 
         assertThat(result).apply {
             isNotNull()
@@ -33,7 +33,7 @@ class FixtureRandomTest {
     fun nextDouble_shouldReturnRandom() {
         val sut = FixtureRandom()
 
-        val result = sut.nextDouble()
+        val result = sut.createDouble()
 
         assertThat(result).apply {
             isNotNull()
@@ -45,7 +45,7 @@ class FixtureRandomTest {
     fun nextDouble_shouldReturnRandom_whenGivenUntil() {
         val sut = FixtureRandom()
 
-        val result = sut.nextDouble(5.0)
+        val result = sut.createDouble(5.0)
 
         assertThat(result).apply {
             isNotNull()
@@ -58,7 +58,7 @@ class FixtureRandomTest {
     fun nextDouble_shouldReturnRandom_whenGivenFromAndUntil() {
         val sut = FixtureRandom()
 
-        val result = sut.nextDouble(0.0, 5.0)
+        val result = sut.createDouble(0.0, 5.0)
 
         assertThat(result).apply {
             isNotNull()
@@ -72,7 +72,7 @@ class FixtureRandomTest {
     fun nextFloat_shouldReturnRandom() {
         val sut = FixtureRandom()
 
-        val result = sut.nextFloat()
+        val result = sut.createFloat()
 
         assertThat(result).apply {
             isNotNull()
@@ -84,7 +84,7 @@ class FixtureRandomTest {
     fun nextInt_shouldReturnRandom() {
         val sut = FixtureRandom()
 
-        val result = sut.nextInt()
+        val result = sut.createInt()
 
         assertThat(result).apply {
             isNotNull()
@@ -96,7 +96,7 @@ class FixtureRandomTest {
     fun nextInt_shouldReturnRandom_whenGivenUntil() {
         val sut = FixtureRandom()
 
-        val result = sut.nextInt(5)
+        val result = sut.createInt(5)
 
         assertThat(result).apply {
             isNotNull()
@@ -109,7 +109,7 @@ class FixtureRandomTest {
     fun nextInt_shouldReturnRandom_whenGivenFromAndUntil() {
         val sut = FixtureRandom()
 
-        val result = sut.nextInt(0, 5)
+        val result = sut.createInt(0, 5)
 
         assertThat(result).apply {
             isNotNull()
@@ -123,7 +123,7 @@ class FixtureRandomTest {
     fun nextInt_shouldReturnRandom_whenGivenRange() {
         val sut = FixtureRandom()
 
-        val result = sut.nextInt(0..5)
+        val result = sut.createInt(0..5)
 
         assertThat(result).apply {
             isNotNull()
@@ -137,7 +137,7 @@ class FixtureRandomTest {
     fun nextLong_shouldReturnRandom() {
         val sut = FixtureRandom()
 
-        val result = sut.nextLong()
+        val result = sut.createLong()
 
         assertThat(result).apply {
             isNotNull()
@@ -150,7 +150,7 @@ class FixtureRandomTest {
     fun nextLong_shouldReturnRandom_whenGivenUntil() {
         val sut = FixtureRandom()
 
-        val result = sut.nextLong(5)
+        val result = sut.createLong(5)
 
         assertThat(result).apply {
             isNotNull()
@@ -163,7 +163,7 @@ class FixtureRandomTest {
     fun nextLong_shouldReturnRandom_whenGivenFromAndUntil() {
         val sut = FixtureRandom()
 
-        val result = sut.nextLong(0, 5)
+        val result = sut.createLong(0, 5)
 
         assertThat(result).apply {
             isNotNull()
@@ -177,7 +177,7 @@ class FixtureRandomTest {
     fun nextLong_shouldReturnRandom_whenGivenLongRange() {
         val sut = FixtureRandom()
 
-        val result = sut.nextLong(0.toLong()..5.toLong())
+        val result = sut.createLong(0.toLong()..5.toLong())
 
         assertThat(result).apply {
             isNotNull()
@@ -191,7 +191,7 @@ class FixtureRandomTest {
     fun nextString_shouldReturnRandom() {
         val sut = FixtureRandom()
 
-        val result = sut.nextString()
+        val result = sut.createString()
 
         assertThat(result).apply {
             isNotNull()
@@ -204,7 +204,7 @@ class FixtureRandomTest {
     fun nextString_shouldReturnRandom_whenGivenPrefix() {
         val sut = FixtureRandom()
 
-        val result = sut.nextString("prefix")
+        val result = sut.createString("prefix")
 
         assertThat(result).apply {
             isNotNull()

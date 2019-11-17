@@ -19,7 +19,7 @@ class TestFixture(
         this.providerFunction = providerFunction
     }
 
-    override fun next(classRef: KClass<*>, classType: KType): Any? {
+    override fun create(classRef: KClass<*>, classType: KType): Any? {
         this.classRef = classRef
         this.typeRef = classType
         return result

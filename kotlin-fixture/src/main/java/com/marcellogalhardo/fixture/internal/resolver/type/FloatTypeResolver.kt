@@ -10,7 +10,7 @@ internal class FloatTypeResolver(
 
     override fun resolveType(context: FixtureContext.Type): Any? = context.run {
         return when (classRef) {
-            Float::class -> random.nextFloat()
+            Float::class -> random.createFloat()
             else -> null
         }
     }

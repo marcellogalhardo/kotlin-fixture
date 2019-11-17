@@ -1,6 +1,5 @@
 package com.marcellogalhardo.fixture
 
-import com.google.common.truth.Truth
 import com.google.common.truth.Truth.assertThat
 import org.junit.Before
 import org.junit.Test
@@ -21,7 +20,7 @@ class FixtureRegistryTest {
             person
         }
 
-        val result = sut.next<String>()
+        val result = sut.create<String>()
 
         assertThat(result)
             .isEqualTo(person)
@@ -38,7 +37,7 @@ class FixtureRegistryTest {
             name2
         }
 
-        val result = sut.next<String>()
+        val result = sut.create<String>()
 
         assertThat(result)
             .isEqualTo(name2)

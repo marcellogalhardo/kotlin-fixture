@@ -52,7 +52,7 @@ class MainActivity : AppCompatActivity() {
         textView.setOnClickListener {
             var person: Person? = null
             val time = measureTimeMillis {
-                person = fixture.next()
+                person = fixture.create()
             }
             Toast.makeText(this, time.toString(), Toast.LENGTH_LONG).show()
             textView.text = "${person?.name?.firstName}.${person?.birthday?.month}.${person?.birthday?.year}"

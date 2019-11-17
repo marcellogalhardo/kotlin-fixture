@@ -4,6 +4,7 @@ import com.marcellogalhardo.fixture.FixtureConfigs
 import com.marcellogalhardo.fixture.FixtureContext
 import com.marcellogalhardo.fixture.FixtureRandom
 import com.marcellogalhardo.fixture.FixtureResolver
+import com.marcellogalhardo.fixture.createInt
 import com.marcellogalhardo.fixture.internal.resolver.SimpleResolver
 
 internal class MapTypeResolver(
@@ -15,7 +16,7 @@ internal class MapTypeResolver(
     override fun resolveType(context: FixtureContext.Type): Any? = context.run {
         return when (classRef) {
             Map::class -> {
-                val size = random.nextInt(configs.mapRange)
+                val size = random.createInt(configs.mapRange)
 
                 val keyType = classType.arguments[0].type!!
                 val valType = classType.arguments[1].type!!

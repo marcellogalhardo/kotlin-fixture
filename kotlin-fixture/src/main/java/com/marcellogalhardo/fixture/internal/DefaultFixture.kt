@@ -4,7 +4,7 @@ import com.marcellogalhardo.fixture.*
 import kotlin.reflect.KClass
 import kotlin.reflect.KType
 
-internal typealias ProviderFunction<T> = (FixtureBuilder) -> T
+internal typealias ProviderFunction<T> = (FixtureCreator) -> T
 
 internal class DefaultFixture constructor(
     configs: FixtureConfigs,
@@ -23,7 +23,7 @@ internal class DefaultFixture constructor(
         customTypeMap[classRef] = providerFunction
     }
 
-    override fun next(classRef: KClass<*>, classType: KType): Any? {
+    override fun create(classRef: KClass<*>, classType: KType): Any? {
         return customTypeMap[classRef]?.invoke(this) ?: typeResolver.resolve(classRef, classType)
     }
 }

@@ -11,7 +11,7 @@ class FixtureTest {
         val configs = FixtureConfigs()
         val sut = Fixture()
 
-        val result = sut.nextListOf<Int>()
+        val result = sut.createListOf<Int>()
 
         assertThat(sut).isInstanceOf(Fixture::class.java)
         assertThat(result.size).apply {
@@ -27,7 +27,7 @@ class FixtureTest {
         )
         val sut = Fixture(configs)
 
-        val result = sut.nextListOf<Int>()
+        val result = sut.createListOf<Int>()
 
         assertThat(sut).isInstanceOf(Fixture::class.java)
         assertThat(result.size).apply {
@@ -44,7 +44,7 @@ class FixtureTest {
             }
         }
 
-        val result = sut.next<Int>()
+        val result = sut.create<Int>()
 
         assertThat(sut).isInstanceOf(Fixture::class.java)
         assertThat(result).isEqualTo(5)
