@@ -1,12 +1,15 @@
 package com.marcellogalhardo.fixture.internal.resolver.type
 
 import com.google.common.truth.Truth.assertThat
+import com.marcellogalhardo.fixture.FixtureCreator
 import com.marcellogalhardo.fixture.FixtureResolver
 import com.marcellogalhardo.fixture.internal.resolver.type.ClassTypeResolver
+import com.marcellogalhardo.fixture.resolve
 import com.marcellogalhardo.fixture.utils.TestClass
 import com.marcellogalhardo.fixture.utils.TestClassWithObjectParam
 import com.marcellogalhardo.fixture.utils.TestObject
 import com.marcellogalhardo.fixture.utils.TestResolver
+import io.mockk.mockk
 import org.junit.Before
 import org.junit.Test
 import kotlin.reflect.full.createType
@@ -29,9 +32,11 @@ class ClassTypeResolverTest {
 
     @Test
     fun resolve_shouldReturnParam_whenGivenClass() {
+        val creator = mockk<FixtureCreator>()
         val classRef = TestClass::class
 
         val result = sut.resolve(
+            creator,
             classRef.javaObjectType.kotlin,
             classRef.javaObjectType.kotlin.createType()
         )
@@ -42,10 +47,12 @@ class ClassTypeResolverTest {
 
     @Test
     fun resolve_shouldReturnParam_whenGivenClassWithObjectParam() {
+        val creator = mockk<FixtureCreator>()
         testResolver.result = TestObject
         val classRef = TestClassWithObjectParam::class
 
         val result = sut.resolve(
+            creator,
             classRef.javaObjectType.kotlin,
             classRef.javaObjectType.kotlin.createType()
         )
@@ -59,9 +66,11 @@ class ClassTypeResolverTest {
 
     @Test
     fun resolve_shouldReturnNull_whenNotGivenClass() {
+        val creator = mockk<FixtureCreator>()
         val classRef = Unit
 
         val result = sut.resolve(
+            creator,
             classRef::class,
             classRef::class.starProjectedType
         )

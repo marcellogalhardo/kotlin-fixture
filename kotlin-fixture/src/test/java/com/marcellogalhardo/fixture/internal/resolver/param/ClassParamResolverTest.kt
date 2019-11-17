@@ -1,12 +1,15 @@
 package com.marcellogalhardo.fixture.internal.resolver.param
 
 import com.google.common.truth.Truth.assertThat
+import com.marcellogalhardo.fixture.FixtureCreator
 import com.marcellogalhardo.fixture.FixtureResolver
-import com.marcellogalhardo.fixture.internal.resolver.param.ClassParamResolver
+import com.marcellogalhardo.fixture.resolve
 import com.marcellogalhardo.fixture.utils.TestClassWithGenerics
 import com.marcellogalhardo.fixture.utils.TestClassWithObjectParam
 import com.marcellogalhardo.fixture.utils.TestFixture
 import com.marcellogalhardo.fixture.utils.TestObject
+import io.mockk.every
+import io.mockk.mockk
 import org.junit.Before
 import org.junit.Test
 import kotlin.reflect.KTypeProjection
@@ -22,10 +25,7 @@ class ClassParamResolverTest {
     @Before
     fun setup() {
         testFixture = TestFixture()
-        sut =
-            ClassParamResolver(
-                testFixture
-            )
+        sut = ClassParamResolver()
     }
 
     @Test
@@ -37,6 +37,7 @@ class ClassParamResolverTest {
             .first()
 
         sut.resolve(
+            testFixture,
             classRef::class,
             classRef::class.createType(),
             parameter.type
@@ -48,6 +49,7 @@ class ClassParamResolverTest {
 
     @Test
     fun resolve_shouldReturnNull_whenGivenTypeParam() {
+        val creator = mockk<FixtureCreator>()
         val classRef = TestClassWithGenerics("Marcello")
         val parameter = classRef::class.constructors
             .first()
@@ -56,6 +58,7 @@ class ClassParamResolverTest {
 
         val projection = KTypeProjection(KVariance.INVARIANT, String::class.createType())
         sut.resolve(
+            creator,
             classRef::class,
             classRef::class.createType(listOf(projection)),
             parameter.type

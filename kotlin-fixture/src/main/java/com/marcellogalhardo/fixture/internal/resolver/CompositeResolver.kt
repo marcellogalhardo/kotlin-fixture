@@ -2,6 +2,7 @@ package com.marcellogalhardo.fixture.internal.resolver
 
 import com.marcellogalhardo.fixture.ContextNotSupported
 import com.marcellogalhardo.fixture.FixtureContext
+import com.marcellogalhardo.fixture.FixtureCreator
 import com.marcellogalhardo.fixture.FixtureResolver
 
 class CompositeResolver(
@@ -10,9 +11,9 @@ class CompositeResolver(
 
     constructor(vararg elements: FixtureResolver) : this(listOf(*elements))
 
-    override fun resolve(context: FixtureContext): Any? {
+    override fun resolve(creator: FixtureCreator, context: FixtureContext): Any? {
         for (resolver in resolvers) {
-            val instance = resolver.resolve(context)
+            val instance = resolver.resolve(creator, context)
             if (instance != null) {
                 return instance
             }

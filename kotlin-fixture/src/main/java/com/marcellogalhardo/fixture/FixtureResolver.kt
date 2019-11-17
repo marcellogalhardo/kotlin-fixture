@@ -22,22 +22,31 @@ import kotlin.reflect.KType
 
 interface FixtureResolver {
 
-    fun resolve(classRef: KClass<*>, classType: KType): Any? {
-        val typeContext = FixtureContext.Type(classRef, classType)
-        return resolve(typeContext)
-    }
+    fun resolve(creator: FixtureCreator, context: FixtureContext): Any?
+}
 
-    fun resolve(classRef: KClass<*>, classType: KType, paramType: KType): Any? {
-        val typeContext = FixtureContext.Param(classRef, classType, paramType)
-        return resolve(typeContext)
-    }
+fun FixtureResolver.resolve(
+    creator: FixtureCreator,
+    context: FixtureContext.Type,
+    paramType: KType
+): Any? = context.run {
+    return resolve(creator, FixtureContext.Param(classRef, classType, paramType))
+}
 
-    fun resolve(context: FixtureContext.Type, paramType: KType): Any? = context.run {
-        val paramContext = FixtureContext.Param(classRef, classType, paramType)
-        return resolve(paramContext)
-    }
+fun FixtureResolver.resolve(
+    creator: FixtureCreator,
+    classRef: KClass<*>,
+    classType: KType, paramType: KType
+): Any? {
+    return resolve(creator, FixtureContext.Param(classRef, classType, paramType))
+}
 
-    fun resolve(context: FixtureContext): Any?
+fun FixtureResolver.resolve(
+    creator: FixtureCreator,
+    classRef: KClass<*>,
+    classType: KType
+): Any? {
+    return resolve(creator, FixtureContext.Type(classRef, classType))
 }
 
 @Suppress("FunctionName")
@@ -47,57 +56,37 @@ fun FixtureResolver(
 ): CompositeResolver {
     val paramResolvers =
         CompositeResolver(
-            ClassParamResolver(
-                creator
-            ),
-            TypeParamResolver(
-                creator
-            )
+            ClassParamResolver(),
+            TypeParamResolver()
         )
     return CompositeResolver(
-        BooleanTypeResolver(
-            creator
-        ),
+        BooleanTypeResolver(),
         CharTypeResolver(
-            configs,
-            creator
+            configs
         ),
         DoubleTypeResolver(
-            configs,
-            creator
+            configs
         ),
-        FloatTypeResolver(
-            creator
-        ),
+        FloatTypeResolver(),
         IntTypeResolver(
-            configs,
-            creator
+            configs
         ),
         LongTypeResolver(
-            configs,
-            creator
+            configs
         ),
-        StringTypeResolver(
-            creator
-        ),
+        StringTypeResolver(),
         ListTypeResolver(
-            creator,
             configs,
             paramResolvers
         ),
         MapTypeResolver(
-            creator,
             configs,
             paramResolvers
         ),
         AbstractClassTypeResolver(),
-        InterfaceTypeResolver(
-            creator
-        ),
+        InterfaceTypeResolver(),
         ObjectTypeResolver(),
-        SealedClassTypeResolver(
-            creator
-        ),
+        SealedClassTypeResolver(),
         ClassTypeResolver(
             paramResolvers
         )

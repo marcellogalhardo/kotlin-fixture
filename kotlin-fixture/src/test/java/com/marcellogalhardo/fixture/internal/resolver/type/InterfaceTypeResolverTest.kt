@@ -1,10 +1,11 @@
 package com.marcellogalhardo.fixture.internal.resolver.type
 
 import com.google.common.truth.Truth.assertThat
+import com.marcellogalhardo.fixture.FixtureCreator
 import com.marcellogalhardo.fixture.FixtureResolver
-import com.marcellogalhardo.fixture.internal.resolver.type.InterfaceTypeResolver
-import com.marcellogalhardo.fixture.utils.TestFixture
+import com.marcellogalhardo.fixture.resolve
 import com.marcellogalhardo.fixture.utils.TestInterface
+import io.mockk.mockk
 import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
@@ -18,16 +19,16 @@ class InterfaceTypeResolverTest {
     @Before
     fun setup() {
         sut =
-            InterfaceTypeResolver(
-                TestFixture()
-            )
+            InterfaceTypeResolver()
     }
 
     @Test
     fun resolve_shouldReturnParam_whenGivenInterface() {
+        val creator = mockk<FixtureCreator>()
         val classRef = TestInterface::class
 
         val result = sut.resolve(
+            creator,
             classRef.javaObjectType.kotlin,
             classRef.javaObjectType.kotlin.createType()
         )
@@ -37,9 +38,11 @@ class InterfaceTypeResolverTest {
 
     @Test
     fun resolve_shouldReturnNull_whenNotGivenInterface() {
+        val creator = mockk<FixtureCreator>()
         val classRef = Unit
 
         val result = sut.resolve(
+            creator,
             classRef::class,
             classRef::class.starProjectedType
         )

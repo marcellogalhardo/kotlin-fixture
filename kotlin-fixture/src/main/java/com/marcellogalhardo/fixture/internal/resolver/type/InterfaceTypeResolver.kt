@@ -9,11 +9,9 @@ import java.lang.reflect.Proxy
 import kotlin.reflect.jvm.jvmErasure
 import kotlin.reflect.jvm.kotlinFunction
 
-internal class InterfaceTypeResolver(
-    private val creator: FixtureCreator
-) : SimpleResolver() {
+internal class InterfaceTypeResolver : SimpleResolver() {
 
-    override fun resolveType(context: FixtureContext.Type): Any? = context.run {
+    override fun resolveType(creator: FixtureCreator, context: FixtureContext.Type): Any? = context.run {
         if (typeIsInterface) {
             val javaClass = classRef.javaObjectType
             return Proxy.newProxyInstance(

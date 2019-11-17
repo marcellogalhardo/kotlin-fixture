@@ -1,16 +1,14 @@
 package com.marcellogalhardo.fixture.internal.resolver.type
 
 import com.marcellogalhardo.fixture.FixtureContext
-import com.marcellogalhardo.fixture.FixtureRandom
+import com.marcellogalhardo.fixture.FixtureCreator
 import com.marcellogalhardo.fixture.internal.resolver.SimpleResolver
 
-internal class FloatTypeResolver(
-    private val random: FixtureRandom
-) : SimpleResolver() {
+internal class FloatTypeResolver : SimpleResolver() {
 
-    override fun resolveType(context: FixtureContext.Type): Any? = context.run {
+    override fun resolveType(creator: FixtureCreator, context: FixtureContext.Type): Any? = context.run {
         return when (classRef) {
-            Float::class -> random.createFloat()
+            Float::class -> creator.createFloat()
             else -> null
         }
     }

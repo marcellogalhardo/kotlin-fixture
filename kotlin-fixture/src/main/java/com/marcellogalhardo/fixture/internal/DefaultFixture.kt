@@ -24,6 +24,6 @@ internal class DefaultFixture constructor(
     }
 
     override fun create(classRef: KClass<*>, classType: KType): Any? {
-        return customTypeMap[classRef]?.invoke(this) ?: typeResolver.resolve(classRef, classType)
+        return customTypeMap[classRef]?.invoke(this) ?: typeResolver.resolve(this, classRef, classType)
     }
 }

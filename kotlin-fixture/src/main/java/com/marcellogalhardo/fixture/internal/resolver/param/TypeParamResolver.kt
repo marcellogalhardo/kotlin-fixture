@@ -7,11 +7,9 @@ import com.marcellogalhardo.fixture.internal.resolver.SimpleResolver
 import kotlin.reflect.KClass
 import kotlin.reflect.KTypeParameter
 
-class TypeParamResolver(
-    private val creator: FixtureCreator
-) : SimpleResolver() {
+class TypeParamResolver : SimpleResolver() {
 
-    override fun resolveParam(context: FixtureContext.Param): Any? = context.run {
+    override fun resolveParam(creator: FixtureCreator, context: FixtureContext.Param): Any? = context.run {
         return when (val classifier = paramType.classifier) {
             is KTypeParameter -> {
                 val typeParameterName = classifier.name
