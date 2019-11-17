@@ -1,9 +1,12 @@
 package com.marcellogalhardo.fixture
 
+import kotlin.reflect.KClass
+import kotlin.reflect.jvm.jvmName
+
 sealed class FixtureException(message: String?) : Error(message)
 
-class ContextNotSupported(context: FixtureContext) :
-    FixtureException("$context is not supported")
+class TypeNotSupported(classRef: KClass<*>) :
+    FixtureException("${classRef.jvmName} is not supported")
 
 class AbstractClassNotSupportedException : FixtureException("Abstract classes are not supported")
 

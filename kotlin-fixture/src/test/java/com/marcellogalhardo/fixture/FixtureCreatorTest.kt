@@ -199,7 +199,7 @@ class FixtureCreatorTest {
         }
 
         assertThat(error)
-            .isInstanceOf(ContextNotSupported::class.java)
+            .isInstanceOf(TypeNotSupported::class.java)
     }
 
     @Test
