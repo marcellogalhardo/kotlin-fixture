@@ -4,6 +4,7 @@ import com.google.common.truth.Truth.assertThat
 import com.marcellogalhardo.fixture.FixtureContext
 import com.marcellogalhardo.fixture.FixtureResolver
 import com.marcellogalhardo.fixture.internal.resolver.composite.DefaultTypeResolver
+import com.marcellogalhardo.fixture.resolve
 import com.marcellogalhardo.fixture.utils.TestFixture
 import io.mockk.every
 import io.mockk.mockk

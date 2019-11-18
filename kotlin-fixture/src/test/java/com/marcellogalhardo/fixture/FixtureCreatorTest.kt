@@ -13,7 +13,7 @@ class FixtureCreatorTest {
 
     @Before
     fun setup() {
-        sut = Fixture()
+        sut = fixtureOf()
     }
 
     @Test

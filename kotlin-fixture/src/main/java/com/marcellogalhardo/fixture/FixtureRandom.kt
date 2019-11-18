@@ -1,7 +1,5 @@
 package com.marcellogalhardo.fixture
 
-import com.marcellogalhardo.fixture.internal.DefaultRandom
-
 interface FixtureRandom {
 
     fun createBoolean(): Boolean
@@ -46,7 +44,3 @@ fun FixtureRandom.createInt(
 fun FixtureRandom.createLong(
     range: LongRange
 ): Long = createLong(range.first, range.last)
-
-@Suppress("FunctionName")
-fun FixtureRandom(): FixtureRandom =
-    DefaultRandom()

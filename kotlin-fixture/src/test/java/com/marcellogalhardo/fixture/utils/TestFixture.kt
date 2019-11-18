@@ -2,12 +2,13 @@ package com.marcellogalhardo.fixture.utils
 
 import com.marcellogalhardo.fixture.Fixture
 import com.marcellogalhardo.fixture.FixtureRandom
+import com.marcellogalhardo.fixture.fixtureRandomOf
 import com.marcellogalhardo.fixture.FixtureResolver
 import kotlin.reflect.KClass
 import kotlin.reflect.KType
 
 class TestFixture(
-    private val random: FixtureRandom = FixtureRandom()
+    private val random: FixtureRandom = fixtureRandomOf()
 ) : Fixture, FixtureRandom by random {
 
     var customTypeResolver: FixtureResolver? = null

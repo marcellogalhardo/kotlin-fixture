@@ -10,7 +10,7 @@ class FixtureRegistryTest {
 
     @Before
     fun setup() {
-        sut = Fixture()
+        sut = fixtureOf()
     }
 
     @Test

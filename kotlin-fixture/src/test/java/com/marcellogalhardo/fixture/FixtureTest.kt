@@ -9,7 +9,7 @@ class FixtureTest {
     @Test
     fun fixture_shouldReturnFixture_withDefaultConfigs() {
         val configs = FixtureConfigs()
-        val sut = Fixture()
+        val sut = fixtureOf()
 
         val result = sut.createListOf<Int>()
 
@@ -25,7 +25,7 @@ class FixtureTest {
         val configs = FixtureConfigs(
             listRange = 5..10
         )
-        val sut = Fixture(configs)
+        val sut = fixtureOf(configs)
 
         val result = sut.createListOf<Int>()
 
@@ -38,7 +38,7 @@ class FixtureTest {
 
     @Test
     fun fixture_shouldReturnFixture_givenApply() {
-        val sut = Fixture {
+        val sut = fixtureOf {
             register {
                 5
             }
