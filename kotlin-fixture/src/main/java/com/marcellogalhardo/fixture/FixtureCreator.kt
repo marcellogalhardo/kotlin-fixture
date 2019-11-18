@@ -1,16 +1,17 @@
 package com.marcellogalhardo.fixture
 
-import com.marcellogalhardo.fixture.internal.getKType
 import kotlin.reflect.KClass
 import kotlin.reflect.KType
+import kotlin.reflect.typeOf
 
 interface FixtureCreator : FixtureRandom {
 
     fun create(classRef: KClass<*>, classType: KType): Any?
 }
 
+@UseExperimental(ExperimentalStdlibApi::class)
 inline fun <reified T : Any> FixtureCreator.create(): T {
-    val kType = getKType<T>()
+    val kType = typeOf<T>()
     return create(T::class, kType) as T
 }
 

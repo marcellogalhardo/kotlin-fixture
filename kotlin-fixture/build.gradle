@@ -5,6 +5,18 @@ apply plugin: 'jacoco'
 
 group = 'com.github.marcellogalhardo'
 
+compileKotlin {
+    kotlinOptions {
+        freeCompilerArgs += '-Xuse-experimental=kotlin.Experimental'
+    }
+}
+
+compileTestKotlin {
+    kotlinOptions {
+        freeCompilerArgs += '-Xuse-experimental=kotlin.Experimental'
+    }
+}
+
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
