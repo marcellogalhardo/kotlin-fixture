@@ -4,16 +4,15 @@ import com.marcellogalhardo.fixture.FixtureConfigs
 import com.marcellogalhardo.fixture.FixtureContext
 import com.marcellogalhardo.fixture.FixtureCreator
 import com.marcellogalhardo.fixture.createInt
-import com.marcellogalhardo.fixture.internal.resolver.SimpleResolver
+import com.marcellogalhardo.fixture.internal.resolver.TypeResolver
 
 internal class IntTypeResolver(
     private val configs: FixtureConfigs
-) : SimpleResolver() {
+) : TypeResolver() {
+
+    override val type = Int::class
 
     override fun resolveType(creator: FixtureCreator, context: FixtureContext.Type): Any? = context.run {
-        return when (classRef) {
-            Int::class -> creator.createInt(configs.defaultRange)
-            else -> null
-        }
+        return creator.createInt(configs.defaultRange)
     }
 }
