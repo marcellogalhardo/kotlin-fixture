@@ -9,6 +9,7 @@ import java.lang.reflect.Proxy
 import kotlin.reflect.jvm.jvmErasure
 import kotlin.reflect.jvm.kotlinFunction
 
+@Deprecated("Interface type resolver can cause unexpected behaviours and is dangerous.")
 internal class InterfaceTypeResolver : SimpleResolver() {
 
     override fun resolveType(creator: FixtureCreator, context: FixtureContext.Type): Any? = context.run {

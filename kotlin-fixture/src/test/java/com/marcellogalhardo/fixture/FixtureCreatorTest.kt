@@ -5,6 +5,7 @@ package com.marcellogalhardo.fixture
 import com.google.common.truth.Truth.assertThat
 import com.marcellogalhardo.fixture.utils.*
 import org.junit.Before
+import org.junit.Ignore
 import org.junit.Test
 
 class FixtureCreatorTest {
@@ -32,6 +33,7 @@ class FixtureCreatorTest {
             .isInstanceOf(TestInterface::class.java)
     }
 
+    @Ignore // FIXME: Interface support will be deprecated.
     @Test
     fun next_shouldReturnRandom_whenInvokeAnyMethodOfProxyInterface() {
         val proxyInterface = sut.create<TestInterface>()
