@@ -1,12 +1,10 @@
-[![Releases](https://img.shields.io/github/v/release/marcellogalhardo/kotlin-fixture?include_prereleases)](https://github.com/marcellogalhardo/kotlin-fixture/releases) [![Build Status](https://travis-ci.org/marcellogalhardo/kotlin-fixture.svg?branch=master)](https://travis-ci.org/marcellogalhardo/kotlin-fixture) [![CodeCov](https://codecov.io/gh/marcellogalhardo/kotlin-fixture/branch/master/graph/badge.svg)](https://codecov.io/gh/marcellogalhardo/kotlin-fixture)
-
-# Kotlin.Fixture
+# Fixture for Kotlin
 
 Write maintainable unit tests, faster.
 
-Kotlin.Fixture makes it easier to create non-relevant data for test fixtures, allowing the developer to focus on the essentials of each test case.
+Fixture makes it easier to create non-relevant data for test fixtures, allowing the developer to focus on the essentials of each test case.
 
-Credits: Kotlin.Fixture is inspired by [AutoFixture](https://github.com/AutoFixture/AutoFixture) and [QuickCheck](https://hackage.haskell.org/package/QuickCheck).
+Credits: Fixture is inspired by [AutoFixture](https://github.com/AutoFixture/AutoFixture) and [QuickCheck](https://hackage.haskell.org/package/QuickCheck).
 
 **This project is currently experimental and the API subject to breaking changes without notice.**
 
@@ -31,11 +29,11 @@ dependencies {
 
 ## Basic Usage
 
-Kotlin.Fixture is designed to make Test-Driven Development more productive and unit tests more refactoring-safe. It does so by removing the need for hand-coding anonymous variables as part of a test's Fixture Setup phase.
+Fixture is designed to make Test-Driven Development more productive and unit tests more refactoring-safe. It does so by removing the need for hand-coding anonymous variables as part of a test's Fixture Setup phase.
 
 When writing unit tests, you typically need to create some objects that represent the initial state of the test. Often, an API will force you to specify much more data than you really care about, so you frequently end up creating objects that have no influence on the test, simply to make the code compile.
 
-Kotlin.Fixture can help by creating such [Anonymous Variables](http://blogs.msdn.com/ploeh/archive/2008/11/17/anonymous-variables.aspx) for you. Here's a simple example:
+Fixture can help by creating such [Anonymous Variables](http://blogs.msdn.com/ploeh/archive/2008/11/17/anonymous-variables.aspx) for you. Here's a simple example:
 
 ```kotlin
 @Test
@@ -52,7 +50,7 @@ fun testExample() {
 }
 ```
 
-This example illustrates the basic principle of Kotlin.Fixture.
+This example illustrates the basic principle of Fixture.
 
 **Warning:** This library does work outside tests but it was not designed for it. Use it at your own risk.
 
