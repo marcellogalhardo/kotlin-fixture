@@ -90,14 +90,17 @@ val generated = Fixture.generate {
 ### Generators for Reusability
 
 ```kotlin
+val complexChildGenerator = Fixture.generator {
+    ComplexChild(name = string(prefix = "child") /* other properties */)
+}
 val complexParentGenerator = Fixture.generator {
     ComplexParent(
         name = string(prefix = "parent"),
         number = int(),
-        child = ComplexChild(name = string(prefix = "child"))
+        child = complexChildGenerator.generate()
     )
 }
-val complexParent = complexParentGenerator.generate("parentName")
+val complexParent = complexParentGenerator.generate()
 ```
 
 ### Generate Lists
