@@ -31,7 +31,7 @@ dependencies {
 
 ## Basic Usage
 
-Kotlin.Fixture is designed to make Test-Driven Development more productive and unit tests more refactoring-safe. It does so by removing the need for hand-coding anonymous variables as part of a test's Fixture Setup phase. 
+Kotlin.Fixture is designed to make Test-Driven Development more productive and unit tests more refactoring-safe. It does so by removing the need for hand-coding anonymous variables as part of a test's Fixture Setup phase.
 
 When writing unit tests, you typically need to create some objects that represent the initial state of the test. Often, an API will force you to specify much more data than you really care about, so you frequently end up creating objects that have no influence on the test, simply to make the code compile.
 
@@ -49,10 +49,10 @@ fun testExample() {
     // Arrange
     val expectedName = Fixture.string(prefix = "name") // name-6223529b-3497-45c8-a864-8a969cd798e4
     val sut = createSut(expectedName)
-    
+
     // Act
     val result = sut.print()
-    
+
     // Assert
     assertTrue(result == expectedName)
 }
@@ -84,7 +84,6 @@ val fixture = Fixture()
 | Int                | `fixture.int()`                  | `Int: 27`                                             |
 | Long               | `fixture.long()`                 | `Long: 5`                                             |
 | String             | `fixture.string()`               | `String: "f5cdf6b1-a473-410f-95f3-f427f7abb0c7"`      |
-|--------------------|----------------------------------|-------------------------------------------------------|
 
 ### Generate Complex Type
 
@@ -124,3 +123,4 @@ val strings = Fixture.list(until = 10) { index -> string(prefix = index.toString
     - `String: "0-ecc1cc75-cd7a-417f-b477-2913802440b4"`
     - `String: "1-fce70a7b-fae5-474f-8055-415ca46eac20"`
     - `String: "2-79b45532-d66f-4abc-9311-77ba68dc9e3c"`
+
