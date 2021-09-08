@@ -106,7 +106,7 @@ val complexParent = complexParentGenerator.generate()
 ### Generate Lists
 
 ```kotlin
-val strings = Fixture.list(until = 10) { index -> string(prefix = index.toString()) }
+val stringList = Fixture.list(until = 10) { index -> string(prefix = index.toString()) }
 ```
 - Sample result: 
   - `List<String>`
@@ -117,14 +117,10 @@ val strings = Fixture.list(until = 10) { index -> string(prefix = index.toString
 ### Generate Maps
 
 ```kotlin
-val strings = Fixture.map(
-    until = 10,
-    generateKey = { index -> index },
-    generateValue = { index -> string() },
-)
+val intToStringMap = Fixture.map(until = 10) { index -> index to string() }
 ```
 - Sample result:
-  - `Map<String, Int>`
+  - `Map<Int, String>`
     - `Pair<Int, String>: 0 to "ecc1cc75-cd7a-417f-b477-2913802440b4"`
     - `Pair<Int, String>: 1 to "fce70a7b-fae5-474f-8055-415ca46eac20"`
     - `Pair<Int, String>: 2 to "79b45532-d66f-4abc-9311-77ba68dc9e3c"`

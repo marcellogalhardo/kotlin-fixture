@@ -19,17 +19,11 @@ internal class FixtureImplementation(
         return block(this)
     }
 
-    override fun <K, V> map(
-        until: Int,
-        generateKey: Fixture.(index: Int) -> K,
-        generateValue: Fixture.(index: Int) -> V
-    ): Map<K, V> {
+    override fun <K, V> map(until: Int, generate: Fixture.(index: Int) -> Pair<K, V>): Map<K, V> {
         return mutableMapOf<K, V>().apply {
             repeat(int(until)) { index ->
-                put(
-                    generateKey(this@FixtureImplementation, index),
-                    generateValue(this@FixtureImplementation, index)
-                )
+                val (key, value) = generate(this@FixtureImplementation, index)
+                put(key, value)
             }
         }
     }
@@ -37,15 +31,12 @@ internal class FixtureImplementation(
     override fun <K, V> map(
         from: Int,
         until: Int,
-        generateKey: Fixture.(index: Int) -> K,
-        generateValue: Fixture.(index: Int) -> V
+        generate: Fixture.(index: Int) -> Pair<K, V>
     ): Map<K, V> {
         return mutableMapOf<K, V>().apply {
             repeat(int(from, until)) { index ->
-                put(
-                    generateKey(this@FixtureImplementation, index),
-                    generateValue(this@FixtureImplementation, index)
-                )
+                val (key, value) = generate(this@FixtureImplementation, index)
+                put(key, value)
             }
         }
     }

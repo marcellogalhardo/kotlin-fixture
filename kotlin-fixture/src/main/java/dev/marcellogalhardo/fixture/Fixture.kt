@@ -8,15 +8,13 @@ sealed interface Fixture {
 
     fun <K, V> map(
         until: Int,
-        generateKey: Fixture.(index: Int) -> K,
-        generateValue: Fixture.(index: Int) -> V,
+        generate: Fixture.(index: Int) -> Pair<K, V>,
     ): Map<K, V>
 
     fun <K, V> map(
         from: Int,
         until: Int,
-        generateKey: Fixture.(index: Int) -> K,
-        generateValue: Fixture.(index: Int) -> V,
+        generate: Fixture.(index: Int) -> Pair<K, V>,
     ): Map<K, V>
 
     fun <T> list(

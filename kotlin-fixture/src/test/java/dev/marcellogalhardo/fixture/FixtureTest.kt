@@ -30,12 +30,9 @@ class FixtureTest {
     @Test
     fun shouldGenerateMap() {
         // Arrange & Act
-        val result = Fixture.map(
-            from = 10,
-            until = 50,
-            generateKey = { char() },
-            generateValue = { string() },
-        )
+        val result = Fixture.map(from = 10, until = 50) {
+            char() to string()
+        }
 
         // Assert
         assertThat(result.count() >= 10).isTrue()
