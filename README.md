@@ -38,20 +38,14 @@ When writing unit tests, you typically need to create some objects that represen
 Kotlin.Fixture can help by creating such [Anonymous Variables](http://blogs.msdn.com/ploeh/archive/2008/11/17/anonymous-variables.aspx) for you. Here's a simple example:
 
 ```kotlin
-val createSut = Fixture.generate {
-    { name: String ->
-        NamePrinter(nameToPrint = name /* other attributes */)
-    }
-}
-
 @Test
 fun testExample() {
     // Arrange
     val expectedName = Fixture.string(prefix = "name") // name-6223529b-3497-45c8-a864-8a969cd798e4
-    val sut = createSut(expectedName)
+    val sut = SystemUnderTest()
 
     // Act
-    val result = sut.print()
+    val result = sut.echo(expectedName)
 
     // Assert
     assertTrue(result == expectedName)
@@ -59,8 +53,6 @@ fun testExample() {
 ```
 
 This example illustrates the basic principle of Kotlin.Fixture.
-
-The example also illustrates how Kotlin.Fixture can be used as a [SUT Factory](http://blog.ploeh.dk/2009/02/13/SUTFactory.aspx) that creates the actual System Under Test (the `NamePrinter` instance).
 
 **Warning:** This library does work outside tests but it was not designed for it. Use it at your own risk.
 
@@ -99,18 +91,15 @@ val generated = Fixture.generate {
 
 ### Generators for Reusability
 
-
 ```kotlin
-val generateComplexParent = Fixture.generate {
-    { name: String ->
-        ComplexParent(
-            name = string(prefix = name),
-            number = int(),
-            child = ComplexChild(name = string(prefix = "child"))
-        )
-    }
+val complexParentGenerator = Fixture.generator {
+    ComplexParent(
+        name = string(prefix = "parent"),
+        number = int(),
+        child = ComplexChild(name = string(prefix = "child"))
+    )
 }
-val complexParent = generateComplexParent("parentName")
+val complexParent = complexParentGenerator.generate("parentName")
 ```
 
 ### Generate Lists
@@ -123,4 +112,19 @@ val strings = Fixture.list(until = 10) { index -> string(prefix = index.toString
     - `String: "0-ecc1cc75-cd7a-417f-b477-2913802440b4"`
     - `String: "1-fce70a7b-fae5-474f-8055-415ca46eac20"`
     - `String: "2-79b45532-d66f-4abc-9311-77ba68dc9e3c"`
+
+### Generate Maps
+
+```kotlin
+val strings = Fixture.map(
+    until = 10,
+    generateKey = { index -> index },
+    generateValue = { index -> string() },
+)
+```
+- Sample result:
+  - `Map<String, Int>`
+    - `Pair<Int, String>: 0 to "ecc1cc75-cd7a-417f-b477-2913802440b4"`
+    - `Pair<Int, String>: 1 to "fce70a7b-fae5-474f-8055-415ca46eac20"`
+    - `Pair<Int, String>: 2 to "79b45532-d66f-4abc-9311-77ba68dc9e3c"`
 

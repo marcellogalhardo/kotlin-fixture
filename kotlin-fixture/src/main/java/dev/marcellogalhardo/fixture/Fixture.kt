@@ -2,12 +2,9 @@ package dev.marcellogalhardo.fixture
 
 sealed interface Fixture {
 
-    fun <T> generate(block: Fixture.() -> T): T
+    fun <T> generator(generate: Fixture.() -> T): FixtureGenerator<T>
 
-    fun <K, V> map(
-        generateKey: Fixture.(index: Int) -> K,
-        generateValue: Fixture.(index: Int) -> V,
-    ): Map<K, V>
+    fun <T> generate(block: Fixture.() -> T): T
 
     fun <K, V> map(
         until: Int,
@@ -21,8 +18,6 @@ sealed interface Fixture {
         generateKey: Fixture.(index: Int) -> K,
         generateValue: Fixture.(index: Int) -> V,
     ): Map<K, V>
-
-    fun <T> list(generate: Fixture.(index: Int) -> T): List<T>
 
     fun <T> list(
         until: Int,

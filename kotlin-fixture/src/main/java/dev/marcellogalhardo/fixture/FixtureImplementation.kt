@@ -11,22 +11,12 @@ internal class FixtureImplementation(
     private val random: Random,
 ) : Fixture {
 
-    override fun <T> generate(block: Fixture.() -> T): T {
-        return block(this)
+    override fun <T> generator(generate: Fixture.() -> T): FixtureGenerator<T> {
+        return FixtureGenerator(this, generate)
     }
 
-    override fun <K, V> map(
-        generateKey: Fixture.(index: Int) -> K,
-        generateValue: Fixture.(index: Int) -> V
-    ): Map<K, V> {
-        return mutableMapOf<K, V>().apply {
-            repeat(int()) { index ->
-                put(
-                    generateKey(this@FixtureImplementation, index),
-                    generateValue(this@FixtureImplementation, index)
-                )
-            }
-        }
+    override fun <T> generate(block: Fixture.() -> T): T {
+        return block(this)
     }
 
     override fun <K, V> map(
@@ -58,10 +48,6 @@ internal class FixtureImplementation(
                 )
             }
         }
-    }
-
-    override fun <T> list(generate: Fixture.(index: Int) -> T): List<T> {
-        return MutableList(int()) { index -> generate(this, index) }
     }
 
     override fun <T> list(until: Int, generate: Fixture.(index: Int) -> T): List<T> {
